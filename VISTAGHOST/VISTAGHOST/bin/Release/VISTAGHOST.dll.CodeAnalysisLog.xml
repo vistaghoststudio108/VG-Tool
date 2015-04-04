@@ -1,0 +1,1259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 9.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="1.36">
+ <Namespaces>
+  <Namespace Name="Vistaghost.VISTAGHOST.Lib">
+   <Messages>
+    <Message Id="VISTAGHOST" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+     <Issue Name="Namespace" Certainty="85" Level="Error">Correct the casing of 'VISTAGHOST' in namespace name 'Vistaghost.VISTAGHOST.Lib' by changing it to 'Vistaghost'.</Issue>
+    </Message>
+    <Message Id="Vistaghost" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+     <Issue Name="Namespace" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Vistaghost' in namespace name 'Vistaghost.VISTAGHOST.Lib'.</Issue>
+    </Message>
+    <Message Id="Lib" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+     <Issue Name="Namespace" Certainty="95" Level="Error">Rename namespace Vistaghost.VISTAGHOST.Lib so that it no longer conflicts with the reserved language keyword 'Lib'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Issue>
+    </Message>
+   </Messages>
+  </Namespace>
+  <Namespace Name="Vistaghost.VISTAGHOST.WindowForms">
+   <Messages>
+    <Message Id="VISTAGHOST" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+     <Issue Name="Namespace" Certainty="85" Level="Error">Correct the casing of 'VISTAGHOST' in namespace name 'Vistaghost.VISTAGHOST.WindowForms' by changing it to 'Vistaghost'.</Issue>
+    </Message>
+    <Message Id="Vistaghost" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+     <Issue Name="Namespace" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Vistaghost' in namespace name 'Vistaghost.VISTAGHOST.WindowForms'.</Issue>
+    </Message>
+   </Messages>
+  </Namespace>
+ </Namespaces>
+ <Targets>
+  <Target Name="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\bin\Release\VISTAGHOST.dll">
+   <Modules>
+    <Module Name="vistaghost.dll">
+     <Messages>
+      <Message Id="VISTAGHOST" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+       <Issue Name="Assembly" Certainty="85" Level="Error">Correct the casing of 'VISTAGHOST' in assembly name 'VISTAGHOST.dll' by changing it to 'Vistaghost'.</Issue>
+      </Message>
+     </Messages>
+     <Namespaces>
+      <Namespace Name="Vistaghost.VISTAGHOST">
+       <Types>
+        <Type Name="VGSetting" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Members>
+          <Member Name="#GetUniqueFileName(System.String,System.String,System.String&amp;)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="Setting.cs" Line="262">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGSetting.GetUniqueFileName(string, string, out string)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#IsFirstInstall" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Accessors>
+            <Accessor Name="#get_IsFirstInstall()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+             <Messages>
+              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+               <Issue Certainty="75" Level="Warning">'VGSetting.IsFirstInstall.get()' appears to have no upstream public or protected callers.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+            <Accessor Name="#set_IsFirstInstall(System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+             <Messages>
+              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+               <Issue Certainty="75" Level="Warning">'VGSetting.IsFirstInstall.set(bool)' appears to have no upstream public or protected callers.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="#LoadNewSetting(System.String,System.String&amp;,System.Boolean&amp;)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="Setting.cs" Line="314">Modify 'VGSetting.LoadNewSetting(string, out string, out bool)' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#LoadRegisterInfo()" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="Setting.cs" Line="205">Modify 'VGSetting.LoadRegisterInfo()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#LoadSettings()" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="Setting.cs" Line="123">Modify 'VGSetting.LoadSettings()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SaveCurrentSetting(System.String,System.String&amp;,System.Boolean&amp;)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="Setting.cs" Line="283">Modify 'VGSetting.SaveCurrentSetting(string, out string, out bool)' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SaveRegisterInfo()" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="Setting.cs" Line="175">Modify 'VGSetting.SaveRegisterInfo()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SaveSettings()" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="Setting.cs" Line="149">Modify 'VGSetting.SaveSettings()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="VGSettingConstants" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#FileExtenstion" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Extenstion" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Extenstion' in member name 'VGSettingConstants.FileExtenstion' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="VGSettingConstants+SettingsKey" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Do not nest type 'VGSettingConstants.SettingsKey'. Alternatively, change its accessibility so that it is not externally visible.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="VISTAGHOSTPackage" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="VISTAGHOST" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Correct the casing of 'VISTAGHOST' in type name 'VISTAGHOSTPackage' by changing it to 'Vistaghost'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#CountCallback(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="442">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VISTAGHOSTPackage.CountCallback(object, EventArgs)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="442">Change 'VISTAGHOSTPackage.CountCallback(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#DTE" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="DTE" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="93">Correct the casing of 'DTE' in member name 'VISTAGHOSTPackage.DTE' by changing it to 'Dte'.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="93">The 'this' parameter (or 'Me' in Visual Basic) of 'VISTAGHOSTPackage.DTE' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#lines" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'VISTAGHOSTPackage.lines' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#RegisterOleComponent()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="Microsoft.VisualStudio.OLE.Interop.IOleComponentManager.FRegisterComponent(Microsoft.VisualStudio.OLE.Interop.IOleComponent,Microsoft.VisualStudio.OLE.Interop.OLECRINFO[],System.UInt32@)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Name="HResultOrErrorCode" Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="247">'VISTAGHOSTPackage.RegisterOleComponent()' calls 'IOleComponentManager.FRegisterComponent(IOleComponent, OLECRINFO[], out uint)' but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#sf_OnSendData(System.String,System.String,System.String,System.String,System.String,System.Boolean,Vistaghost.VISTAGHOST.Lib.ActionType,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="489">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VISTAGHOSTPackage.sf_OnSendData(string, string, string, string, string, bool, ActionType, bool, bool)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="490">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VISTAGHOSTPackage.sf_OnSendData(string, string, string, string, string, bool, ActionType, bool, bool)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="496">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VISTAGHOSTPackage.sf_OnSendData(string, string, string, string, string, bool, ActionType, bool, bool)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="496">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VISTAGHOSTPackage.sf_OnSendData(string, string, string, string, string, bool, ActionType, bool, bool)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="499">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VISTAGHOSTPackage.sf_OnSendData(string, string, string, string, string, bool, ActionType, bool, bool)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ShowToolBar(System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Packages" File="VISTAGHOSTPackage.cs" Line="253">The 'this' parameter (or 'Me' in Visual Basic) of 'VISTAGHOSTPackage.ShowToolBar(bool)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Vistaghost.VISTAGHOST.Helper">
+       <Types>
+        <Type Name="DTEHelper" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Members>
+          <Member Name="#AddErrorToErrorListWindow(System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="75">'DTEHelper.AddErrorToErrorListWindow(string)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="75">The 'this' parameter (or 'Me' in Visual Basic) of 'DTEHelper.AddErrorToErrorListWindow(string)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#docEvents_DocumentClosing(EnvDTE.Document)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="49">'DTEHelper.docEvents_DocumentClosing(Document)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="49">The 'this' parameter (or 'Me' in Visual Basic) of 'DTEHelper.docEvents_DocumentClosing(Document)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message Id="Document" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="49">Parameter 'Document' of 'DTEHelper.docEvents_DocumentClosing(Document)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#docEvents_DocumentOpening(System.String,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="53">'DTEHelper.docEvents_DocumentOpening(string, bool)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="53">The 'this' parameter (or 'Me' in Visual Basic) of 'DTEHelper.docEvents_DocumentOpening(string, bool)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message Id="DocumentPath" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="53">Parameter 'DocumentPath' of 'DTEHelper.docEvents_DocumentOpening(string, bool)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+            <Message Id="ReadOnly" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="53">Parameter 'ReadOnly' of 'DTEHelper.docEvents_DocumentOpening(string, bool)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteCmd(System.String,System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="115">'DTEHelper.ExecuteCmd(string, string)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GetStatusBar()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="99">'DTEHelper.GetStatusBar()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OutputWindowWriteLine(System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="85">'DTEHelper.OutputWindowWriteLine(string)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="85">The 'this' parameter (or 'Me' in Visual Basic) of 'DTEHelper.OutputWindowWriteLine(string)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="90">Because the behavior of 'string.ToUpper()' could vary based on the current user's locale settings, replace this call in 'DTEHelper.OutputWindowWriteLine(string)' with a call to 'string.ToUpper(CultureInfo)'. If the result of 'string.ToUpper(CultureInfo)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'CultureInfo' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SetStatusBarText(System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="70">'DTEHelper.SetStatusBarText(string)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#type" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'DTEHelper.type' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#wndEvents_WindowActivated(EnvDTE.Window,EnvDTE.Window)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="61">'DTEHelper.wndEvents_WindowActivated(Window, Window)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="61">The 'this' parameter (or 'Me' in Visual Basic) of 'DTEHelper.wndEvents_WindowActivated(Window, Window)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message Id="GotFocus" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="61">Parameter 'GotFocus' of 'DTEHelper.wndEvents_WindowActivated(Window, Window)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+            <Message Id="LostFocus" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="DTEHelper.cs" Line="61">Parameter 'LostFocus' of 'DTEHelper.wndEvents_WindowActivated(Window, Window)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="Logger" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Messages>
+          <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+           <Issue Certainty="75" Level="Warning">'Logger' is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#LogError(System.Exception)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="Logger.cs" Line="39">Modify 'Logger.LogError(Exception)' to catch a more specific exception than 'object' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="Logger.cs" Line="29">Because the behavior of 'string.Format(string, object, object)' could vary based on the current user's locale settings, replace this call in 'Logger.LogError(Exception)' with a call to 'string.Format(IFormatProvider, string, params object[])'. If the result of 'string.Format(IFormatProvider, string, params object[])' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#LogMessage(System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Helper" File="Logger.cs" Line="69">Modify 'Logger.LogMessage(string)' to catch a more specific exception than 'object' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Vistaghost.VISTAGHOST.Lib">
+       <Types>
+        <Type Name="ActionType" Kind="Enum" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+           <Issue Name="NotFlagsNoZeroValue" Certainty="95" Level="CriticalError">Add a member to 'ActionType' that has a value of zero with a suggested name of 'None'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="AddCommentEventHandler" Kind="Delegate" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="comments" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="DelegateParameter" Certainty="85" Level="Error">In delegate 'AddCommentEventHandler', correct the casing of 'comments' in parameter name 'keep_comments' by changing it to 'Comments'.</Issue>
+          </Message>
+          <Message Id="accout" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="DelegateParameter" Certainty="75" Level="CriticalWarning">In delegate 'AddCommentEventHandler', correct the spelling of 'accout' in parameter name 'accout' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+          </Message>
+          <Message Id="contentchanged" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="DelegateParameter" Certainty="75" Level="CriticalWarning">In delegate 'AddCommentEventHandler', correct the spelling of 'contentchanged' in parameter name 'contentchanged' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+          </Message>
+          <Message Id="devid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="DelegateParameter" Certainty="75" Level="CriticalWarning">In delegate 'AddCommentEventHandler', correct the spelling of 'devid' in parameter name 'devid' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+          </Message>
+          <Message Id="moreopt" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="DelegateParameter" Certainty="75" Level="CriticalWarning">In delegate 'AddCommentEventHandler', correct the spelling of 'moreopt' in parameter name 'moreopt' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+          </Message>
+          <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="DelegateParameter" Certainty="95" Level="Error">In delegate 'AddCommentEventHandler', remove the underscores from parameter name 'keep_comments'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="CommentInfo" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#DevID" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberAbbreviation" Certainty="85" Level="Error">Correct the casing of 'ID' in member name 'CommentInfo.DevID' by changing it to 'Id'. 'Id' is an abbreviation and therefore is not subject to acronym casing guidelines.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="DataInfo" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Storge" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Storge" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Storge' in member name 'DataInfo.Storge' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="DateFormat" Kind="Enum" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#ddmmyyyy" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="ddmmyyyy" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'ddmmyyyy' in member name 'DateFormat.ddmmyyyy' by changing it to 'Ddmmyyyy'.</Issue>
+            </Message>
+            <Message Id="ddmmyyyy" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'ddmmyyyy' in member name 'DateFormat.ddmmyyyy' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#mmddyyyy" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="mmddyyyy" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'mmddyyyy' in member name 'DateFormat.mmddyyyy' by changing it to 'Mmddyyyy'.</Issue>
+            </Message>
+            <Message Id="mmddyyyy" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'mmddyyyy' in member name 'DateFormat.mmddyyyy' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#yyyyddmm" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="yyyyddmm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'yyyyddmm' in member name 'DateFormat.yyyyddmm' by changing it to 'Yyyyddmm'.</Issue>
+            </Message>
+            <Message Id="yyyyddmm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'yyyyddmm' in member name 'DateFormat.yyyyddmm' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#yyyymmdd" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="yyyymmdd" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'yyyymmdd' in member name 'DateFormat.yyyymmdd' by changing it to 'Yyyymmdd'.</Issue>
+            </Message>
+            <Message Id="yyyymmdd" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'yyyymmdd' in member name 'DateFormat.yyyymmdd' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HeaderInfo" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#HeaderComponents" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning">Change 'HeaderInfo.HeaderComponents' to be read-only by removing the property setter.</Issue>
+            </Message>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error">Change 'List&lt;ComponentInfo&gt;' in 'HeaderInfo.HeaderComponents' to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HeaderInputEventHandler" Kind="Delegate" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="funcinfo" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="DelegateParameter" Certainty="75" Level="CriticalWarning">In delegate 'HeaderInputEventHandler', correct the spelling of 'funcinfo' in parameter name 'funcinfo' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Invoke(System.Collections.Generic.List`1&lt;Vistaghost.VISTAGHOST.Lib.LVFuncInfo&gt;)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error">Change 'List&lt;LVFuncInfo&gt;' in 'HeaderInputEventHandler.Invoke(List&lt;LVFuncInfo&gt;)' to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HeaderStyle" Kind="Enum" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Aloka1" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Aloka" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Aloka' in member name 'HeaderStyle.Aloka1' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Aloka2" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Aloka" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Aloka' in member name 'HeaderStyle.Aloka2' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Aloka3" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Aloka" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Aloka' in member name 'HeaderStyle.Aloka3' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Aloka4" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Aloka" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Aloka' in member name 'HeaderStyle.Aloka4' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Doxygen" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Doxygen" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Doxygen' in member name 'HeaderStyle.Doxygen' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Vistaghost" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Vistaghost" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Vistaghost' in member name 'HeaderStyle.Vistaghost' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="LanguageType" Kind="Enum" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Cplusplus" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Cplusplus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Cplusplus' in member name 'LanguageType.Cplusplus' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Php" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Php" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Php' in member name 'LanguageType.Php' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ObjectType" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Parameters" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning">Change 'ObjectType.Parameters' to be read-only by removing the property setter.</Issue>
+            </Message>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error">Change 'List&lt;IOType&gt;' in 'ObjectType.Parameters' to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="VGDelCommentsOptions" Kind="Enum" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Certainty="75" Level="Error">If the name 'VGDelCommentsOptions' is plural, change it to its singular form.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="VGOperations" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Certainty="90" Level="Error">Remove the public constructors from 'VGOperations'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#ClearCommentWithoutSelection(EnvDTE.DTE,System.Int32,Vistaghost.VISTAGHOST.Lib.VGDelCommentsType,Vistaghost.VISTAGHOST.Lib.VGDelCommentsOptions)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Loc" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="85" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="666">In member 'VGOperations.ClearCommentWithoutSelection(DTE, int, VGDelCommentsType, VGDelCommentsOptions)', correct the casing of 'Loc' in parameter name 'LocRange' by changing it to 'loc'.</Issue>
+            </Message>
+            <Message Id="d" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="666">In method 'VGOperations.ClearCommentWithoutSelection(DTE, int, VGDelCommentsType, VGDelCommentsOptions)', correct the spelling of 'd' in parameter name 'dOpt' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="666">In method 'VGOperations.ClearCommentWithoutSelection(DTE, int, VGDelCommentsType, VGDelCommentsOptions)', correct the spelling of 'd' in parameter name 'dType' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message Id="dte" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="666">In method 'VGOperations.ClearCommentWithoutSelection(DTE, int, VGDelCommentsType, VGDelCommentsOptions)', correct the spelling of 'dte' in parameter name 'dte' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ClearCommentWithSelectedText(EnvDTE.DTE,Vistaghost.VISTAGHOST.Lib.VGDelCommentsType,Vistaghost.VISTAGHOST.Lib.VGDelCommentsOptions)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="697">Consider changing the type of parameter 'dte' in 'VGOperations.ClearCommentWithSelectedText(DTE, VGDelCommentsType, VGDelCommentsOptions)' from 'DTE' to its base type '_DTE'. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Issue>
+            </Message>
+            <Message Id="d" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="697">In method 'VGOperations.ClearCommentWithSelectedText(DTE, VGDelCommentsType, VGDelCommentsOptions)', correct the spelling of 'd' in parameter name 'dOpt' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="697">In method 'VGOperations.ClearCommentWithSelectedText(DTE, VGDelCommentsType, VGDelCommentsOptions)', correct the spelling of 'd' in parameter name 'dType' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message Id="dte" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="697">In method 'VGOperations.ClearCommentWithSelectedText(DTE, VGDelCommentsType, VGDelCommentsOptions)', correct the spelling of 'dte' in parameter name 'dte' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GetDateString(Vistaghost.VISTAGHOST.Lib.DateFormat)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="63">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGOperations.GetDateString(DateFormat)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="63">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGOperations.GetDateString(DateFormat)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="63">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGOperations.GetDateString(DateFormat)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="64">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGOperations.GetDateString(DateFormat)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="64">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGOperations.GetDateString(DateFormat)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="64">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGOperations.GetDateString(DateFormat)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="66">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'VGOperations.GetDateString(DateFormat)' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GetTags(System.String,Vistaghost.VISTAGHOST.Lib.ActionType)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="163">'VGOperations.GetTags(string, ActionType)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="164">'VGOperations.GetTags(string, ActionType)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#langType" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Warning">Consider making 'VGOperations.langType' non-public or a constant.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#MakeHeaderString(System.String,Vistaghost.VISTAGHOST.Lib.ObjectType,System.Collections.Generic.List`1&lt;Vistaghost.VISTAGHOST.Lib.IOType&gt;)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="540">'VGOperations.MakeHeaderString(string, ObjectType, List&lt;IOType&gt;)' has a cyclomatic complexity of 27. Rewrite or refactor the method to reduce complexity to 25.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NoneEn" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="En" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the casing of 'En' in member name 'VGOperations.NoneEn' by changing it to 'EN'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PreProcessSelectionText(EnvDTE.DTE,System.Boolean)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="addBookMark" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="117">Parameter 'addBookMark' of 'VGOperations.PreProcessSelectionText(DTE, bool)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+            <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="137">'VGOperations.PreProcessSelectionText(DTE, bool)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PreProcessString(System.String,System.String)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="508">'VGOperations.PreProcessString(string, string)' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+            <Message Id="_indent" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="508">Parameter '_indent' of 'VGOperations.PreProcessString(string, string)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ProcessDescription(System.String,System.String)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.String.IndexOf(System.String,System.Int32)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="519">'VGOperations.ProcessDescription(string, string)' makes a call to 'string.IndexOf(string, int)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, int, StringComparison)'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="521">'VGOperations.ProcessDescription(string, string)' makes a call to 'string.IndexOf(string, int)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, int, StringComparison)'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ProcessLinesForCount(System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="365">'VGOperations.ProcessLinesForCount(string)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="365">'VGOperations.ProcessLinesForCount(string)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="365">'VGOperations.ProcessLinesForCount(string)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="372">'VGOperations.ProcessLinesForCount(string)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ProcessStringForAddHeader(EnvDTE.DTE,Vistaghost.VISTAGHOST.Lib.ObjectType,System.Int32&amp;)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="448">Consider a design that does not require that 'offsetLine' be an out parameter.</Issue>
+            </Message>
+            <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="448">Consider changing the type of parameter 'dte' in 'VGOperations.ProcessStringForAddHeader(DTE, ObjectType, out int)' from 'DTE' to its base type '_DTE'. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Issue>
+            </Message>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="490">Modify 'VGOperations.ProcessStringForAddHeader(DTE, ObjectType, out int)' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="dte" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="448">In method 'VGOperations.ProcessStringForAddHeader(DTE, ObjectType, out int)', correct the spelling of 'dte' in parameter name 'dte' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ProcessTextForAddSingle(EnvDTE.DTE,System.String,System.String,System.String,System.String,Vistaghost.VISTAGHOST.Lib.ActionType,System.Boolean,Vistaghost.VISTAGHOST.Lib.ActionInfo&amp;)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="267">Modify 'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="7#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="198">Consider a design that does not require that 'info' be a reference parameter.</Issue>
+            </Message>
+            <Message Id="comments" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="85" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="198">In member 'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)', correct the casing of 'comments' in parameter name 'keep_comments' by changing it to 'Comments'.</Issue>
+            </Message>
+            <Message Id="devid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="198">In method 'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)', correct the spelling of 'devid' in parameter name 'devid' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message Id="dte" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="198">In method 'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)', correct the spelling of 'dte' in parameter name 'dte' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="198">In member 'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)', remove the underscores from parameter name 'keep_comments'.</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="269">Change 'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+            </Message>
+            <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="276">'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="280">'VGOperations.ProcessTextForAddSingle(DTE, string, string, string, string, ActionType, bool, ref ActionInfo)' makes a call to 'string.IndexOf(string)' that does not explicitly provide a StringComparison. This should be replaced with a call to 'string.IndexOf(string, StringComparison)'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Replace(EnvDTE._DTE,System.String,System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="dte" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="385">In method 'VGOperations.Replace(_DTE, string, string)', correct the spelling of 'dte' in parameter name 'dte' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+            <Message Id="replacedby" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\Lib" File="Lib.cs" Line="385">In method 'VGOperations.Replace(_DTE, string, string)', correct the spelling of 'replacedby' in parameter name 'replacedby' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Vistaghost.VISTAGHOST.WindowForms">
+       <Types>
+        <Type Name="AboutVistaghostForm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="Vistaghost" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Vistaghost' in type name 'AboutVistaghostForm'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="Config" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#AddComponent_CheckedChanged(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Name="Parameter" Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="Config.cs" Line="258">'sender', a parameter, is cast to type 'CheckBox' multiple times in method 'Config.AddComponent_CheckedChanged(object, EventArgs)'. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant castclass instruction.</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="DependsOnFix">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="Config.cs" Line="258">Because the behavior of 'int.Parse(string)' could vary based on the current user's locale settings, replace this call in 'Config.AddComponent_CheckedChanged(object, EventArgs)' with a call to 'int.Parse(string, IFormatProvider)'. If the result of 'int.Parse(string, IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#btnClearData_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="Config.cs" Line="199">Modify 'Config.btnClearData_Click(object, EventArgs)' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="Config.cs" Line="184">Change 'Config.btnClearData_Click(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="Config.cs" Line="227">Change 'Config.btnClearData_Click(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#folderBrowserDialog1" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'Config.folderBrowserDialog1' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OnSendData" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'Config.OnSendData' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#saveFileDialog1" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'Config.saveFileDialog1' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="DeleteForm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#OnSendData" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'DeleteForm.OnSendData' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#saveFileDialog1" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'DeleteForm.saveFileDialog1' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ExportHistoryForm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#btnExport_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="ExportHistoryForm.cs" Line="35">Change 'ExportHistoryForm.btnExport_Click(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExportFileTo(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="ExportHistoryForm.cs" Line="62">The 'this' parameter (or 'Me' in Visual Basic) of 'ExportHistoryForm.ExportFileTo(string)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message Id="location" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="ExportHistoryForm.cs" Line="62">Parameter 'location' of 'ExportHistoryForm.ExportFileTo(string)' is never used. Remove the parameter or use it in the method body.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OnExportResult" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ExportHistoryForm.OnExportResult' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ExportSettingsForm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#OnExportResult" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'ExportSettingsForm.OnExportResult' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HeaderForm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Non_AddFunc" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Warning">Change 'HeaderForm.Non_AddFunc' to be read-only by removing the property setter.</Issue>
+            </Message>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error">Change 'List&lt;LVFuncInfo&gt;' in 'HeaderForm.Non_AddFunc' to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Remove the underscores from member name 'HeaderForm.Non_AddFunc'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OnNotify" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HeaderForm.OnNotify' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OnSendHeaderInfo" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'HeaderForm.OnSendHeaderInfo' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RegisterForm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#btnNext_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="RegisterForm.cs" Line="90">Change 'RegisterForm.btnNext_Click(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="SingleForm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#button1_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="SingleForm.cs" Line="86">Change 'SingleForm.button1_Click(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="SingleForm.cs" Line="92">Change 'SingleForm.button1_Click(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+             <Issue Certainty="95" Level="Error" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="SingleForm.cs" Line="98">Change 'SingleForm.button1_Click(object, EventArgs)' to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OnSendData" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'SingleForm.OnSendData' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="SingleHeader" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(EnvDTE80.DTE2)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="dte" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="SingleHeader.cs" Line="26">In method 'SingleHeader.SingleHeader(DTE2)', correct the spelling of 'dte' in parameter name 'dte2Obj' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InputHeader_Load(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="SingleHeader.cs" Line="98">Modify 'SingleHeader.InputHeader_Load(object, EventArgs)' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OnSendData" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Because field 'SingleHeader.OnSendData' is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ViewFunction" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(EnvDTE.DTE,EnvDTE80.DTE2)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="dte" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="ViewFunction.cs" Line="24">In method 'ViewFunction.ViewFunction(DTE, DTE2)', correct the spelling of 'dte' in parameter name 'dte' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="ViewFunction.cs" Line="24">In method 'ViewFunction.ViewFunction(DTE, DTE2)', correct the spelling of 'dte' in parameter name 'dte2' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#btnFindAll_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="ViewFunction.cs" Line="103">'ViewFunction.btnFindAll_Click(object, EventArgs)' has a cyclomatic complexity of 26. Rewrite or refactor the method to reduce complexity to 25.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GetString(Vistaghost.VISTAGHOST.Lib.SearchType,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2015-04-04 12:38:52Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="D:\HAMWorking\Vistaghost\VISTAGHOST\VISTAGHOST\WindowForms" File="ViewFunction.cs" Line="48">The 'this' parameter (or 'Me' in Visual Basic) of 'ViewFunction.GetString(SearchType, int)' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502">
+   <Name>Avoid excessive complexity</Name>
+   <Description>Method implementations that are exceedingly complex increase the challenge of understanding and maintaining code.</Description>
+   <Resolution Name="Default">{0} has a cyclomatic complexity of {1}. Rewrite or refactor the method to reduce complexity to {2}.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182212(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Warning</MessageLevel>
+   <File Name="MaintainabilityRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
+   <Name>Avoid out parameters</Name>
+   <Description>Using out parameters might indicate a design flaw. Although there are legitimate times to use out parameters, their use frequently indicates a design that does not conform to the design guidelines for managed code.</Description>
+   <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182131(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">Warning</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+   <Name>Avoid uncalled private code</Name>
+   <Description>There is uncalled code that is not externally visible and is not a known runtime entry point. If this violation fires in error, please send a problem report to the Visual Studio Code Analysis team.</Description>
+   <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182264(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
+   <Name>Avoid uninstantiated internal classes</Name>
+   <Description>An internal class was detected that is apparently never instantiated. This rule does not attempt to detect late-bound creation and will generate false positives if instances of a type are only created in this way (for example, by means of Activator.CreateInstance or by passing the type as an argument to a TypeConverter constructor).</Description>
+   <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182265(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+   <Name>Avoid unused private fields</Name>
+   <Description>Private fields were detected that do not appear to be accessed within the assembly. If this violation fires in error, please send a problem report to the Visual Studio Code Analysis team.</Description>
+   <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms245042(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
+   <Name>Collection properties should be read only</Name>
+   <Description>Properties that return collections should be read-only so that users cannot entirely replace the backing store. Users can still modify the contents of the collection by calling relevant methods on the collection. Note that the XmlSerializer class has special support for deserializing read-only collections. See the XmlSerializer overview for more information.</Description>
+   <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182327(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="UsageRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
+   <Name>Consider passing base types as parameters</Name>
+   <Description>Using base types as parameters to methods improves re-use of these methods if you only use methods &amp; properties from the parameter's base class. E.g. use Stream instead of FileStream as a parameter when only calling Stream.Read(), this makes the method work on all kind of streams instead of just File streams.</Description>
+   <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/3hk32yyz(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
+   <Name>Do not cast unnecessarily</Name>
+   <Description>Avoid duplicate casts where possible, since there is a cost associated with them.</Description>
+   <Resolution Name="Parameter">{0}, a parameter, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182271(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+   <Name>Do not catch general exception types</Name>
+   <Description>You should not catch Exception or SystemException. Catching generic exception types can hide run-time problems from the library user, and can complicate debugging. You should catch only those exceptions that you can handle gracefully.</Description>
+   <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182137(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+   <Name>Do not declare visible instance fields</Name>
+   <Description>Instance fields that are visible outside of the type that declares them, limit your ability to change the implementation details for those data items. Use properties instead. They do not compromise usability or performance and they do provide flexibility in that they conceal the implementation details of the underlying data.</Description>
+   <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182141(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+   <Name>Do not expose generic lists</Name>
+   <Description>Do not expose List&lt;T&gt; in object models. Use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt; instead. List&lt;T&gt; is meant to be used from implementation, not in object model API. List&lt;T&gt; is optimized for performance at the cost of long term versioning. For example, if you return List&lt;T&gt; to the client code, you will not ever be able to receive notifications when client code modifies the collection.</Description>
+   <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182142(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
+   <Name>Do not ignore method results</Name>
+   <Description>The result of methods that return new instances of strings should be assigned to a variable and subsequently used. If the result of a method that creates a new object, such as String.ToLower(), is not assigned to a variable, the call is wasted.</Description>
+   <Resolution Name="HResultOrErrorCode">{0} calls {1} but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182273(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="UsageRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045">
+   <Name>Do not pass types by reference</Name>
+   <Description>Although there are legitimate times to use reference parameters, such use frequently indicates a design that does not conform to the design guidelines for managed code.</Description>
+   <Resolution Name="Default">Consider a design that does not require that {0} be a reference parameter.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182146(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008">
+   <Name>Enums should have zero value</Name>
+   <Description>An enum should generally have a zero value. If the enum is not decorated with the Flags attribute, it should have a member with a value of zero that represents the empty state. Optionally, this value is named 'None'. For a Flags-attributed enum, a zero-valued member is optional and, if it exists, should always be named 'None'. This value should indicate that no values have been set in the enum. Using a zero-valued member for other purposes is contrary to the use of the Flags attribute in that the bitwise AND and OR operators are useless with the member.</Description>
+   <Resolution Name="NotFlagsNoZeroValue">Add a member to {0} that has a value of zero with a suggested name of 'None'.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182149(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+   <Name>Identifiers should be cased correctly</Name>
+   <Description>Type, namespace, and member identifiers are Pascal-cased. Parameter identifiers are camel-cased. Two letter acronyms within these identifiers should be upper-cased, for example, use System.IO instead of System.Io. Acronyms of three or more letters should be Pascal-cased, for example, use System.Xml instead of System.XML. The pascal-casing convention capitalizes the first letter of each word, as in BackColor. The camel-casing convention formats the first letter of the first word in lowercase and capitalizes the first letter of all subsequent words, as in backgroundColor. Although it may be common practice for some two letter acronyms to not be fully capitalized, violations of this rule should not be excluded for this reason. For example, 'DbConnection', is common but incorrect; use DBConnection. A violation of this rule might be required for compatibility with existing, non-managed symbol schemes. In general, however, these symbols should not be visible outside the assembly that uses them.</Description>
+   <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
+   <Resolution Name="DelegateParameter">In delegate {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
+   <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+   <Resolution Name="MemberAbbreviation">Correct the casing of '{0}' in member name {1} by changing it to '{2}'. '{2}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
+   <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
+   <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
+   <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182240(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+   <Name>Identifiers should be spelled correctly</Name>
+   <Description>The individual words that make up an identifier should not be abbreviated and should be spelled correctly. If this rule generates a false positive on a term that should be recognized, add the word to the FxCop custom dictionary.</Description>
+   <Resolution Name="DelegateParameter">In delegate {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+   <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+   <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+   <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
+   <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/bb264492(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+   <File Name="NamingRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+   <Name>Identifiers should not contain underscores</Name>
+   <Description>Do not use underscores when specifying identifiers. Some generated Visual Studio identifiers for applications contain underscore characters. Underscore characters should generally be avoided in public identifiers.</Description>
+   <Resolution Name="DelegateParameter">In delegate {0}, remove the underscores from parameter name {1}.</Resolution>
+   <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
+   <Resolution Name="MemberParameter">In member {0}, remove the underscores from parameter name {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182245(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
+   <Name>Identifiers should not match keywords</Name>
+   <Description>Identifiers which conflict with reserved language keywords should be avoided. Using a reserved keyword as an identifier makes it harder for consumers in other languages to use your API.</Description>
+   <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182248(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+   <Name>Mark members as static</Name>
+   <Description>Methods which do not access instance data or call instance methods can be marked as static (Shared in Visual Basic). After doing so, the compiler will emit non-virtual call sites to these members which will prevent a check at runtime for each call that ensures the current object pointer is non-null. This can result in a measurable performance gain for performance-sensitive code. In some cases, the failure to access the current object instance represents a correctness issue.</Description>
+   <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms245046(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+   <Name>Nested types should not be visible</Name>
+   <Description>Do not use public, protected or protected internal (Protected Friend) nested types as a way of grouping types. Use namespaces for this purpose. There are very limited scenarios where nested types are the best design. Also, nested type member accessibility is not clearly understood by all audiences. Enumerators are exempt from this rule.</Description>
+   <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182162(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211">
+   <Name>Non-constant fields should not be visible</Name>
+   <Description>Static fields should be constant unless you carefully manage access to the field using locks. Using static variables without making them thread safe can compromise execution state. This rule applies to managed code libraries. If the analyzed assembly is an application, it is usually safe to exclude violations of this rule.</Description>
+   <Resolution Name="Default">Consider making {0} non-public or a constant.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182353(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Warning</MessageLevel>
+   <File Name="UsageRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
+   <Name>Only FlagsAttribute enums should have plural names</Name>
+   <Description>Plural names indicate that the values of the enumeration can be combined. For example, an enumeration named 'Day' indicates a single day, and an enumeration named 'Days' indicates multiple days. Enumeration values should be combined using the bit-wise OR operator only if the Flags attribute is present on the enumeration.</Description>
+   <Resolution Name="Default">If the name {0} is plural, change it to its singular form.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/bb264487(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+   <Name>Review unused parameters</Name>
+   <Description>Review parameters in non-virtual methods that are not used in the method body to ensure no correctness exists around failure to access them. Unused parameters incur maintenance and performance costs. Sometimes a violation of this rule can point to an implementation bug in the method (i.e. the parameter should actually have been used in the method body). Exclude warnings of this rule if the parameter has to exist because of backward compatibility.</Description>
+   <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182268(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="UsageRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304">
+   <Name>Specify CultureInfo</Name>
+   <Description>If an overload exists that takes a CultureInfo argument, it should always be called in favor of an overload that does not. The CultureInfo type contains culture-specific information required for performing numeric and string operations, such as casing, formatting, and string comparisons. In scenarios where conversion and parsing behavior should never change between cultures, specify CultureInfo.InvariantCulture, otherwise, specify CultureInfo.CurrentCulture.</Description>
+   <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'CultureInfo' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182189(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="GlobalizationRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+   <Name>Specify IFormatProvider</Name>
+   <Description>If an overload exists that takes an IFormatProvider argument, it should always be called in favor of an overload that does not. Some methods in the runtime convert a value to or from a string representation and take a string parameter that contains one or more characters, called format specifiers, which indicate how the value is to be converted. If the meaning of the format specifier varies by culture, a formatting object supplies the actual characters used in the string representation. In scenarios where sorting and comparison behavior should never change between cultures, specify CultureInfo.InvariantCulture, otherwise, specify CultureInfo.CurrentCulture.</Description>
+   <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182190(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="GlobalizationRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+   <Name>Specify MessageBoxOptions</Name>
+   <Description>In order to run correctly on right-to-left systems, all calls to MessageBox.Show should use the overload that specifies MessageBoxOptions as an argument. Programs should detect whether they are running on a right-to-left system at run-time and pass the appropriate MessageBoxOptions value in order to display correctly.</Description>
+   <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182191(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="GlobalizationRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
+   <Name>Specify StringComparison</Name>
+   <Description>If an overload exists that takes a StringComparison argument, it should always be called in favor of an overload that does not.</Description>
+   <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide a StringComparison. This should be replaced with a call to {2}.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/bb386080(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="GlobalizationRules.dll" Version="9.0.0.0" />
+  </Rule>
+  <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
+   <Name>Static holder types should not have constructors</Name>
+   <Description>Instances of types that define only static members do not need to be created. Many compilers will automatically add a public default constructor if no constructor is specified. To prevent this, adding an empty private constructor may be required.</Description>
+   <Resolution Name="Default">Remove the public constructors from {0}.</Resolution>
+   <Owner />
+   <Url>http://msdn2.microsoft.com/library/ms182169(VS.90).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="9.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

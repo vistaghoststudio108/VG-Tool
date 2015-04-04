@@ -1,0 +1,5 @@
+D:\HAMWorking\Vistaghost\VISTAGHOST\DevenvSetupCustomAction\bin\Debug\DevenvSetupCustomAction.dll
+D:\HAMWorking\Vistaghost\VISTAGHOST\DevenvSetupCustomAction\bin\Debug\DevenvSetupCustomAction.pdb
+D:\HAMWorking\Vistaghost\VISTAGHOST\DevenvSetupCustomAction\obj\Debug\ResolveAssemblyReference.cache
+D:\HAMWorking\Vistaghost\VISTAGHOST\DevenvSetupCustomAction\obj\Debug\DevenvSetupCustomAction.dll
+D:\HAMWorking\Vistaghost\VISTAGHOST\DevenvSetupCustomAction\obj\Debug\DevenvSetupCustomAction.pdb

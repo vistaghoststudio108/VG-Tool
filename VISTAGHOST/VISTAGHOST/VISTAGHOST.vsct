@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--  This is the file that defines the actual layout and type of the commands.
+        It is divided in different sections (e.g. command definition, command
+        placement, ...), with each defining a specific set of properties.
+        See the comment before each section for more details about how to
+        use it. -->
+
+  <!--  The VSCT compiler (the tool that translates this file into the binary 
+        format that VisualStudio will consume) has the ability to run a preprocessor 
+        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so 
+        it is possible to define includes and macros with the same syntax used 
+        in C++ files. Using this ability of the compiler here, we include some files 
+        defining some of the constants that we will use inside the file. -->
+
+  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <Extern href="stdidcmd.h"/>
+
+  <!--This header contains the command ids for the menus provided by the shell. -->
+  <Extern href="vsshlids.h"/>
+
+  <!--Definition of some VSCT specific constants. In this sample we use it for the IDs inside the guidOfficeIcon group. -->
+  <Extern href="msobtnid.h"/>
+
+
+
+
+  <!--The Commands section is where we the commands, menus and menu groups are defined.
+      This section uses a Guid to identify the package that provides the command defined inside it. -->
+  <Commands package="guidVISTAGHOSTPkg">
+    <!-- Inside this section we have different sub-sections: one for the menus, another  
+    for the menu groups, one for the buttons (the actual commands), one for the combos 
+    and the last one for the bitmaps used. Each element is identified by a command id that  
+    is a unique pair of guid and numeric identifier; the guid part of the identifier is usually  
+    called "command set" and is used to group different command inside a logically related  
+    group; your package should define its own command set in order to avoid collisions  
+    with command ids defined by other packages. -->
+
+    
+    <!-- In this section you can define new menu groups. A menu group is a container for 
+         other menus or buttons (commands); from a visual point of view you can see the 
+         group as the part of a menu contained between two lines. The parent of a group 
+         must be a menu. -->
+
+    <Menus>
+      <!--<Menu guid="guidVISTAGHOSTCmdSet" id="VistaghostToolBar" priority="0x6001" type="Toolbar">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_TOOL_OUTPUTWINDOW"/>
+        <Strings>
+          <ButtonText>Vistaghost</ButtonText>
+          <CommandName>Vistaghost</CommandName>
+        </Strings>
+      </Menu>-->
+
+      <Menu guid="guidVISTAGHOSTCmdSet" id="VistaghostMenu" priority="0x700" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
+        <Strings>
+          <ButtonText>Vista&amp;ghost</ButtonText>
+          <CommandName>Vistaghost</CommandName>
+        </Strings>
+      </Menu>
+
+      <Menu guid="guidVISTAGHOSTCmdSet" id="AddCommentSubContextMenu" priority="0x0100" type="Menu">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostContexMenuGroup"/>
+        <Strings>
+          <ButtonText>Add Comments</ButtonText>
+          <CommandName>AddComments</CommandName>
+        </Strings>
+      </Menu>
+
+      <Menu guid="guidVISTAGHOSTCmdSet" id="cmdidMenuShotKeys" priority="0x0800" type="Menu">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostMenuBarGroup"/>
+        <Strings>
+          <ButtonText>ShotKeys</ButtonText>
+          <CommandName>ShotKeys</CommandName>
+          <MenuText>ShotKeys</MenuText>
+        </Strings>
+      </Menu>
+    </Menus>
+    
+    <Groups>
+
+      <Group guid="guidVISTAGHOSTCmdSet" id="MyMenuShotKeyGroup" priority="0x700">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="cmdidMenuShotKeys"/>
+      </Group>
+
+      <Group guid="guidVISTAGHOSTCmdSet" id="VistaghostContexMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+      </Group>
+
+      <Group guid="guidVISTAGHOSTCmdSet" id="AddCommentSubContextMenuGroup" priority="0x0000">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="AddCommentSubContextMenu"/>
+      </Group>
+
+      <Group guid="guidVISTAGHOSTCmdSet" id="VistaghostMenuBarGroup" priority="0x0000">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostMenu"/>
+      </Group>
+
+      <Group guid="guidVISTAGHOSTCmdSet" id="VistaghostToolBarGroup" priority="0x0000">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostToolBar"/>
+      </Group>
+
+    </Groups>
+    
+    <!--Buttons section. -->
+    <!--This section defines the elements the user can interact with, like a menu command or a button 
+        or combo box in a toolbar. -->
+    <Buttons>
+      <!--To define a menu group you have to specify its ID, the parent menu and its display priority. 
+          The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
+          the CommandFlag node.
+          You can add more than one CommandFlag node e.g.:
+              <CommandFlag>DefaultInvisible</CommandFlag>
+              <CommandFlag>DynamicVisibility</CommandFlag>
+          If you do not want an image next to your command, remove the Icon node or set it to <Icon guid="guidOfficeIcon" id="msotcidNoIcon" /> -->
+
+      <!--All buttons in menubar-->
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidChangeInfo" priority="0x0000" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="MyMenuShotKeyGroup"/>
+        <Strings>
+          <ButtonText>Change Info</ButtonText>
+          <CommandName>cmdidChangeInfo</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidAddHeaderForAll" priority="0x0001" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="MyMenuShotKeyGroup"/>
+        <Strings>
+          <ButtonText>Add Header for All Function</ButtonText>
+          <CommandName>cmdidAddHeaderForAll</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidConfig_mb" priority="0x0104" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostMenuBarGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Configurations</ButtonText>
+          <CommandName>cmdidConfig</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidAbout_mb" priority="0x0106" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostMenuBarGroup" />
+        <Icon guid="guidImages" id="bmpPic2" />
+        <Strings>
+          <ButtonText>About</ButtonText>
+          <CommandName>cmdidAbout</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidExportSettings_mb" priority="0x0105" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostMenuBarGroup" />
+        <Strings>
+          <ButtonText>&amp;Import and Export Settings...</ButtonText>
+          <CommandName>cmdidEI</CommandName>
+        </Strings>
+      </Button>
+
+
+      <!--All buttons in Toolbar-->
+      <!--<Button guid="guidVISTAGHOSTCmdSet" id="cmdidSingle" priority="0x0001" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostToolBarGroup"/>
+        <Icon guid="guidImages" id="bmpPicSingle"/>
+        <Strings>
+          <ButtonText>Add Single Comments</ButtonText>
+          <CommandName>cmdidSintle</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidMultiple" priority="0x0002" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostToolBarGroup"/>
+        <Icon guid="guidImages" id="bmpPicMulti"/>
+        <Strings>
+          <ButtonText>Add Multiple Comments</ButtonText>
+          <CommandName>cmdidMultiple</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidDelete" priority="0x0003" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostToolBarGroup"/>
+        <Icon guid="guidImages" id="bmpPicX"/>
+        <Strings>
+          <ButtonText>Delete Comments</ButtonText>
+          <CommandName>cmdidDelete</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidCount" priority="0x0004" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostToolBarGroup"/>
+        <Icon guid="guidImages" id="bmpPicSearch"/>
+        <Strings>
+          <ButtonText>Count Lines of Code</ButtonText>
+          <CommandName>cmdidCount</CommandName>
+        </Strings>
+      </Button>-->
+
+      <!--All buttons in Menu context (when right-click mouse)-->
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidModTag" priority="0x0000" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="AddCommentSubContextMenuGroup" />
+        <Icon guid="guidImages" id="bmpPicSingle" />
+        <Strings>
+          <ButtonText>[modify] Tags</ButtonText>
+          <CommandName>cmdidSingle</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidAddTag" priority="0x0001" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="AddCommentSubContextMenuGroup" />
+        <Icon guid="guidImages" id="bmpPicMulti" />
+        <Strings>
+          <ButtonText>[add] Tags</ButtonText>
+          <CommandName>cmdidMultiple</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidDelTag" priority="0x0002" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="AddCommentSubContextMenuGroup" />
+        <Icon guid="guidImages" id="bmpPicMulti" />
+        <Strings>
+          <ButtonText>[delete] Tags</ButtonText>
+          <CommandName>cmdidMultiple</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidAddHeader" priority="0x0101" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostContexMenuGroup" />
+        <Icon guid="guidImages" id="bmpPicMulti" />
+        <Strings>
+          <ButtonText>Make &amp;Function Header</ButtonText>
+          <CommandName>cmdidAddHeader</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidDelete" priority="0x0102" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostContexMenuGroup" />
+        <Icon guid="guidImages" id="bmpPicX" />
+        <Strings>
+          <ButtonText>&amp;Delete Comments</ButtonText>
+          <CommandName>cmdidDelete</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidCount" priority="0x0103" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostContexMenuGroup" />
+        <Icon guid="guidImages" id="bmpPicSearch" />
+        <Strings>
+          <ButtonText>&amp;Count Lines of Code</ButtonText>
+          <CommandName>cmdidCount</CommandName>
+        </Strings>
+      </Button>
+
+    </Buttons>
+   
+    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
+    <Bitmaps>
+      <!--  The bitmap id is defined in a way that is a little bit different from the others: 
+            the declaration starts with a guid for the bitmap strip, then there is the resource id of the 
+            bitmap strip containing the bitmaps and then there are the numeric ids of the elements used 
+            inside a button definition. An important aspect of this declaration is that the element id 
+            must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
+      <Bitmap guid="guidImages" href="Resources\icons2.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicMulti, bmpPicSingle "/>
+
+    </Bitmaps>
+ 
+  </Commands>
+
+
+  <KeyBindings>
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidDelete" key1="0x34" mod1="ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidCount" key1="0x35" mod1="ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidAddTag" key1="0x32" mod1="ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidDelTag" key1="0x33" mod1="ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidModTag" key1="0x31" mod1="ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidAddHeader" key1="0x36" mod1="ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidAddHeaderForAll" key1="0x36" mod1="CONTROL ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidExportSettings_mb" key1="I" mod1="ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidChangeInfo" key1="R" key2="R" mod1="ALT" mod2="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidConfig_mb" key1="R" key2="F" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidAbout_mb" key1="R" key2="A" mod1="ALT" editor="guidVSStd97" />
+  </KeyBindings>
+
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidVISTAGHOSTPkg" value="{8b00b194-7670-422b-9ff2-40f0b2527890}" />
+    
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidVISTAGHOSTCmdSet" value="{7977b9e2-bd7c-4e39-9d89-88b83b76f144}">
+
+      <IDSymbol name ="VistaghostMenu" value="0x1021" />
+      <IDSymbol name="VistaghostMenuBarGroup" value="0x1101"/>
+      <IDSymbol name ="VistaghostContexMenuGroup" value="0x1020" />
+      <IDSymbol name ="AddCommentSubContextMenu" value="0x1100" />
+      <IDSymbol name ="AddCommentSubContextMenuGroup" value="0x1150" />
+      <IDSymbol name="VistaghostToolBar" value="0x1102"/>
+      <IDSymbol name="VistaghostToolBarGroup" value="0x1202"/>
+      <IDSymbol name="cmdidMenuShotKeys" value="0x0011"/>
+      <IDSymbol name="MyMenuShotKeyGroup" value="0x1011"/>
+
+      <IDSymbol name ="cmdidModTag" value="0x0104" />
+
+      <IDSymbol name ="cmdidAddTag" value="0x0105" />
+
+      <IDSymbol name ="cmdidDelTag" value="0x0108" />
+
+      <IDSymbol name ="cmdidDelete" value="0x0106" />
+
+      <IDSymbol name ="cmdidCount" value="0x0107" />
+
+      <IDSymbol name ="cmdidAddHeader" value="0x0109" />
+      <IDSymbol name ="cmdidAddHeaderForAll" value="0x0111" />
+
+      <IDSymbol name ="cmdidConfig_mb" value="0x010c" />
+      <IDSymbol name ="cmdidAbout_mb" value ="0x010d"/>
+      <IDSymbol name ="cmdidExportSettings_mb" value ="0x010e"/>
+      <IDSymbol name ="cmdidExportHistory" value ="0x010f"/>
+      <IDSymbol name ="cmdidChangeInfo" value ="0x0110"/>
+      
+    </GuidSymbol>
+    
+    
+    
+    <GuidSymbol name="guidImages" value="{2a0291e7-c2db-44c0-beb0-e92402149639}" >
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicMulti" value="5" />
+      <IDSymbol name="bmpPicSingle" value="6" />
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>

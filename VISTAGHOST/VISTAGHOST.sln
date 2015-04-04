@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VISTAGHOST", "VISTAGHOST\VISTAGHOST.csproj", "{C1AD1994-57D9-4785-9CED-3B440E8093E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakarovDev.ExpandCollapsePanel", "UserControl\MakarovDev.ExpandCollapsePanel\MakarovDev.ExpandCollapsePanel.csproj", "{BE76A6FE-225F-4287-9CA0-231F5AF4CDC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevenvSetupCustomAction", "DevenvSetupCustomAction\DevenvSetupCustomAction.csproj", "{B8E2130D-2448-41D1-837F-FE0A3B96E901}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{07100E31-CB95-4908-BADB-F8C1ED291D5D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1AD1994-57D9-4785-9CED-3B440E8093E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1AD1994-57D9-4785-9CED-3B440E8093E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1AD1994-57D9-4785-9CED-3B440E8093E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1AD1994-57D9-4785-9CED-3B440E8093E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE76A6FE-225F-4287-9CA0-231F5AF4CDC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE76A6FE-225F-4287-9CA0-231F5AF4CDC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE76A6FE-225F-4287-9CA0-231F5AF4CDC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE76A6FE-225F-4287-9CA0-231F5AF4CDC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E2130D-2448-41D1-837F-FE0A3B96E901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E2130D-2448-41D1-837F-FE0A3B96E901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E2130D-2448-41D1-837F-FE0A3B96E901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E2130D-2448-41D1-837F-FE0A3B96E901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07100E31-CB95-4908-BADB-F8C1ED291D5D}.Debug|Any CPU.ActiveCfg = Debug
+		{07100E31-CB95-4908-BADB-F8C1ED291D5D}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

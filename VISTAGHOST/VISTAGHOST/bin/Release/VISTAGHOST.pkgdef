@@ -1,0 +1,28 @@
+Windows Registry Editor Version 5.00
+
+[$RootKey$\InstalledProducts\VISTAGHOSTPackage]
+@="#110"
+"Package"="{8b00b194-7670-422b-9ff2-40f0b2527890}"
+"ProductDetails"="#112"
+"PID"="1.0"
+"LogoID"="#400"
+[$RootKey$\Packages\{8b00b194-7670-422b-9ff2-40f0b2527890}]
+@="Vistaghost Tools Package"
+"InprocServer32"="%windir%\\SYSTEM32\\MSCOREE.DLL"
+"Class"="Vistaghost.VISTAGHOST.VISTAGHOSTPackage"
+"Assembly"="VISTAGHOST, Version=1.0.0.0, Culture=neutral, PublicKeyToken=eba4f2538df263cd"
+[$RootKey$\AutoLoadPackages\{adfc4e64-0397-11d1-9f4e-00a0c911004f}]
+"{8b00b194-7670-422b-9ff2-40f0b2527890}"=dword:00000000
+[$RootKey$\AutoLoadPackages\{f1536ef8-92ec-443c-9ed7-fdadf150da82}]
+"{8b00b194-7670-422b-9ff2-40f0b2527890}"=dword:00000000
+[$RootKey$\Packages\{8b00b194-7670-422b-9ff2-40f0b2527890}\Automation]
+"Vistaghost"=""
+[$RootKey$\Packages\{8b00b194-7670-422b-9ff2-40f0b2527890}]
+"ID"=dword:00000068
+"MinEdition"="Professional"
+"ProductVersion"="1.0"
+"ProductName"="VISTAGHOST"
+"CompanyName"="Vistaghost"
+[$RootKey$\Menus]
+"{8b00b194-7670-422b-9ff2-40f0b2527890}"=", 1000, 1"
+
