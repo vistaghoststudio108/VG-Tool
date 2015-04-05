@@ -106,17 +106,28 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 return;
             }
 
+            var pri = dte2Object.ActiveDocument.ProjectItem;
+            if (pri == null)
+            {
+                btnSearch.Enabled = false;
+                lblStatus.Text = "Unknown scope. Please move to the project that contains this file and try again.";
+                return;
+            }
+
             /*reset to zero*/
             offsetLine = 0;
             activeLine = 0;
             Added = false;
             objList.Clear();
 
-            var fcm = dte2Object.ActiveDocument.ProjectItem.FileCodeModel;
-
+            var fcm = pri.FileCodeModel;
             /*open a file that not included in project*/
             if (fcm == null)
+            {
+                btnSearch.Enabled = false;
+                lblStatus.Text = "Unknown scope. Please move to the project that contains this file and try again.";
                 return;
+            }
 
             dtFunctions.Rows.Clear();
             dtParamView.Rows.Clear();
@@ -352,6 +363,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         {
             var pointer = this.dteObject.ActiveDocument.Selection as TextSelection;
             pointer.GotoLine(objList[index].Line, false);
+            pointer.SelectLine();
         }
 
         private void hif_OnSendHeaderInfo(List<LVFuncInfo> funcinfo)
@@ -434,7 +446,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         /// <param name="e"></param>
         private void dtFunctions_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && dtFunctions.Rows.Count > 0)
             {
                 non_AddFunc.Clear();
                 if (CheckFunction())

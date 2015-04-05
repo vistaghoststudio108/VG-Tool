@@ -153,6 +153,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BackgroundImage = global::Vistaghost.VISTAGHOST.Properties.Resources.logo;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Location = new System.Drawing.Point(446, 7);
             this.panel1.Name = "panel1";
@@ -322,33 +323,37 @@
             // 
             // lblWorkAt
             // 
+            this.lblWorkAt.AutoSize = true;
             this.lblWorkAt.Location = new System.Drawing.Point(171, 146);
             this.lblWorkAt.Name = "lblWorkAt";
-            this.lblWorkAt.Size = new System.Drawing.Size(63, 15);
+            this.lblWorkAt.Size = new System.Drawing.Size(58, 15);
             this.lblWorkAt.TabIndex = 0;
             this.lblWorkAt.Text = "Unknown";
             // 
             // lblRank
             // 
-            this.lblRank.Location = new System.Drawing.Point(171, 122);
+            this.lblRank.AutoSize = true;
+            this.lblRank.Location = new System.Drawing.Point(171, 124);
             this.lblRank.Name = "lblRank";
-            this.lblRank.Size = new System.Drawing.Size(63, 15);
+            this.lblRank.Size = new System.Drawing.Size(58, 15);
             this.lblRank.TabIndex = 0;
             this.lblRank.Text = "Unknown";
             // 
             // lblAccount
             // 
+            this.lblAccount.AutoSize = true;
             this.lblAccount.Location = new System.Drawing.Point(171, 102);
             this.lblAccount.Name = "lblAccount";
-            this.lblAccount.Size = new System.Drawing.Size(63, 15);
+            this.lblAccount.Size = new System.Drawing.Size(58, 15);
             this.lblAccount.TabIndex = 0;
             this.lblAccount.Text = "Unknown";
             // 
             // lblName
             // 
+            this.lblName.AutoSize = true;
             this.lblName.Location = new System.Drawing.Point(171, 80);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(63, 15);
+            this.lblName.Size = new System.Drawing.Size(58, 15);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Unknown";
             // 
@@ -392,7 +397,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 355);
+            this.ClientSize = new System.Drawing.Size(507, 355);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.panel1);

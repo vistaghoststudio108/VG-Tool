@@ -117,28 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddCommentSuccess" xml:space="preserve">
-    <value>Add comment tags succeeded</value>
+  <data name="ExportFailedMessage" xml:space="preserve">
+    <value>Settings can not be exported. Please try again</value>
   </data>
   <data name="DeleteCommentSuccess" xml:space="preserve">
     <value>All comments have been deleted</value>
   </data>
-  <data name="ExportFailedMessage" xml:space="preserve">
-    <value>Settings can not be exported. Please try again</value>
+  <data name="MakeHeaderSuccess" xml:space="preserve">
+    <value>Make function header succeeded</value>
   </data>
   <data name="ExportSuccessMessage" xml:space="preserve">
     <value>Your settings has been exported succeeded</value>
   </data>
-  <data name="ImportSettingsSuccess" xml:space="preserve">
-    <value>Import new settings succeeded</value>
+  <data name="NoText" xml:space="preserve">
+    <value>No text selection</value>
   </data>
   <data name="MakeHeaderFaield" xml:space="preserve">
     <value>Make function header failed</value>
   </data>
-  <data name="MakeHeaderSuccess" xml:space="preserve">
-    <value>Make function header succeeded</value>
+  <data name="AddCommentSuccess" xml:space="preserve">
+    <value>Add comment tags succeeded</value>
   </data>
-  <data name="NoText" xml:space="preserve">
-    <value>No text selection</value>
+  <data name="ImportSettingsSuccess" xml:space="preserve">
+    <value>Import new settings succeeded</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
