@@ -82,6 +82,17 @@ namespace Vistaghost.VISTAGHOST.Lib
                 case DateFormat.mmddyyyy:
                     date = month + day + year;
                     break;
+                case DateFormat.DateFormat1:
+                    date = day + "-" + month + "-" + year;
+                    break;
+                case DateFormat.DateFormat2:
+                    date = day + "/" + month + "/" + year;
+                    break;
+                case DateFormat.FullDate:
+                    {
+                        date = DateTime.Now.ToString() + " " + DateTime.Now.DayOfWeek;
+                    }
+                    break;
                 default:
                     break;
             }

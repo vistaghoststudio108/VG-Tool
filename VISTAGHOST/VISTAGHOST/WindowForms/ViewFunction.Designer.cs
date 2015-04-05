@@ -31,28 +31,30 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnSearch = new System.Windows.Forms.Button();
             this.dtParamView = new System.Windows.Forms.DataGridView();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cbSearchType = new System.Windows.Forms.ComboBox();
-            this.dtFunctions = new System.Windows.Forms.DataGridView();
-            this.chkAdded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtParaList = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chInput = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.chOutput = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cbSearchType = new System.Windows.Forms.ComboBox();
+            this.dtFunctions = new System.Windows.Forms.DataGridView();
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.onlyViewThisFunctionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkAdded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dtParamView)).BeginInit();
             this.statusStrip1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtFunctions)).BeginInit();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -93,15 +95,53 @@
             this.dtParamView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dtParamView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.dtParamView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtParamView.Size = new System.Drawing.Size(336, 242);
+            this.dtParamView.Size = new System.Drawing.Size(336, 292);
             this.dtParamView.TabIndex = 4;
+            // 
+            // txtParaList
+            // 
+            this.txtParaList.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.txtParaList.DefaultCellStyle = dataGridViewCellStyle2;
+            this.txtParaList.FillWeight = 35F;
+            this.txtParaList.HeaderText = "Arguments";
+            this.txtParaList.Name = "txtParaList";
+            this.txtParaList.ReadOnly = true;
+            this.txtParaList.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // chInput
+            // 
+            this.chInput.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.chInput.FillWeight = 5F;
+            this.chInput.HeaderText = "Input";
+            this.chInput.Name = "chInput";
+            this.chInput.ReadOnly = true;
+            this.chInput.Width = 41;
+            // 
+            // chOutput
+            // 
+            this.chOutput.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.chOutput.FillWeight = 4.478957F;
+            this.chOutput.HeaderText = "Output";
+            this.chOutput.Name = "chOutput";
+            this.chOutput.ReadOnly = true;
+            this.chOutput.Width = 51;
+            // 
+            // colValue
+            // 
+            this.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.colValue.HeaderText = "Value";
+            this.colValue.Name = "colValue";
+            this.colValue.ReadOnly = true;
+            this.colValue.Visible = false;
             // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 298);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 346);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(705, 22);
             this.statusStrip1.SizingGrip = false;
@@ -114,19 +154,6 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(0, 17);
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(97, 26);
-            // 
-            // addToolStripMenuItem
-            // 
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.addToolStripMenuItem.Text = "Add";
             // 
             // cbSearchType
             // 
@@ -169,10 +196,37 @@
             this.dtFunctions.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dtFunctions.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.dtFunctions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtFunctions.Size = new System.Drawing.Size(336, 242);
+            this.dtFunctions.Size = new System.Drawing.Size(336, 292);
             this.dtFunctions.TabIndex = 4;
             this.dtFunctions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtFunctions_KeyDown);
             this.dtFunctions.SelectionChanged += new System.EventHandler(this.dtFunctions_SelectionChanged);
+            // 
+            // contextMenu
+            // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.onlyViewThisFunctionToolStripMenuItem,
+            this.edToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(203, 70);
+            // 
+            // onlyViewThisFunctionToolStripMenuItem
+            // 
+            this.onlyViewThisFunctionToolStripMenuItem.Name = "onlyViewThisFunctionToolStripMenuItem";
+            this.onlyViewThisFunctionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.onlyViewThisFunctionToolStripMenuItem.Text = "Only View This Function";
+            // 
+            // edToolStripMenuItem
+            // 
+            this.edToolStripMenuItem.Name = "edToolStripMenuItem";
+            this.edToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.edToolStripMenuItem.Text = "Edit Name";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // chkAdded
             // 
@@ -190,53 +244,13 @@
             this.dataGridViewTextBoxColumn1.FillWeight = 100.736F;
             this.dataGridViewTextBoxColumn1.HeaderText = "List of parameters";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // txtParaList
-            // 
-            this.txtParaList.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.txtParaList.DefaultCellStyle = dataGridViewCellStyle2;
-            this.txtParaList.FillWeight = 35F;
-            this.txtParaList.HeaderText = "Arguments";
-            this.txtParaList.Name = "txtParaList";
-            this.txtParaList.ReadOnly = true;
-            this.txtParaList.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // chInput
-            // 
-            this.chInput.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.chInput.FillWeight = 5F;
-            this.chInput.HeaderText = "Input";
-            this.chInput.Name = "chInput";
-            this.chInput.ReadOnly = true;
-            this.chInput.Width = 41;
-            // 
-            // chOutput
-            // 
-            this.chOutput.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.chOutput.FillWeight = 4.478957F;
-            this.chOutput.HeaderText = "Output";
-            this.chOutput.Name = "chOutput";
-            this.chOutput.ReadOnly = true;
-            this.chOutput.Width = 51;
-            // 
-            // colValue
-            // 
-            this.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.colValue.HeaderText = "Value";
-            this.colValue.Name = "colValue";
-            this.colValue.ReadOnly = true;
-            this.colValue.Visible = false;
-            this.colValue.Width = 61;
             // 
             // ViewFunction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(705, 320);
+            this.ClientSize = new System.Drawing.Size(705, 368);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dtFunctions);
             this.Controls.Add(this.cbSearchType);
@@ -257,8 +271,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtParamView)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtFunctions)).EndInit();
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,15 +284,17 @@
         private System.Windows.Forms.DataGridView dtParamView;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ComboBox cbSearchType;
         private System.Windows.Forms.DataGridView dtFunctions;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn chkAdded;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn txtParaList;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chInput;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chOutput;
         private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem onlyViewThisFunctionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem edToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chkAdded;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

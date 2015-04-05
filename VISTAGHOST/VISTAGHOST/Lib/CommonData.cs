@@ -14,6 +14,13 @@ namespace Vistaghost.VISTAGHOST.Lib
         None
     }
 
+    public enum LogFileType
+    {
+        TextFile = 0,
+        Xml,
+        Excel
+    }
+
     public enum HeaderStyle
     {
         Aloka1 = 0,
@@ -52,7 +59,10 @@ namespace Vistaghost.VISTAGHOST.Lib
         yyyymmdd = 0,
         yyyyddmm,
         ddmmyyyy,
-        mmddyyyy
+        mmddyyyy,
+        DateFormat1,    // dd-mm-yyyy
+        DateFormat2,    // dd/mm/yyyy
+        FullDate,       // include date and time
     }
 
     public enum VGDelCommentsType
@@ -122,14 +132,20 @@ namespace Vistaghost.VISTAGHOST.Lib
         public bool AddBreakLine { get; set; }
         public string History { get; set; }
         public int Style { get; set; }
+        public string LogPath { get; set; }
+        public bool LogHistory { get; set; }
+        public int MaxSize { get; set; }
         public List<ComponentInfo> HeaderComponents { get; set; }
 
-        public HeaderInfo()
+        public HeaderInfo(string defaultPath)
         {
             BeginHeader = "/*<Not set>";
             EndHeader = "<Not set>*/";
             AddBreakLine = false;
             History = String.Empty;
+            MaxSize = 100;
+            LogHistory = true;
+            LogPath = defaultPath;
             Style = 0; //default style is Aloka1
         }
     }
@@ -140,13 +156,6 @@ namespace Vistaghost.VISTAGHOST.Lib
         public CommentInfo CommentInfo { get; set; }
         public HeaderInfo HeaderInfo { get; set; }
         public DataInfo DataInfo { get; set; }
-
-        public Settings()
-        {
-            CommentInfo = new CommentInfo();
-            HeaderInfo = new HeaderInfo();
-            DataInfo = new DataInfo();
-        }
     }
 
     public class IOType

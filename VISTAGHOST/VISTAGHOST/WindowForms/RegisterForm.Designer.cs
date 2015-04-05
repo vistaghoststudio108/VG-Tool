@@ -153,7 +153,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.BackgroundImage = global::Vistaghost.VISTAGHOST.Properties.Resources.logo;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Location = new System.Drawing.Point(446, 7);
             this.panel1.Name = "panel1";
@@ -333,7 +332,7 @@
             // lblRank
             // 
             this.lblRank.AutoSize = true;
-            this.lblRank.Location = new System.Drawing.Point(171, 124);
+            this.lblRank.Location = new System.Drawing.Point(171, 122);
             this.lblRank.Name = "lblRank";
             this.lblRank.Size = new System.Drawing.Size(58, 15);
             this.lblRank.TabIndex = 0;
@@ -397,7 +396,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(507, 355);
+            this.ClientSize = new System.Drawing.Size(524, 355);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.panel1);

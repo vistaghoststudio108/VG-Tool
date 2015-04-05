@@ -49,7 +49,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             ExpFileName = VGSetting.DefaultFileName(ExImType.vgEXPORT);
             CurFileName = VGSetting.DefaultFileName(ExImType.vgIMPORT);
 
-            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.ExportFolder);
+            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
 
             FileNames = VGSetting.GetAllSettingFile(FilePath);
 
@@ -265,7 +265,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             openFileDialog1.FileName = "*.vgconfig";
             openFileDialog1.DefaultExt = "vgconfig";
             openFileDialog1.ValidateNames = true;
-            openFileDialog1.InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.ExportFolder);
+            openFileDialog1.InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
 
             openFileDialog1.Filter = "Settings Files (.vgconfig)|*.vgconfig";
 

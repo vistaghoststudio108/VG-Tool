@@ -29,33 +29,42 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Comments");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Header");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Add", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Delete");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Data Management");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Comments");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Header");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Add", new System.Windows.Forms.TreeNode[] {
+            treeNode16,
+            treeNode17});
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Delete");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Data Management");
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtCloseBeginTag = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.txtCloseEndTag = new System.Windows.Forms.TextBox();
             this.txtOpenBeginTag = new System.Windows.Forms.TextBox();
+            this.cbDateFormat = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.chAutoAddWithoutDialog = new System.Windows.Forms.CheckBox();
             this.lblDate2 = new System.Windows.Forms.Label();
             this.lblDate1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pnSingleSetting = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtOpenEndTag = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.chkLogHistory = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.chDisHistory = new System.Windows.Forms.CheckBox();
-            this.cbDateFormat = new System.Windows.Forms.ComboBox();
-            this.chAutoAddWithoutDialog = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtOpenEndTag = new System.Windows.Forms.TextBox();
             this.pnHeaderSetting = new System.Windows.Forms.Panel();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.cbHeaderStyle = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.richTextBox9 = new System.Windows.Forms.TextBox();
@@ -76,7 +85,6 @@
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pnDataSetting = new System.Windows.Forms.Panel();
@@ -87,12 +95,20 @@
             this.btnBrowseExternal = new System.Windows.Forms.Button();
             this.txtExternalLink = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.label8 = new System.Windows.Forms.Label();
+            this.pnHistory = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.pnSingleSetting.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.pnHeaderSetting.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.pnDataSetting.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.pnHistory.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -120,22 +136,23 @@
             // 
             this.treeView1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
             this.treeView1.Location = new System.Drawing.Point(8, 7);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "nodeComment";
-            treeNode1.Text = "Comments";
-            treeNode2.Name = "nodeHeader";
-            treeNode2.Text = "Header";
-            treeNode3.Name = "Node2";
-            treeNode3.Text = "Add";
-            treeNode4.Name = "nodeDelete";
-            treeNode4.Text = "Delete";
-            treeNode5.Name = "nodeDataManagement";
-            treeNode5.Text = "Data Management";
+            treeNode16.Name = "nodeComment";
+            treeNode16.Text = "Comments";
+            treeNode17.Name = "nodeHeader";
+            treeNode17.Text = "Header";
+            treeNode18.Name = "Node2";
+            treeNode18.Text = "Add";
+            treeNode19.Name = "nodeDelete";
+            treeNode19.Text = "Delete";
+            treeNode20.Name = "nodeDataManagement";
+            treeNode20.Text = "Data Management";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4,
-            treeNode5});
+            treeNode18,
+            treeNode19,
+            treeNode20});
             this.treeView1.ShowNodeToolTips = true;
             this.treeView1.Size = new System.Drawing.Size(161, 355);
             this.treeView1.TabIndex = 0;
@@ -144,32 +161,44 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtCloseBeginTag);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtCloseEndTag);
             this.groupBox1.Controls.Add(this.txtOpenBeginTag);
+            this.groupBox1.Controls.Add(this.cbDateFormat);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.chAutoAddWithoutDialog);
             this.groupBox1.Controls.Add(this.lblDate2);
             this.groupBox1.Controls.Add(this.lblDate1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(7, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(441, 97);
+            this.groupBox1.Size = new System.Drawing.Size(441, 155);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Comment tags format";
+            this.groupBox1.Text = "Tags Format";
             // 
             // txtCloseBeginTag
             // 
-            this.txtCloseBeginTag.Location = new System.Drawing.Point(7, 60);
+            this.txtCloseBeginTag.Location = new System.Drawing.Point(7, 53);
             this.txtCloseBeginTag.Name = "txtCloseBeginTag";
             this.txtCloseBeginTag.Size = new System.Drawing.Size(106, 23);
             this.txtCloseBeginTag.TabIndex = 6;
             this.txtCloseBeginTag.TextChanged += new System.EventHandler(this.CommentInput_TextChanged);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 99);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 15);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Date format";
+            // 
             // txtCloseEndTag
             // 
-            this.txtCloseEndTag.Location = new System.Drawing.Point(333, 60);
+            this.txtCloseEndTag.Location = new System.Drawing.Point(333, 53);
             this.txtCloseEndTag.Name = "txtCloseEndTag";
             this.txtCloseEndTag.Size = new System.Drawing.Size(41, 23);
             this.txtCloseEndTag.TabIndex = 10;
@@ -183,10 +212,25 @@
             this.txtOpenBeginTag.TabIndex = 1;
             this.txtOpenBeginTag.TextChanged += new System.EventHandler(this.CommentInput_TextChanged);
             // 
+            // cbDateFormat
+            // 
+            this.cbDateFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDateFormat.FormattingEnabled = true;
+            this.cbDateFormat.Items.AddRange(new object[] {
+            "YYYY/MM/DD",
+            "YYYY/DD/MM",
+            "DD/MM/YYYY",
+            "MM/DD/YYYY"});
+            this.cbDateFormat.Location = new System.Drawing.Point(80, 91);
+            this.cbDateFormat.Name = "cbDateFormat";
+            this.cbDateFormat.Size = new System.Drawing.Size(108, 23);
+            this.cbDateFormat.TabIndex = 11;
+            this.cbDateFormat.SelectedIndexChanged += new System.EventHandler(this.cbDateFormat_SelectedIndexChanged);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(256, 63);
+            this.label7.Location = new System.Drawing.Point(256, 56);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(72, 15);
             this.label7.TabIndex = 9;
@@ -201,10 +245,21 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "<Account>) <Content>";
             // 
+            // chAutoAddWithoutDialog
+            // 
+            this.chAutoAddWithoutDialog.AutoSize = true;
+            this.chAutoAddWithoutDialog.Location = new System.Drawing.Point(7, 126);
+            this.chAutoAddWithoutDialog.Name = "chAutoAddWithoutDialog";
+            this.chAutoAddWithoutDialog.Size = new System.Drawing.Size(248, 19);
+            this.chAutoAddWithoutDialog.TabIndex = 12;
+            this.chAutoAddWithoutDialog.Text = "Add comment tags without display dialog";
+            this.chAutoAddWithoutDialog.UseVisualStyleBackColor = true;
+            this.chAutoAddWithoutDialog.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Options_MouseClick);
+            // 
             // lblDate2
             // 
             this.lblDate2.AutoSize = true;
-            this.lblDate2.Location = new System.Drawing.Point(175, 63);
+            this.lblDate2.Location = new System.Drawing.Point(175, 56);
             this.lblDate2.Name = "lblDate2";
             this.lblDate2.Size = new System.Drawing.Size(83, 15);
             this.lblDate2.TabIndex = 8;
@@ -222,7 +277,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(119, 63);
+            this.label2.Location = new System.Drawing.Point(119, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 15);
             this.label2.TabIndex = 7;
@@ -239,25 +294,118 @@
             // 
             // pnSingleSetting
             // 
-            this.pnSingleSetting.Controls.Add(this.label3);
+            this.pnSingleSetting.Controls.Add(this.groupBox2);
             this.pnSingleSetting.Controls.Add(this.txtOpenEndTag);
-            this.pnSingleSetting.Controls.Add(this.chDisHistory);
-            this.pnSingleSetting.Controls.Add(this.cbDateFormat);
-            this.pnSingleSetting.Controls.Add(this.chAutoAddWithoutDialog);
             this.pnSingleSetting.Controls.Add(this.groupBox1);
-            this.pnSingleSetting.Location = new System.Drawing.Point(695, 12);
+            this.pnSingleSetting.Location = new System.Drawing.Point(175, 5);
             this.pnSingleSetting.Name = "pnSingleSetting";
             this.pnSingleSetting.Size = new System.Drawing.Size(451, 355);
             this.pnSingleSetting.TabIndex = 3;
             // 
-            // label3
+            // groupBox2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 120);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Date format";
+            this.groupBox2.Controls.Add(this.pnHistory);
+            this.groupBox2.Controls.Add(this.chkLogHistory);
+            this.groupBox2.Controls.Add(this.chDisHistory);
+            this.groupBox2.Location = new System.Drawing.Point(7, 170);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(441, 182);
+            this.groupBox2.TabIndex = 14;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "History";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Location = new System.Drawing.Point(323, 37);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            2048,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.numericUpDown1.Size = new System.Drawing.Size(60, 23);
+            this.numericUpDown1.TabIndex = 14;
+            this.numericUpDown1.ThousandsSeparator = true;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            // 
+            // chkLogHistory
+            // 
+            this.chkLogHistory.AutoSize = true;
+            this.chkLogHistory.Location = new System.Drawing.Point(7, 50);
+            this.chkLogHistory.Name = "chkLogHistory";
+            this.chkLogHistory.Size = new System.Drawing.Size(146, 19);
+            this.chkLogHistory.TabIndex = 13;
+            this.chkLogHistory.Text = "Write history to log file";
+            this.chkLogHistory.UseVisualStyleBackColor = true;
+            this.chkLogHistory.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Options_MouseClick);
+            this.chkLogHistory.CheckedChanged += new System.EventHandler(this.chkLogHistory_CheckedChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(385, 45);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(21, 15);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "KB";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(265, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 15);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Max Size";
+            // 
+            // chDisHistory
+            // 
+            this.chDisHistory.AutoSize = true;
+            this.chDisHistory.Location = new System.Drawing.Point(7, 22);
+            this.chDisHistory.Name = "chDisHistory";
+            this.chDisHistory.Size = new System.Drawing.Size(200, 19);
+            this.chDisHistory.TabIndex = 13;
+            this.chDisHistory.Text = "Display history in output window";
+            this.chDisHistory.UseVisualStyleBackColor = true;
+            this.chDisHistory.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Options_MouseClick);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(38, 3);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(314, 23);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "C:\\Users\\thuanpv3\\Documents\\Vistaghost\\Log";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(358, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(47, 25);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "...";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(1, 8);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 15);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Path";
             // 
             // txtOpenEndTag
             // 
@@ -267,53 +415,29 @@
             this.txtOpenEndTag.TabIndex = 5;
             this.txtOpenEndTag.TextChanged += new System.EventHandler(this.CommentInput_TextChanged);
             // 
-            // chDisHistory
-            // 
-            this.chDisHistory.AutoSize = true;
-            this.chDisHistory.Location = new System.Drawing.Point(11, 172);
-            this.chDisHistory.Name = "chDisHistory";
-            this.chDisHistory.Size = new System.Drawing.Size(200, 19);
-            this.chDisHistory.TabIndex = 13;
-            this.chDisHistory.Text = "Display history in output window";
-            this.chDisHistory.UseVisualStyleBackColor = true;
-            this.chDisHistory.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Options_MouseClick);
-            // 
-            // cbDateFormat
-            // 
-            this.cbDateFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDateFormat.FormattingEnabled = true;
-            this.cbDateFormat.Items.AddRange(new object[] {
-            "YYYY/MM/DD",
-            "YYYY/DD/MM",
-            "DD/MM/YYYY",
-            "MM/DD/YYYY"});
-            this.cbDateFormat.Location = new System.Drawing.Point(84, 112);
-            this.cbDateFormat.Name = "cbDateFormat";
-            this.cbDateFormat.Size = new System.Drawing.Size(108, 23);
-            this.cbDateFormat.TabIndex = 11;
-            this.cbDateFormat.SelectedIndexChanged += new System.EventHandler(this.cbDateFormat_SelectedIndexChanged);
-            // 
-            // chAutoAddWithoutDialog
-            // 
-            this.chAutoAddWithoutDialog.AutoSize = true;
-            this.chAutoAddWithoutDialog.Location = new System.Drawing.Point(11, 147);
-            this.chAutoAddWithoutDialog.Name = "chAutoAddWithoutDialog";
-            this.chAutoAddWithoutDialog.Size = new System.Drawing.Size(248, 19);
-            this.chAutoAddWithoutDialog.TabIndex = 12;
-            this.chAutoAddWithoutDialog.Text = "Add comment tags without display dialog";
-            this.chAutoAddWithoutDialog.UseVisualStyleBackColor = true;
-            this.chAutoAddWithoutDialog.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Options_MouseClick);
-            // 
             // pnHeaderSetting
             // 
             this.pnHeaderSetting.Controls.Add(this.checkBox10);
             this.pnHeaderSetting.Controls.Add(this.cbHeaderStyle);
             this.pnHeaderSetting.Controls.Add(this.groupBox3);
             this.pnHeaderSetting.Controls.Add(this.label4);
-            this.pnHeaderSetting.Location = new System.Drawing.Point(175, 7);
+            this.pnHeaderSetting.Location = new System.Drawing.Point(739, 476);
             this.pnHeaderSetting.Name = "pnHeaderSetting";
             this.pnHeaderSetting.Size = new System.Drawing.Size(451, 355);
             this.pnHeaderSetting.TabIndex = 4;
+            // 
+            // checkBox10
+            // 
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Location = new System.Drawing.Point(18, 330);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(220, 19);
+            this.checkBox10.TabIndex = 1;
+            this.checkBox10.Tag = "7";
+            this.checkBox10.Text = "Add break line between components";
+            this.checkBox10.UseVisualStyleBackColor = true;
+            this.checkBox10.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddComponent_MouseClick);
+            this.checkBox10.CheckedChanged += new System.EventHandler(this.AddComponent_CheckedChanged);
             // 
             // cbHeaderStyle
             // 
@@ -538,19 +662,6 @@
             this.label4.TabIndex = 2;
             this.label4.Text = "Header Style";
             // 
-            // checkBox10
-            // 
-            this.checkBox10.AutoSize = true;
-            this.checkBox10.Location = new System.Drawing.Point(18, 330);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Size = new System.Drawing.Size(220, 19);
-            this.checkBox10.TabIndex = 1;
-            this.checkBox10.Tag = "7";
-            this.checkBox10.Text = "Add break line between components";
-            this.checkBox10.UseVisualStyleBackColor = true;
-            this.checkBox10.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddComponent_MouseClick);
-            this.checkBox10.CheckedChanged += new System.EventHandler(this.AddComponent_CheckedChanged);
-            // 
             // pnDataSetting
             // 
             this.pnDataSetting.Controls.Add(this.btnClearData);
@@ -625,6 +736,65 @@
             this.txtExternalLink.Size = new System.Drawing.Size(206, 23);
             this.txtExternalLink.TabIndex = 37;
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(44, 43);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(46, 19);
+            this.radioButton1.TabIndex = 3;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "*.txt";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(148, 43);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(52, 19);
+            this.radioButton2.TabIndex = 3;
+            this.radioButton2.Text = "*.xml";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(96, 43);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(46, 19);
+            this.radioButton5.TabIndex = 3;
+            this.radioButton5.Text = "*.xls";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(1, 45);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(33, 15);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Type";
+            // 
+            // pnHistory
+            // 
+            this.pnHistory.Controls.Add(this.radioButton5);
+            this.pnHistory.Controls.Add(this.numericUpDown1);
+            this.pnHistory.Controls.Add(this.textBox1);
+            this.pnHistory.Controls.Add(this.label6);
+            this.pnHistory.Controls.Add(this.radioButton2);
+            this.pnHistory.Controls.Add(this.label8);
+            this.pnHistory.Controls.Add(this.button1);
+            this.pnHistory.Controls.Add(this.label10);
+            this.pnHistory.Controls.Add(this.label9);
+            this.pnHistory.Controls.Add(this.radioButton1);
+            this.pnHistory.Enabled = false;
+            this.pnHistory.Location = new System.Drawing.Point(23, 73);
+            this.pnHistory.Name = "pnHistory";
+            this.pnHistory.Size = new System.Drawing.Size(407, 103);
+            this.pnHistory.TabIndex = 46;
+            // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -652,6 +822,9 @@
             this.groupBox1.PerformLayout();
             this.pnSingleSetting.ResumeLayout(false);
             this.pnSingleSetting.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.pnHeaderSetting.ResumeLayout(false);
             this.pnHeaderSetting.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -659,6 +832,8 @@
             this.pnDataSetting.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.pnHistory.ResumeLayout(false);
+            this.pnHistory.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -716,5 +891,18 @@
         private System.Windows.Forms.TextBox txtCloseEndTag;
         private System.Windows.Forms.ComboBox cbHeaderStyle;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox chkLogHistory;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel pnHistory;
     }
 }

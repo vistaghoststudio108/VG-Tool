@@ -476,13 +476,14 @@ namespace Vistaghost.VISTAGHOST
             if (mode == ActionType.ChangeInfo)
                 return;
 
-            int numPh = 0;
+            int numPh = -1;
             ActionInfo info = new ActionInfo();
 
             owP.Collection.Item("Vistaghost").Activate();
 
             if (VGOperations.ProcessTextForAddSingle(DteHelper.Dte, Setting.CurrentDate, content, account, devid, mode, keep_comments, ref info))
             {
+                /*Show history in output window*/
                 if (VGSetting.SettingData.CommentInfo.DisplayHistory)
                 {
                     // Add a line of text to the new pane.
@@ -496,11 +497,23 @@ namespace Vistaghost.VISTAGHOST
                             owP.OutputString(recordNum.ToString() + ">   [" + account + "] -> Replace '" + find + "'" + " to '" + replace + "' succeeded (" + numPh.ToString() + " matched)\n");
                         }
                         else
+                        {
                             owP.OutputString(recordNum.ToString() + ">   [" + account + "] -> No matched phrases\n");
+                        }
                     }
 
                     recordNum++;
                 }
+
+                /*Write log of history*/
+                if (VGSetting.SettingData.HeaderInfo.LogHistory)
+                {
+                    /* Log Format:
+                     * 2015-03-04 12:03:43 AM, Monday  [ThuanPV3]  [Modify]   D:\HAMWorking\HAM_United2\VG Source\VG-Tool\VISTAGHOST\VISTAGHOST\Packages\VISTAGHOSTPackage.cs(134)
+                     */
+                    Logger.LogHistory(LogFileType.Xml, info.Path, info.Line, mode, find, replace, numPh);
+                }
+
                 DteHelper.Dte.StatusBar.Text = Properties.Resources.AddCommentSuccess;
             }
             else

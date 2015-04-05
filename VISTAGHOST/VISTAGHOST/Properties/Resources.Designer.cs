@@ -105,10 +105,16 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap logo {
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;VistaghostLog&gt;
+        ///  
+        ///&lt;/VistaghostLog&gt;
+        ///.
+        /// </summary>
+        internal static string Log {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("Log", resourceCulture);
             }
         }
         

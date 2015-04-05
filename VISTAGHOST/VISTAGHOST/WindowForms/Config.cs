@@ -340,5 +340,10 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     btnSave.Enabled = true;
             }
         }
+
+        private void chkLogHistory_CheckedChanged(object sender, EventArgs e)
+        {
+            pnHistory.Enabled = chkLogHistory.Checked;
+        }
     }
 }

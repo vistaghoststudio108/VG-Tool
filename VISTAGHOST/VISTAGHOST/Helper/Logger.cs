@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Vistaghost.VISTAGHOST.Lib;
+using System.Xml;
+using System.Xml.Linq;
 namespace Vistaghost.VISTAGHOST.Helper
 {
     class Logger
@@ -13,7 +15,7 @@ namespace Vistaghost.VISTAGHOST.Helper
         ///</summary>
         public static void LogError(Exception e)
         {
-            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.ExportFolder);
+            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -44,7 +46,7 @@ namespace Vistaghost.VISTAGHOST.Helper
         ///</summary>
         public static void LogMessage(string message)
         {
-            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.ExportFolder);
+            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -67,6 +69,111 @@ namespace Vistaghost.VISTAGHOST.Helper
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// write history to file
+        /// </summary>
+        /// <param name="history"></param>
+        public static void LogHistory(LogFileType type, string path, int line, ActionType mode, string find, string replace, int numPhrase)
+        {
+            try
+            {
+                var date = VGOperations.GetDateString(DateFormat.FullDate);
+                var account = VGSetting.SettingData.CommentInfo.Account;
+                var logPath = String.Empty;
+                var dir = VGSetting.SettingData.HeaderInfo.LogPath;
+
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                switch (type)
+                {
+                    case LogFileType.TextFile:
+                        {
+                            logPath = Path.Combine(dir, VGSettingConstants.LogTextFile);
+
+                            using (StreamWriter writer = new StreamWriter(logPath, true, new UTF8Encoding(false)))
+                            {
+                                writer.WriteLine(date + "   [" + account + "]    " + "[" + mode.ToString() + "] " + path + "(" + line.ToString() + ")");
+
+                                if (numPhrase != -1)
+                                {
+                                    writer.WriteLine("-> Replace '" + find + "'" + " to '" + replace + "' succeeded (" + numPhrase.ToString() + " matched)");
+                                }
+
+                                /*end of log*/
+                                writer.WriteLine("---------------------------------------------------------------");
+                            }
+                        }
+                        break;
+                    case LogFileType.Xml:
+                        {
+                            logPath = Path.Combine(dir, VGSettingConstants.LogXmlFile);
+                            if (!File.Exists(logPath))
+                            {
+                                using (var stream = File.CreateText(logPath))
+                                {
+                                    /*Create new log file based on exists file*/
+                                    stream.Write(Properties.Resources.Log);
+                                }
+                            }
+                            XDocument Doc;
+                            XElement RootNode;
+
+                            if(File.Exists(logPath))
+                            {
+                                Doc = XDocument.Load(logPath, LoadOptions.SetBaseUri);
+
+                                RootNode = Doc.Root.Element("VGHistory");
+                                if (RootNode == null)
+                                {
+                                    RootNode = new XElement("VGHistory");
+                                    Doc.Root.Add(RootNode);
+                                }
+
+                                XElement historyNode = new XElement("History");
+                                XAttribute dateAttribute = new XAttribute("date", date);
+                                historyNode.Add(dateAttribute);
+
+                                XElement accountNode = new XElement("Account");
+                                accountNode.Value = account;
+
+                                XElement modeNode = new XElement("Mode");
+                                modeNode.Value = mode.ToString();
+
+                                XElement fileNode = new XElement("File");
+                                fileNode.Value = path;
+
+                                XElement lineNode = new XElement("Line");
+                                lineNode.Value = line.ToString();
+
+                                historyNode.Add(accountNode);
+                                historyNode.Add(modeNode);
+                                historyNode.Add(fileNode);
+                                historyNode.Add(lineNode);
+
+                                RootNode.Add(historyNode);
+
+                                Doc.Save(logPath);
+                            }
+                        }
+                        break;
+                    case LogFileType.Excel:
+                        {
+                            logPath = Path.Combine(dir, VGSettingConstants.LogExcelFile);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+            }
         }
     }
 }

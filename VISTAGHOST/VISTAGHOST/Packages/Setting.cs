@@ -23,8 +23,12 @@ namespace Vistaghost.VISTAGHOST
         public const string SettingFile = "Setting.xml"; //old file is data.xml
         public const string RegisterFile = "Register.xml";
 
-        public const string ExportFolder = "Vistaghost";
+        public const string VGFolder = "Vistaghost";
         public const string FileExtenstion = ".vgconfig";
+        public const string LogFolder = "Log";
+        public const string LogTextFile = "History.txt";
+        public const string LogXmlFile = "History.xml";
+        public const string LogExcelFile = "History.xls";
 
         public const string HistoryFile = "History.xml";
 
@@ -60,6 +64,15 @@ namespace Vistaghost.VISTAGHOST
         public string CurrentDate { get; set; }
 
         public string Title { get; set; }
+
+        static string DefaultLogPath
+        {
+            get 
+            {
+                var p1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
+                return Path.Combine(p1, VGSettingConstants.LogFolder);
+            }
+        }
 
         public VGSetting()
         {
@@ -99,7 +112,7 @@ namespace Vistaghost.VISTAGHOST
             Settings settings = new Settings
             {
                 CommentInfo = new CommentInfo(),
-                HeaderInfo = new HeaderInfo(),
+                HeaderInfo = new HeaderInfo(DefaultLogPath),
                 DataInfo = new DataInfo()
             };
 
