@@ -404,7 +404,7 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            cff.LoadConfig(VGSetting.SettingData);
+            cff.LoadConfig(DteHelper.Dte2, VGSetting.SettingData);
             cff.ShowDialog();
         }
 
@@ -508,9 +508,6 @@ namespace Vistaghost.VISTAGHOST
                 /*Write log of history*/
                 if (VGSetting.SettingData.HeaderInfo.LogHistory)
                 {
-                    /* Log Format:
-                     * 2015-03-04 12:03:43 AM, Monday  [ThuanPV3]  [Modify]   D:\HAMWorking\HAM_United2\VG Source\VG-Tool\VISTAGHOST\VISTAGHOST\Packages\VISTAGHOSTPackage.cs(134)
-                     */
                     Logger.LogHistory(LogFileType.Xml, info.Path, info.Line, mode, find, replace, numPh);
                 }
 

@@ -67,7 +67,7 @@ namespace Vistaghost.VISTAGHOST
 
         static string DefaultLogPath
         {
-            get 
+            get
             {
                 var p1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
                 return Path.Combine(p1, VGSettingConstants.LogFolder);
@@ -109,26 +109,28 @@ namespace Vistaghost.VISTAGHOST
         #region Data methods
         public static Settings LoadSettings()
         {
-            Settings settings = new Settings
-            {
-                CommentInfo = new CommentInfo(),
-                HeaderInfo = new HeaderInfo(DefaultLogPath),
-                DataInfo = new DataInfo()
-            };
+            Settings settings = new Settings();
 
             try
             {
                 var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-                if (isoStore.GetFileNames(VGSettingConstants.SettingFile).Length == 0)
-                    return settings;
-
-                var isoStream = new IsolatedStorageFileStream(VGSettingConstants.SettingFile, FileMode.Open, isoStore);
-
-                if (!isoStream.CanRead)
-                    return settings;
+                IsolatedStorageFileStream isoStream = null;
 
                 XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-                settings = (Settings)serializer.Deserialize(isoStream);
+
+                if (isoStore.GetFileNames(VGSettingConstants.SettingFile).Length == 0)
+                {
+                    isoStream = new IsolatedStorageFileStream(VGSettingConstants.SettingFile, FileMode.Create, isoStore);
+                    serializer.Serialize(isoStream, settings);
+                }
+                else
+                {
+                    isoStream = new IsolatedStorageFileStream(VGSettingConstants.SettingFile, FileMode.Open, isoStore);
+                    if (!isoStream.CanRead)
+                        return settings;
+
+                    settings = (Settings)serializer.Deserialize(isoStream);
+                }
 
                 isoStream.Close();
                 isoStore.Close();
@@ -151,9 +153,18 @@ namespace Vistaghost.VISTAGHOST
                 if (!isoStream.CanWrite)
                     return false;
 
+                var ws = new XmlWriterSettings();
+                ws.NewLineChars = Environment.NewLine;
+                ws.NewLineOnAttributes = true;
+                ws.CloseOutput = true;
+                ws.Indent = true;
+                ws.NewLineHandling = NewLineHandling.Entitize;
+
+                XmlWriter writer = XmlWriter.Create(isoStream, ws);
+
                 XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
-                serializer.Serialize(isoStream, SettingData);
+                serializer.Serialize(writer, SettingData);
 
                 isoStream.Close();
                 isoStore.Close();

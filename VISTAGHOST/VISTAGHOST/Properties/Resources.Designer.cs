@@ -107,9 +107,14 @@ namespace Vistaghost.VISTAGHOST.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;VistaghostLog&gt;
-        ///  
-        ///&lt;/VistaghostLog&gt;
+        ///&lt;Log&gt;
+        ///  &lt;VGHistory&gt;
+        ///
+        ///  &lt;/VGHistory&gt;
+        ///  &lt;VGError&gt;
+        ///    
+        ///  &lt;/VGError&gt;
+        ///&lt;/Log&gt;
         ///.
         /// </summary>
         internal static string Log {

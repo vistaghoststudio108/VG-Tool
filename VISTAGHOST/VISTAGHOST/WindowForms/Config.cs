@@ -13,6 +13,7 @@ using Vistaghost.VISTAGHOST.Lib;
 using System.Xml.Serialization;
 using System.Xml;
 using Vistaghost.VISTAGHOST.Helper;
+using EnvDTE80;
 
 namespace Vistaghost.VISTAGHOST.WindowForms
 {
@@ -24,6 +25,17 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         Settings settings;
         public ConfigEventHandler OnSendData;
         private HeaderStyle headerStyle = HeaderStyle.Aloka1;
+
+        private List<GroupComand> gCommand = new List<GroupComand>() { 
+            new GroupComand("Add Comments", new List<VGCommand> { new VGCommand("Modify","Alt + 1"), new VGCommand("Add", "Alt + 2"), new VGCommand("Delete", "Alt + 3")}),
+            new GroupComand("Delete Comments", new List<VGCommand> { new VGCommand("","")}),
+            new GroupComand("Make Header", new List<VGCommand> { new VGCommand("","")}),
+            new GroupComand("Count Line of Code", new List<VGCommand> { new VGCommand("","")}),
+            new GroupComand("Change Comments Info", new List<VGCommand> { new VGCommand("","")}),
+            new GroupComand("Configuration", new List<VGCommand> { new VGCommand("","")}),
+            new GroupComand("Import/Export Settings", new List<VGCommand> { new VGCommand("","")}),
+            new GroupComand("About", new List<VGCommand> { new VGCommand("","")})
+        };
 
         public Config()
         {
@@ -39,23 +51,33 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = false;
                     pnSingleSetting.Visible = true;
+                    pnHistory.Visible = false;
                 }
                 else if (e.Node.Text == "Header")
                 {
                     pnHeaderSetting.Visible = true;
                     pnDataSetting.Visible = false;
                     pnSingleSetting.Visible = false;
+                    pnHistory.Visible = false;
                 }
                 else if (e.Node.Text == "Data Management")
                 {
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = true;
                     pnSingleSetting.Visible = false;
+                    pnHistory.Visible = false;
+                }
+                else if (e.Node.Text == "History")
+                {
+                    pnHistory.Visible = true;
+                    pnHeaderSetting.Visible = false;
+                    pnDataSetting.Visible = false;
+                    pnSingleSetting.Visible = false;
                 }
             }
         }
 
-        public void LoadConfig(Settings data)
+        public void LoadConfig(DTE2 dte2, Settings data)
         {
             this.settings = data;
             // update comment config
@@ -94,6 +116,29 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 checkBox11.Checked = data.HeaderInfo.HeaderComponents[6].Checked;
 
                 txtHistory.Enabled = checkBox11.Checked;
+            }
+
+            /*Load keybinding*/
+            InitKeyBinding(dte2);
+        }
+
+        void InitKeyBinding(DTE2 dte2)
+        {
+            listBox1.Items.Clear();
+            //object[] bindings;
+            //string msg = string.Empty;
+            //// Populate the collection with all of the bindings associated
+            //// with the command File.NewFile.
+            //// Bindings() is an array of key binding string names.
+            //bindings = (object[])dte2.Commands.Item("File.NewFile", 0).Bindings;
+            //foreach (object b in bindings)
+            //{
+            //    msg += ((string)b) + "\n";
+            //}
+
+            foreach (var gc in gCommand)
+            {
+                listBox1.Items.Add(gc.GroupdName);
             }
         }
 
@@ -343,7 +388,34 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
         private void chkLogHistory_CheckedChanged(object sender, EventArgs e)
         {
-            pnHistory.Enabled = chkLogHistory.Checked;
+            groupBox2.Enabled = chkLogHistory.Checked;
+        }
+
+        private void btnCustomForColor_Click(object sender, EventArgs e)
+        {
+            colorDialog1.FullOpen = true;
+            if (colorDialog1.ShowDialog(this) == DialogResult.OK)
+            {
+            }
+        }
+
+        private void btnCustomBackColor_Click(object sender, EventArgs e)
+        {
+            colorDialog1.FullOpen = true;
+            if (colorDialog1.ShowDialog(this) == DialogResult.OK)
+            {
+
+            }
+        }
+
+        private void cbForgroundColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPreview.ForeColor = cbForgroundColor.SelectedItem.Color;
+        }
+
+        private void cbBackgroundColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPreview.BackColor = cbBackgroundColor.SelectedItem.Color;
         }
     }
 }

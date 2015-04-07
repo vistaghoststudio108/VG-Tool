@@ -21,6 +21,34 @@ namespace Vistaghost.VISTAGHOST.Lib
         Excel
     }
 
+    public enum KeyBindings
+    {
+        //AddCommentsTag = 0x00001,
+        //DelCommentsTag = 0x00002,
+        //ModCommentsTag = 0x00004,
+        //DelComments = 0x00008,
+        //CountLineOfCode = 0x00010,
+        //MakeSingleHeader = 0x00020,
+        //MakeMultiHeader = 0x00040,
+        //ChangeInfo = 0x00080,
+        //Configuration = 0x00100,
+        //ImportExportSetting = 0x00200,
+        //AboutProduct = 0x00400,
+        //None
+        AddCommentsTag = 0,
+        DelCommentsTag,
+        ModCommentsTag,
+        DelComments,
+        CountLineOfCode,
+        MakeSingleHeader,
+        MakeMultiHeader,
+        ChangeInfo,
+        Configuration,
+        ImportExportSetting,
+        AboutProduct,
+        None
+    }
+
     public enum HeaderStyle
     {
         Aloka1 = 0,
@@ -80,6 +108,32 @@ namespace Vistaghost.VISTAGHOST.Lib
         None = 0x000
     }
 
+    public class VGCommand
+    {
+        public string Name { get; set; }
+
+        public string HotKeys { get; set; }
+
+        public VGCommand(string name, string hotkey)
+        {
+            this.Name = name;
+            this.HotKeys = hotkey;
+        }
+    }
+
+    public class GroupComand
+    {
+        public string GroupdName { get; set; }
+
+        public List<VGCommand> Command { get; set; }
+
+        public GroupComand(string gName, List<VGCommand> command)
+        {
+            this.GroupdName = gName;
+            this.Command = command;
+        }
+    }
+
     [Serializable]
     public class RegisterData
     {
@@ -137,7 +191,7 @@ namespace Vistaghost.VISTAGHOST.Lib
         public int MaxSize { get; set; }
         public List<ComponentInfo> HeaderComponents { get; set; }
 
-        public HeaderInfo(string defaultPath)
+        public HeaderInfo()
         {
             BeginHeader = "/*<Not set>";
             EndHeader = "<Not set>*/";
@@ -145,7 +199,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             History = String.Empty;
             MaxSize = 100;
             LogHistory = true;
-            LogPath = defaultPath;
+            LogPath = String.Empty;
             Style = 0; //default style is Aloka1
         }
     }
@@ -156,6 +210,13 @@ namespace Vistaghost.VISTAGHOST.Lib
         public CommentInfo CommentInfo { get; set; }
         public HeaderInfo HeaderInfo { get; set; }
         public DataInfo DataInfo { get; set; }
+
+        public Settings()
+        {
+            CommentInfo = new CommentInfo();
+            HeaderInfo = new HeaderInfo();
+            DataInfo = new DataInfo();
+        }
     }
 
     public class IOType
