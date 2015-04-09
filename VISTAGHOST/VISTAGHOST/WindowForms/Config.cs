@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using Vistaghost.VISTAGHOST.Helper;
 using EnvDTE80;
+using EnvDTE;
 
 namespace Vistaghost.VISTAGHOST.WindowForms
 {
@@ -25,16 +26,26 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         Settings settings;
         public ConfigEventHandler OnSendData;
         private HeaderStyle headerStyle = HeaderStyle.Aloka1;
+        DTE2 dte2;
 
-        private List<GroupComand> gCommand = new List<GroupComand>() { 
-            new GroupComand("Add Comments", new List<VGCommand> { new VGCommand("Modify","Alt + 1"), new VGCommand("Add", "Alt + 2"), new VGCommand("Delete", "Alt + 3")}),
-            new GroupComand("Delete Comments", new List<VGCommand> { new VGCommand("","")}),
-            new GroupComand("Make Header", new List<VGCommand> { new VGCommand("","")}),
-            new GroupComand("Count Line of Code", new List<VGCommand> { new VGCommand("","")}),
-            new GroupComand("Change Comments Info", new List<VGCommand> { new VGCommand("","")}),
-            new GroupComand("Configuration", new List<VGCommand> { new VGCommand("","")}),
-            new GroupComand("Import/Export Settings", new List<VGCommand> { new VGCommand("","")}),
-            new GroupComand("About", new List<VGCommand> { new VGCommand("","")})
+        private int parentIndex = 0;
+        private int childIndex = 0;
+
+        private string curHotKey = String.Empty;
+
+        private List<VGCommand> commands = new List<VGCommand>() { 
+            new VGCommand(0, "EditorContextMenus.CodeWindow.AddComments", "[add]Tags", "Add", "None"),
+            new VGCommand(0, "EditorContextMenus.CodeWindow.AddComments", "[delete]Tags", "Delete", "None"),
+            new VGCommand(0, "EditorContextMenus.CodeWindow.AddComments", "[modify]Tags", "Modify", "None"),
+            new VGCommand(1, "EditorContextMenus.CodeWindow.DeleteComments", "", "Delete Comments", "None"),
+            new VGCommand(2, "EditorContextMenus.CodeWindow.MakeFunctionHeader", "", "Single Header", "None"),
+            new VGCommand(3, "EditorContextMenus.CodeWindow.CountLinesofCode", "", "Count LOC", "None"),
+            new VGCommand(4, "Vistaghost.ChangeInfo", "", "Change Comments Info", "None"),
+            new VGCommand(5, "Vistaghost.HistoryViewer", "", "History Viewer", "None"),
+            new VGCommand(6, "Vistaghost.Configurations", "", "Configurations", "None"),
+            new VGCommand(7, "Vistaghost.CreateMultiHeader", "", "Multi Header", "None"),
+            new VGCommand(8, "Vistaghost.ImportandExportSettings", "", "Import/Export Settings", "None"),
+            new VGCommand(9, "Vistaghost.About", "", "About Tool", "None")
         };
 
         public Config()
@@ -52,6 +63,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     pnDataSetting.Visible = false;
                     pnSingleSetting.Visible = true;
                     pnHistory.Visible = false;
+                    pnKeyboard.Visible = false;
                 }
                 else if (e.Node.Text == "Header")
                 {
@@ -59,6 +71,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     pnDataSetting.Visible = false;
                     pnSingleSetting.Visible = false;
                     pnHistory.Visible = false;
+                    pnKeyboard.Visible = false;
                 }
                 else if (e.Node.Text == "Data Management")
                 {
@@ -66,6 +79,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     pnDataSetting.Visible = true;
                     pnSingleSetting.Visible = false;
                     pnHistory.Visible = false;
+                    pnKeyboard.Visible = false;
                 }
                 else if (e.Node.Text == "History")
                 {
@@ -73,6 +87,15 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = false;
                     pnSingleSetting.Visible = false;
+                    pnKeyboard.Visible = false;
+                }
+                else if (e.Node.Text == "Keyboard")
+                {
+                    pnHistory.Visible = false;
+                    pnHeaderSetting.Visible = false;
+                    pnDataSetting.Visible = false;
+                    pnSingleSetting.Visible = false;
+                    pnKeyboard.Visible = true;
                 }
             }
         }
@@ -80,6 +103,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         public void LoadConfig(DTE2 dte2, Settings data)
         {
             this.settings = data;
+            this.dte2 = dte2;
             // update comment config
             txtOpenBeginTag.Text = data.CommentInfo.OpenTagBegin;
             txtOpenEndTag.Text = data.CommentInfo.OpenTagEnd;
@@ -119,27 +143,37 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             }
 
             /*Load keybinding*/
-            InitKeyBinding(dte2);
+            InitKeyBinding();
         }
 
-        void InitKeyBinding(DTE2 dte2)
+        void InitKeyBinding()
         {
-            listBox1.Items.Clear();
-            //object[] bindings;
-            //string msg = string.Empty;
-            //// Populate the collection with all of the bindings associated
-            //// with the command File.NewFile.
-            //// Bindings() is an array of key binding string names.
-            //bindings = (object[])dte2.Commands.Item("File.NewFile", 0).Bindings;
-            //foreach (object b in bindings)
-            //{
-            //    msg += ((string)b) + "\n";
-            //}
-
-            foreach (var gc in gCommand)
+            object[] bindings;
+            var appendCommand = String.Empty;
+            foreach (var c in commands)
             {
-                listBox1.Items.Add(gc.GroupdName);
+                if (c.HotKeys == txtHotKey.Text)
+                {
+                    c.HotKeys = "None";
+                }
+
+                if (String.IsNullOrEmpty(c.MissName))
+                {
+                    appendCommand = c.KeyName;
+                }
+                else
+                {
+                    appendCommand = c.KeyName + "." + c.MissName;
+                }
+
+                bindings = (object[])this.dte2.Commands.Item(appendCommand, 0).Bindings;
+                foreach (object b in bindings)
+                {
+                    c.HotKeys = ((string)b).Remove(0, 8);
+                }
             }
+
+            listGroupCommand_SelectedIndexChanged(null, EventArgs.Empty);
         }
 
         private void Config_Load(object sender, EventArgs e)
@@ -150,10 +184,18 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
             pnSingleSetting.Location = new Point(175, 7);
             pnSingleSetting.Size = new Size(451, 355);
+
             pnHeaderSetting.Location = new Point(175, 7);
             pnHeaderSetting.Size = new Size(451, 355);
+
             pnDataSetting.Location = new Point(175, 7);
             pnDataSetting.Size = new Size(451, 355);
+
+            pnHistory.Location = new Point(175, 7);
+            pnHistory.Size = new Size(451, 355);
+
+            pnKeyboard.Location = new Point(175, 7);
+            pnKeyboard.Size = new Size(451, 355);
 
             toolTip1.SetToolTip(txtOpenBeginTag, txtOpenBeginTag.Text);
             toolTip1.SetToolTip(txtCloseBeginTag, txtCloseBeginTag.Text);
@@ -416,6 +458,135 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         private void cbBackgroundColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblPreview.BackColor = cbBackgroundColor.SelectedItem.Color;
+        }
+
+        private void listGroupCommand_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            parentIndex = listGroupCommand.SelectedIndex;
+            if (parentIndex == -1)
+                return;
+
+            lvDetailKeys.Items.Clear();
+            curHotKey = String.Empty;
+            childIndex = 0;
+
+            foreach (var c in commands)
+            {
+                if (c.GroupID == parentIndex)
+                {
+                    ListViewItem item = new ListViewItem(new string[] { c.DisName, c.HotKeys });
+                    lvDetailKeys.Items.Add(item);
+                }
+            }
+        }
+
+        private void lvDetailKeys_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (!e.IsSelected)
+                return;
+
+            childIndex = e.ItemIndex;
+
+            txtHotKey.Text = lvDetailKeys.SelectedItems[0].SubItems[1].Text;
+            curHotKey = txtHotKey.Text;
+        }
+
+        string GetCommandString()
+        {
+            var strCmd = String.Empty;
+
+            foreach (var c in commands)
+            {
+                if (c.GroupID == parentIndex)
+                {
+                    if (String.IsNullOrEmpty(c.MissName))
+                    {
+                        strCmd = c.KeyName;
+                    }
+                    else
+                    {
+                        strCmd = c.KeyName + "." + commands[childIndex].MissName;
+                    }
+                    break;
+                }
+            }
+
+            return strCmd;
+        }
+
+        private void btnAssignHotKey_Click(object sender, EventArgs e)
+        {
+            if (curHotKey == txtHotKey.Text || curHotKey == "")
+            {
+                return;
+            }
+
+            var strCmd = String.Empty;
+            Commands cmds;
+            Command cmd;
+
+            strCmd = GetCommandString();
+
+            try
+            {
+                // Set references to the Commands collection and the 
+                cmds = dte2.Commands;
+                cmd = cmds.Item(strCmd, 1);
+
+                // Assigns the command key
+                cmd.Bindings = "Global::" + txtHotKey.Text;
+
+                /*update info*/
+                InitKeyBinding();
+
+                txtHotKey.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex);
+            }
+        }
+
+        private void btnRemoveHotkey_Click(object sender, EventArgs e)
+        {
+            if (curHotKey == "None" || curHotKey == "")
+            {
+                return;
+            }
+
+            var strCmd = String.Empty;
+
+            strCmd = GetCommandString();
+
+            try
+            {
+                this.dte2.Commands.Item(strCmd, 0).Bindings = new object[] { };
+
+                InitKeyBinding();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex);
+            }
+        }
+
+        private void listGroupCommand_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right && listGroupCommand.SelectedIndex != -1)
+            {
+                lvDetailKeys.Focus();
+                lvDetailKeys.Items[childIndex].Selected = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void lvDetailKeys_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left)
+            {
+                listGroupCommand.Focus();
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

@@ -114,6 +114,12 @@
     <Compile Include="User Control\ColorComboBox.Designer.cs">
       <DependentUpon>ColorComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Control\ExListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="User Control\ExListView.Designer.cs">
+      <DependentUpon>ExListView.cs</DependentUpon>
+    </Compile>
     <Compile Include="User Control\ShortcutKeyTextBox.cs">
       <SubType>Component</SubType>
     </Compile>

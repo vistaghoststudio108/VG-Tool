@@ -23,4 +23,6 @@ namespace Vistaghost.VISTAGHOST.Lib
     public delegate void HeaderInputEventHandler(List<LVFuncInfo> funcinfo);
 
     public delegate void HeaderNotifyEventHandler(int index);
+
+    public delegate void HistoryViewerEventHandler(string file);
 }

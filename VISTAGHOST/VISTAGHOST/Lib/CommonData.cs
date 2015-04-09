@@ -110,27 +110,23 @@ namespace Vistaghost.VISTAGHOST.Lib
 
     public class VGCommand
     {
-        public string Name { get; set; }
+        public string KeyName { get; set; }
 
         public string HotKeys { get; set; }
 
-        public VGCommand(string name, string hotkey)
+        public int GroupID { get; set; }
+
+        public string MissName { get; set; }
+
+        public string DisName { get; set; }
+
+        public VGCommand(int groupId, string keyname, string misname, string disname, string hotkey)
         {
-            this.Name = name;
+            this.GroupID = groupId;
+            this.KeyName = keyname;
+            this.MissName = misname;
             this.HotKeys = hotkey;
-        }
-    }
-
-    public class GroupComand
-    {
-        public string GroupdName { get; set; }
-
-        public List<VGCommand> Command { get; set; }
-
-        public GroupComand(string gName, List<VGCommand> command)
-        {
-            this.GroupdName = gName;
-            this.Command = command;
+            this.DisName = disname;
         }
     }
 

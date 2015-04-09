@@ -109,15 +109,15 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnHistory = new System.Windows.Forms.Panel();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnKeyboard = new System.Windows.Forms.Panel();
             this.cbCurrentShortcut = new System.Windows.Forms.ComboBox();
             this.btnRemoveHotkey = new System.Windows.Forms.Button();
             this.btnAssignHotKey = new System.Windows.Forms.Button();
             this.txtHotKey = new Vistaghost.VISTAGHOST.User_Control.ShortcutKeyTextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lvDetailKeys = new System.Windows.Forms.ListView();
             this.colCommand = new System.Windows.Forms.ColumnHeader();
             this.colKey = new System.Windows.Forms.ColumnHeader();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listGroupCommand = new System.Windows.Forms.ListBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -130,7 +130,7 @@
             this.pnDataSetting.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.pnHistory.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnKeyboard.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -890,21 +890,21 @@
             this.pnHistory.Size = new System.Drawing.Size(451, 355);
             this.pnHistory.TabIndex = 46;
             // 
-            // panel1
+            // pnKeyboard
             // 
-            this.panel1.Controls.Add(this.cbCurrentShortcut);
-            this.panel1.Controls.Add(this.btnRemoveHotkey);
-            this.panel1.Controls.Add(this.btnAssignHotKey);
-            this.panel1.Controls.Add(this.txtHotKey);
-            this.panel1.Controls.Add(this.listView1);
-            this.panel1.Controls.Add(this.listBox1);
-            this.panel1.Controls.Add(this.label15);
-            this.panel1.Controls.Add(this.label14);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Location = new System.Drawing.Point(175, 7);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(451, 355);
-            this.panel1.TabIndex = 47;
+            this.pnKeyboard.Controls.Add(this.cbCurrentShortcut);
+            this.pnKeyboard.Controls.Add(this.btnRemoveHotkey);
+            this.pnKeyboard.Controls.Add(this.btnAssignHotKey);
+            this.pnKeyboard.Controls.Add(this.txtHotKey);
+            this.pnKeyboard.Controls.Add(this.lvDetailKeys);
+            this.pnKeyboard.Controls.Add(this.listGroupCommand);
+            this.pnKeyboard.Controls.Add(this.label15);
+            this.pnKeyboard.Controls.Add(this.label14);
+            this.pnKeyboard.Controls.Add(this.label13);
+            this.pnKeyboard.Location = new System.Drawing.Point(175, 7);
+            this.pnKeyboard.Name = "pnKeyboard";
+            this.pnKeyboard.Size = new System.Drawing.Size(451, 355);
+            this.pnKeyboard.TabIndex = 47;
             // 
             // cbCurrentShortcut
             // 
@@ -924,6 +924,7 @@
             this.btnRemoveHotkey.TabIndex = 8;
             this.btnRemoveHotkey.Text = "Remove";
             this.btnRemoveHotkey.UseVisualStyleBackColor = true;
+            this.btnRemoveHotkey.Click += new System.EventHandler(this.btnRemoveHotkey_Click);
             // 
             // btnAssignHotKey
             // 
@@ -933,6 +934,7 @@
             this.btnAssignHotKey.TabIndex = 8;
             this.btnAssignHotKey.Text = "Assign";
             this.btnAssignHotKey.UseVisualStyleBackColor = true;
+            this.btnAssignHotKey.Click += new System.EventHandler(this.btnAssignHotKey_Click);
             // 
             // txtHotKey
             // 
@@ -943,19 +945,24 @@
             this.txtHotKey.Size = new System.Drawing.Size(173, 23);
             this.txtHotKey.TabIndex = 7;
             // 
-            // listView1
+            // lvDetailKeys
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvDetailKeys.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colCommand,
             this.colKey});
-            this.listView1.FullRowSelect = true;
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(167, 31);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(271, 214);
-            this.listView1.TabIndex = 6;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.lvDetailKeys.FullRowSelect = true;
+            this.lvDetailKeys.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvDetailKeys.HideSelection = false;
+            this.lvDetailKeys.Location = new System.Drawing.Point(167, 31);
+            this.lvDetailKeys.MultiSelect = false;
+            this.lvDetailKeys.Name = "lvDetailKeys";
+            this.lvDetailKeys.ShowItemToolTips = true;
+            this.lvDetailKeys.Size = new System.Drawing.Size(271, 214);
+            this.lvDetailKeys.TabIndex = 6;
+            this.lvDetailKeys.UseCompatibleStateImageBehavior = false;
+            this.lvDetailKeys.View = System.Windows.Forms.View.Details;
+            this.lvDetailKeys.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvDetailKeys_ItemSelectionChanged);
+            this.lvDetailKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvDetailKeys_KeyDown);
             // 
             // colCommand
             // 
@@ -967,23 +974,27 @@
             this.colKey.Text = "Key";
             this.colKey.Width = 80;
             // 
-            // listBox1
+            // listGroupCommand
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Items.AddRange(new object[] {
-            "Add Comments",
-            "Delete Comments",
-            "Make Header",
-            "Count Line of Code",
-            "Change Comment Info",
-            "Configuration",
-            "Import/Export Setting",
+            this.listGroupCommand.FormattingEnabled = true;
+            this.listGroupCommand.ItemHeight = 15;
+            this.listGroupCommand.Items.AddRange(new object[] {
+            "AddComments",
+            "DeleteComments",
+            "CreateSingleHeader",
+            "Count LineOfCode",
+            "ChangeInformation",
+            "HistoryViewer",
+            "Configurations",
+            "CreateMultiHeader",
+            "Import/ExportSetting",
             "About"});
-            this.listBox1.Location = new System.Drawing.Point(22, 31);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(139, 214);
-            this.listBox1.TabIndex = 0;
+            this.listGroupCommand.Location = new System.Drawing.Point(22, 31);
+            this.listGroupCommand.Name = "listGroupCommand";
+            this.listGroupCommand.Size = new System.Drawing.Size(139, 214);
+            this.listGroupCommand.TabIndex = 0;
+            this.listGroupCommand.SelectedIndexChanged += new System.EventHandler(this.listGroupCommand_SelectedIndexChanged);
+            this.listGroupCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listGroupCommand_KeyDown);
             // 
             // label15
             // 
@@ -1018,7 +1029,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1131, 743);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnKeyboard);
             this.Controls.Add(this.pnHistory);
             this.Controls.Add(this.pnSingleSetting);
             this.Controls.Add(this.pnDataSetting);
@@ -1054,8 +1065,8 @@
             this.groupBox4.PerformLayout();
             this.pnHistory.ResumeLayout(false);
             this.pnHistory.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnKeyboard.ResumeLayout(false);
+            this.pnKeyboard.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1133,10 +1144,10 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Label lblPreview;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Panel pnKeyboard;
+        private System.Windows.Forms.ListBox listGroupCommand;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lvDetailKeys;
         private System.Windows.Forms.ColumnHeader colCommand;
         private System.Windows.Forms.ColumnHeader colKey;
         private System.Windows.Forms.Button btnRemoveHotkey;

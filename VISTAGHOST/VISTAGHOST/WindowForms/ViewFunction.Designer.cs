@@ -244,6 +244,7 @@
             this.dataGridViewTextBoxColumn1.FillWeight = 100.736F;
             this.dataGridViewTextBoxColumn1.HeaderText = "List of parameters";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ViewFunction
@@ -293,8 +294,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem onlyViewThisFunctionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem edToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chkAdded;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

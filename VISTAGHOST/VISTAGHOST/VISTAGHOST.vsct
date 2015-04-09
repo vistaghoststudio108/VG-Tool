@@ -64,7 +64,7 @@
         <Parent guid="guidVISTAGHOSTCmdSet" id="VistaghostContexMenuGroup"/>
         <Strings>
           <ButtonText>Add Comments</ButtonText>
-          <CommandName>AddComments</CommandName>
+          <CommandName>Add Comments</CommandName>
         </Strings>
       </Menu>
 
@@ -123,11 +123,19 @@
         </Strings>
       </Button>
 
-      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidAddHeaderForAll" priority="0x0001" type="Button">
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidHistoryViewer" priority="0x0001" type="Button">
         <Parent guid="guidVISTAGHOSTCmdSet" id="MyMenuShotKeyGroup"/>
         <Strings>
-          <ButtonText>Add Header for All Function</ButtonText>
-          <CommandName>cmdidAddHeaderForAll</CommandName>
+          <ButtonText>History Viewer</ButtonText>
+          <CommandName>cmdidHistoryViewer</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidCreateMultiHeader" priority="0x0002" type="Button">
+        <Parent guid="guidVISTAGHOSTCmdSet" id="MyMenuShotKeyGroup"/>
+        <Strings>
+          <ButtonText>Create Multi Header</ButtonText>
+          <CommandName>cmdidCreateMultiHeader</CommandName>
         </Strings>
       </Button>
 
@@ -274,7 +282,7 @@
     <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidDelTag" key1="0x33" mod1="ALT" editor="guidVSStd97" />
     <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidModTag" key1="0x31" mod1="ALT" editor="guidVSStd97" />
     <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidAddHeader" key1="0x36" mod1="ALT" editor="guidVSStd97" />
-    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidAddHeaderForAll" key1="0x36" mod1="CONTROL ALT" editor="guidVSStd97" />
+    <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidCreateMultiHeader" key1="0x36" mod1="CONTROL ALT" editor="guidVSStd97" />
     <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidExportSettings_mb" key1="I" mod1="ALT" editor="guidVSStd97" />
     <KeyBinding guid="guidVISTAGHOSTCmdSet" id="cmdidChangeInfo" key1="R" key2="R" mod1="ALT" mod2="ALT" editor="guidVSStd97" />
 
@@ -312,13 +320,14 @@
       <IDSymbol name ="cmdidCount" value="0x0107" />
 
       <IDSymbol name ="cmdidAddHeader" value="0x0109" />
-      <IDSymbol name ="cmdidAddHeaderForAll" value="0x0111" />
+      <IDSymbol name ="cmdidCreateMultiHeader" value="0x0111" />
 
       <IDSymbol name ="cmdidConfig_mb" value="0x010c" />
       <IDSymbol name ="cmdidAbout_mb" value ="0x010d"/>
       <IDSymbol name ="cmdidExportSettings_mb" value ="0x010e"/>
       <IDSymbol name ="cmdidExportHistory" value ="0x010f"/>
       <IDSymbol name ="cmdidChangeInfo" value ="0x0110"/>
+      <IDSymbol name ="cmdidHistoryViewer" value ="0x1110"/>
       
     </GuidSymbol>
     

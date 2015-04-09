@@ -219,9 +219,13 @@ namespace Vistaghost.VISTAGHOST
                 MenuCommand menuChangeInfo = new MenuCommand(ChangeInfoCallback, menuChangeID);
                 mcs.AddCommand(menuChangeInfo);
 
-                CommandID addAllHeaderID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidAddHeaderForAll);
+                CommandID addAllHeaderID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidCreateMultiHeader);
                 MenuCommand addAllHeader = new MenuCommand(AddAllHeaderCallback, addAllHeaderID);
                 mcs.AddCommand(addAllHeader);
+
+                CommandID historyViewerID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidHistoryViewer);
+                MenuCommand historyViewer = new MenuCommand(HistoryViewerCallback, historyViewerID);
+                mcs.AddCommand(historyViewer);
 
                 OutputWindow ow = dte2.ToolWindows.OutputWindow;
                 owP = ow.OutputWindowPanes.Add("Vistaghost");
@@ -260,6 +264,13 @@ namespace Vistaghost.VISTAGHOST
         }
 
         #region Callback methods
+        private void HistoryViewerCallback(object sender, EventArgs e)
+        {
+            HistoryViewer hvf = new HistoryViewer();
+            hvf.OnOpenFile += new HistoryViewerEventHandler(hvf_OnOpenFile);
+            hvf.ShowDialog();
+        }
+
         private void AddAllHeaderCallback(object sender, EventArgs e)
         {
             ViewFunction vff = new ViewFunction(DteHelper.Dte, DteHelper.Dte2);
@@ -454,6 +465,19 @@ namespace Vistaghost.VISTAGHOST
         }
 
         #endregion
+
+        private void hvf_OnOpenFile(string file)
+        {
+            try
+            {
+                DTE.ItemOperations.OpenFile(file, EnvDTE.Constants.vsViewKindCode);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Can not open this file!", "Open Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.LogError(ex);
+            }
+        }
 
         private void sf_OnSendData(string content,          /*content of comments*/
                             string account,         /*user account*/

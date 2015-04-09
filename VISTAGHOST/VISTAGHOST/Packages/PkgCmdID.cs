@@ -26,6 +26,8 @@ namespace Vistaghost.VISTAGHOST
 
         public const uint cmdidChangeInfo = 0x0110;
 
-        public const uint cmdidAddHeaderForAll = 0x0111;
+        public const uint cmdidCreateMultiHeader = 0x0111;
+
+        public const uint cmdidHistoryViewer = 0x1110;
     };
 }
