@@ -21,34 +21,6 @@ namespace Vistaghost.VISTAGHOST.Lib
         Excel
     }
 
-    public enum KeyBindings
-    {
-        //AddCommentsTag = 0x00001,
-        //DelCommentsTag = 0x00002,
-        //ModCommentsTag = 0x00004,
-        //DelComments = 0x00008,
-        //CountLineOfCode = 0x00010,
-        //MakeSingleHeader = 0x00020,
-        //MakeMultiHeader = 0x00040,
-        //ChangeInfo = 0x00080,
-        //Configuration = 0x00100,
-        //ImportExportSetting = 0x00200,
-        //AboutProduct = 0x00400,
-        //None
-        AddCommentsTag = 0,
-        DelCommentsTag,
-        ModCommentsTag,
-        DelComments,
-        CountLineOfCode,
-        MakeSingleHeader,
-        MakeMultiHeader,
-        ChangeInfo,
-        Configuration,
-        ImportExportSetting,
-        AboutProduct,
-        None
-    }
-
     public enum HeaderStyle
     {
         Aloka1 = 0,
@@ -156,22 +128,25 @@ namespace Vistaghost.VISTAGHOST.Lib
         public string CloseTagBegin { get; set; }
         public string CloseTagEnd { get; set; }
         public int DateFormat { get; set; }
+        public int EmptyLineNum { get; set; }
         public bool AutoShowInputDialog { get; set; }
-        public bool DisplayHistory { get; set; }
+        public bool JustOneLine { get; set; }
 
         public CommentInfo()
         {
             Account = "<account>";
             Content = "<content>";
             DevID = "<devid>";
-            DateFormat = 0;
+            KeepComment = true;
+
             OpenTagBegin = "//<Not set> ";
             OpenTagEnd = "/";
             CloseTagBegin = "//<Not set> ";
             CloseTagEnd = "/";
-            KeepComment = true;
+            DateFormat = 0;
+            EmptyLineNum = 0;
             AutoShowInputDialog = true;
-            DisplayHistory = false;
+            JustOneLine = false;
         }
     }
 
@@ -182,9 +157,7 @@ namespace Vistaghost.VISTAGHOST.Lib
         public bool AddBreakLine { get; set; }
         public string History { get; set; }
         public int Style { get; set; }
-        public string LogPath { get; set; }
-        public bool LogHistory { get; set; }
-        public int MaxSize { get; set; }
+        public string XAModel { get; set; }
         public List<ComponentInfo> HeaderComponents { get; set; }
 
         public HeaderInfo()
@@ -193,10 +166,24 @@ namespace Vistaghost.VISTAGHOST.Lib
             EndHeader = "<Not set>*/";
             AddBreakLine = false;
             History = String.Empty;
-            MaxSize = 100;
-            LogHistory = true;
-            LogPath = String.Empty;
+            XAModel = "XA-161";
             Style = 0; //default style is Aloka1
+        }
+    }
+
+    public class HistoryInfo
+    {
+        public bool DisplayHistory { get; set; }
+        public bool WriteLogHistory { get; set; }
+        public string LogPath { get; set; }
+        public string LogExtension { get; set; }
+
+        public HistoryInfo()
+        {
+            DisplayHistory = false;
+            WriteLogHistory = false;
+            LogPath = String.Empty;
+            LogExtension = ".txt";
         }
     }
 
@@ -205,12 +192,14 @@ namespace Vistaghost.VISTAGHOST.Lib
     {
         public CommentInfo CommentInfo { get; set; }
         public HeaderInfo HeaderInfo { get; set; }
+        public HistoryInfo HistoryInfo { get; set; }
         public DataInfo DataInfo { get; set; }
 
         public Settings()
         {
             CommentInfo = new CommentInfo();
             HeaderInfo = new HeaderInfo();
+            HistoryInfo = new HistoryInfo();
             DataInfo = new DataInfo();
         }
     }

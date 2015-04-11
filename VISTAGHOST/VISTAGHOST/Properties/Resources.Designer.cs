@@ -61,11 +61,65 @@ namespace Vistaghost.VISTAGHOST.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vistaghost.About.
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.AddComments.
+        /// </summary>
+        internal static string AddComment {
+            get {
+                return ResourceManager.GetString("AddComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add comment tags succeeded.
         /// </summary>
         internal static string AddCommentSuccess {
             get {
                 return ResourceManager.GetString("AddCommentSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vistaghost.ChangeInfo.
+        /// </summary>
+        internal static string ChangeInfo {
+            get {
+                return ResourceManager.GetString("ChangeInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vistaghost.Configurations.
+        /// </summary>
+        internal static string Config {
+            get {
+                return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.CountLinesofCode.
+        /// </summary>
+        internal static string CountLOC {
+            get {
+                return ResourceManager.GetString("CountLOC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.DeleteComments.
+        /// </summary>
+        internal static string DeleteComment {
+            get {
+                return ResourceManager.GetString("DeleteComment", resourceCulture);
             }
         }
         
@@ -93,6 +147,24 @@ namespace Vistaghost.VISTAGHOST.Properties {
         internal static string ExportSuccessMessage {
             get {
                 return ResourceManager.GetString("ExportSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vistaghost.HistoryViewer.
+        /// </summary>
+        internal static string HistoryViewer {
+            get {
+                return ResourceManager.GetString("HistoryViewer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vistaghost.ImportandExportSettings.
+        /// </summary>
+        internal static string ImportExport {
+            get {
+                return ResourceManager.GetString("ImportExport", resourceCulture);
             }
         }
         
@@ -142,11 +214,29 @@ namespace Vistaghost.VISTAGHOST.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vistaghost.CreateMultiHeader.
+        /// </summary>
+        internal static string MultiHeader {
+            get {
+                return ResourceManager.GetString("MultiHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No text selection.
         /// </summary>
         internal static string NoText {
             get {
                 return ResourceManager.GetString("NoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.MakeFunctionHeader.
+        /// </summary>
+        internal static string SingleHeader {
+            get {
+                return ResourceManager.GetString("SingleHeader", resourceCulture);
             }
         }
     }

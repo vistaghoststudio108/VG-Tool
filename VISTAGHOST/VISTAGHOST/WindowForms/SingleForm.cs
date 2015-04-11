@@ -43,10 +43,10 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     {
                         if (expMore.IsExpanded)
                             expMore.IsExpanded = false;
-                        this.Size = new Size(484, 172);
+                        this.Size = new Size(474, 160);
                         chKeepComments.Location = new Point(15, 99);
                         chKeepComments.Visible = true;
-                        btnAdd.Location = new Point(369, 99);
+                        btnAdd.Location = new Point(369, 95);
                         expMore.Visible = true;
                         btnAdd.Text = "Add";
                     }
@@ -54,7 +54,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 case ActionType.Add:
                 case ActionType.Delete:
                     {
-                        this.Size = new Size(484, 150);
+                        this.Size = new Size(474, 140);
                         expMore.Visible = false;
                         chKeepComments.Visible = false;
                         btnAdd.Location = new Point(369, 75);
@@ -64,7 +64,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
                 case ActionType.ChangeInfo:
                     {
-                        this.Size = new Size(484, 150);
+                        this.Size = new Size(474, 140);
                         expMore.Visible = false;
                         chKeepComments.Visible = false;
                         btnAdd.Location = new Point(369, 75);
@@ -77,6 +77,8 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 default:
                     break;
             }
+
+            txtContent.Focus();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -133,9 +135,9 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         {
             if (e.IsExpanded)
             {
-                this.Size = new Size(this.Size.Width, this.Size.Height + 93);
-                btnAdd.Location = new Point(btnAdd.Location.X, btnAdd.Location.Y + 93);
-                chKeepComments.Location = new Point(chKeepComments.Location.X, chKeepComments.Location.Y + 93);
+                this.Size = new Size(this.Size.Width, this.Size.Height + 96);
+                btnAdd.Location = new Point(btnAdd.Location.X, btnAdd.Location.Y + 96);
+                chKeepComments.Location = new Point(chKeepComments.Location.X, chKeepComments.Location.Y + 96);
 
                 txtFindWhat.Enabled = true;
                 txtFindWhat.Focus();
@@ -148,9 +150,9 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 txtReplaceWith.Enabled = false;
 
                 btnAdd.Focus();
-                this.Size = new Size(this.Size.Width, this.Size.Height - 93);
-                btnAdd.Location = new Point(btnAdd.Location.X, btnAdd.Location.Y - 93);
-                chKeepComments.Location = new Point(chKeepComments.Location.X, chKeepComments.Location.Y - 93);
+                this.Size = new Size(this.Size.Width, this.Size.Height - 96);
+                btnAdd.Location = new Point(btnAdd.Location.X, btnAdd.Location.Y - 96);
+                chKeepComments.Location = new Point(chKeepComments.Location.X, chKeepComments.Location.Y - 96);
 
                 MoreOptions = false;
             }

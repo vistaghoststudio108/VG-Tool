@@ -86,7 +86,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                     date = day + "-" + month + "-" + year;
                     break;
                 case DateFormat.DateFormat2:
-                    date = day + "/" + month + "/" + year;
+                    date = year + "/" + month + "/" + day;
                     break;
                 case DateFormat.FullDate:
                     {
@@ -538,6 +538,16 @@ namespace Vistaghost.VISTAGHOST.Lib
             return tempStr;
         }
 
+        static string ProcessHistory(string tab)
+        {
+            string tempStr = String.Empty;
+
+            string model = "-- " + VGSetting.SettingData.HeaderInfo.XAModel + " --\n" + tab + WhiteSpace3;
+            tempStr = model + GetDateString(DateFormat.DateFormat2) + "     " + VGSetting.SettingData.CommentInfo.Account + "     " + VGSetting.SettingData.HeaderInfo.History;
+
+            return tempStr;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -627,7 +637,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                 }
 
                 if (!none)
-                    header += tab + "      " + NoneJP;
+                    header += tab + "      " + NoneJP + _EOF;
 
                 // reset none
                 none = false;
@@ -654,7 +664,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                 header += tab + VGSetting.SettingData.HeaderInfo.HeaderComponents[5].Name + "\n" + tab + WhiteSpace3 + EndOfLine1;
 
             if (VGSetting.SettingData.HeaderInfo.HeaderComponents[6].Checked)
-                header += tab + VGSetting.SettingData.HeaderInfo.HeaderComponents[6].Name + "\n" + tab + WhiteSpace3 + ProcessDescription(VGSetting.SettingData.HeaderInfo.History.ToString(), tab) + "\n";
+                header += tab + VGSetting.SettingData.HeaderInfo.HeaderComponents[6].Name + "\n" + tab + ProcessHistory(tab) + "\n";
 
             header += VGSetting.SettingData.HeaderInfo.EndHeader;
 
@@ -749,12 +759,19 @@ namespace Vistaghost.VISTAGHOST.Lib
             {
                 /*final code*/
                 expCode = VGSettingConstants.MainCode + "|" + expCode;
+                try
+                {
+                    string noComments = Regex.Replace(selected.Text, expCode, "$1");
+                    TextRanges dummy = null;
 
-                string noComments = Regex.Replace(selected.Text, expCode, "$1");
-                TextRanges dummy = null;
-
-                /*Replace old selection with uncomment-selection*/
-                selected.ReplacePattern(selected.Text, noComments, 0, ref dummy);
+                    /*Replace old selection with uncomment-selection*/
+                    selected.ReplacePattern(selected.Text, noComments, 0, ref dummy);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex);
+                    return false;
+                }
             }
 
             if (!selected.IsEmpty)

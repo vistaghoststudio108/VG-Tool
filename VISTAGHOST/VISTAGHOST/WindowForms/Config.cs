@@ -22,6 +22,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
     {
         bool AddCommentChanged = false;
         bool AddHeaderChanged = false;
+        bool AddHistoryChanged = false;
 
         Settings settings;
         public ConfigEventHandler OnSendData;
@@ -34,23 +35,25 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         private string curHotKey = String.Empty;
 
         private List<VGCommand> commands = new List<VGCommand>() { 
-            new VGCommand(0, "EditorContextMenus.CodeWindow.AddComments", "[add]Tags", "Add", "None"),
-            new VGCommand(0, "EditorContextMenus.CodeWindow.AddComments", "[delete]Tags", "Delete", "None"),
-            new VGCommand(0, "EditorContextMenus.CodeWindow.AddComments", "[modify]Tags", "Modify", "None"),
-            new VGCommand(1, "EditorContextMenus.CodeWindow.DeleteComments", "", "Delete Comments", "None"),
-            new VGCommand(2, "EditorContextMenus.CodeWindow.MakeFunctionHeader", "", "Single Header", "None"),
-            new VGCommand(3, "EditorContextMenus.CodeWindow.CountLinesofCode", "", "Count LOC", "None"),
-            new VGCommand(4, "Vistaghost.ChangeInfo", "", "Change Comments Info", "None"),
-            new VGCommand(5, "Vistaghost.HistoryViewer", "", "History Viewer", "None"),
-            new VGCommand(6, "Vistaghost.Configurations", "", "Configurations", "None"),
-            new VGCommand(7, "Vistaghost.CreateMultiHeader", "", "Multi Header", "None"),
-            new VGCommand(8, "Vistaghost.ImportandExportSettings", "", "Import/Export Settings", "None"),
-            new VGCommand(9, "Vistaghost.About", "", "About Tool", "None")
+            new VGCommand(0, Properties.Resources.AddComment, "[add]Tags", "Add", "None"),
+            new VGCommand(0, Properties.Resources.AddComment, "[delete]Tags", "Delete", "None"),
+            new VGCommand(0, Properties.Resources.AddComment, "[modify]Tags", "Modify", "None"),
+            new VGCommand(1, Properties.Resources.DeleteComment, "", "Delete Comments", "None"),
+            new VGCommand(2, Properties.Resources.SingleHeader, "", "Single Header", "None"),
+            new VGCommand(3, Properties.Resources.CountLOC, "", "Count LOC", "None"),
+            new VGCommand(4, Properties.Resources.ChangeInfo, "", "Change Comments Info", "None"),
+            new VGCommand(5, Properties.Resources.HistoryViewer, "", "History Viewer", "None"),
+            new VGCommand(6, Properties.Resources.Config, "", "Configurations", "None"),
+            new VGCommand(7, Properties.Resources.MultiHeader, "", "Multi Header", "None"),
+            new VGCommand(8, Properties.Resources.ImportExport, "", "Import/Export Settings", "None"),
+            new VGCommand(9, Properties.Resources.About, "", "About Tool", "None")
         };
 
         public Config()
         {
             InitializeComponent();
+
+            pnSingleSetting.Visible = true;
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -111,8 +114,9 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             txtCloseEndTag.Text = data.CommentInfo.CloseTagEnd;
 
             cbDateFormat.SelectedIndex = data.CommentInfo.DateFormat;
+            numerEmptyLine.Value = data.CommentInfo.EmptyLineNum;
             chAutoAddWithoutDialog.Checked = data.CommentInfo.AutoShowInputDialog;
-            chDisHistory.Checked = data.CommentInfo.DisplayHistory;
+            chkJustOneLine.Checked = data.CommentInfo.JustOneLine;
 
             // update header config
             richTextBox1.Text = data.HeaderInfo.BeginHeader;
@@ -120,6 +124,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             checkBox10.Checked = data.HeaderInfo.AddBreakLine;
             txtHistory.Text = data.HeaderInfo.History;
             cbHeaderStyle.SelectedIndex = data.HeaderInfo.Style;
+            cbXAModel.SelectedIndex = cbXAModel.FindString(data.HeaderInfo.XAModel);
 
             if (data.HeaderInfo.HeaderComponents != null && data.HeaderInfo.HeaderComponents.Count != 0)
             {
@@ -141,6 +146,12 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
                 txtHistory.Enabled = checkBox11.Checked;
             }
+
+            chDisHistory.Checked = data.HistoryInfo.DisplayHistory;
+            chkLogHistory.Checked = data.HistoryInfo.WriteLogHistory;
+            txtLogPath.Text = data.HistoryInfo.LogPath;
+
+            rdTxtFile.Checked = (data.HistoryInfo.LogExtension == ".txt");
 
             /*Load keybinding*/
             InitKeyBinding();
@@ -216,8 +227,9 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 settings.CommentInfo.CloseTagEnd = txtCloseEndTag.Text;
 
                 settings.CommentInfo.DateFormat = cbDateFormat.SelectedIndex;
+                settings.CommentInfo.EmptyLineNum = (int)numerEmptyLine.Value;
                 settings.CommentInfo.AutoShowInputDialog = chAutoAddWithoutDialog.Checked;
-                settings.CommentInfo.DisplayHistory = chDisHistory.Checked;
+                settings.CommentInfo.JustOneLine = chkJustOneLine.Checked;
             }
 
             if (AddHeaderChanged)
@@ -249,10 +261,20 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 settings.HeaderInfo.AddBreakLine = checkBox10.Checked;
                 settings.HeaderInfo.History = txtHistory.Text;
                 settings.HeaderInfo.Style = (int)headerStyle;
+                settings.HeaderInfo.XAModel = cbXAModel.Text;
             }
 
-            if (OnSendData != null && (AddCommentChanged | AddHeaderChanged))
+            if (AddHistoryChanged)
+            {
+                settings.HistoryInfo.DisplayHistory = chDisHistory.Checked;
+                settings.HistoryInfo.WriteLogHistory = chkLogHistory.Checked;
+                settings.HistoryInfo.LogPath = txtLogPath.Text;
+                settings.HistoryInfo.LogExtension = (rdTxtFile.Checked) ? ".txt" : ".xml";
+            }
+
+            if (OnSendData != null && (AddCommentChanged | AddHeaderChanged | AddHistoryChanged))
                 OnSendData(settings);
+
             this.Close();
         }
 
@@ -327,49 +349,75 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             btnBrowseExternal.Enabled = radioButton4.Checked;
         }
 
-        private void AddComponent_MouseClick(object sender, MouseEventArgs e)
-        {
-            AddHeaderChanged = true;
-            btnSave.Enabled = true;
-        }
-
-        private void Options_MouseClick(object sender, MouseEventArgs e)
-        {
-            AddCommentChanged = true;
-            btnSave.Enabled = true;
-        }
-
         private void AddComponent_CheckedChanged(object sender, EventArgs e)
         {
             var check = ((CheckBox)sender);
             var tag = int.Parse(((CheckBox)sender).Tag.ToString());
 
+            AddHeaderChanged = true;
+            btnSave.Enabled = true;
+
             if (tag == 0)
+            {
                 richTextBox3.Enabled = check.Checked;
+                if (check.Checked)
+                    richTextBox3.Focus();
+            }
             else if (tag == 1)
+            {
                 richTextBox4.Enabled = check.Checked;
+                if (check.Checked)
+                    richTextBox4.Focus();
+            }
             else if (tag == 2)
+            {
                 richTextBox5.Enabled = check.Checked;
+                if (check.Checked)
+                    richTextBox5.Focus();
+            }
             else if (tag == 3)
+            {
                 richTextBox6.Enabled = check.Checked;
+                if (check.Checked)
+                    richTextBox6.Focus();
+            }
             else if (tag == 4)
+            {
                 richTextBox7.Enabled = check.Checked;
+                if (check.Checked)
+                    richTextBox7.Focus();
+            }
             else if (tag == 5)
+            {
                 richTextBox8.Enabled = check.Checked;
+                if (check.Checked)
+                    richTextBox8.Focus();
+            }
             else if (tag == 6)
             {
                 richTextBox9.Enabled = check.Checked;
+                if (check.Checked)
+                    richTextBox9.Focus();
+
                 txtHistory.Enabled = check.Checked;
+                cbXAModel.Enabled = check.Checked;
             }
         }
 
         private void cbDateFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
+            int savedFormat = settings.CommentInfo.DateFormat;
+            var curFormat = cbDateFormat.SelectedIndex;
+
+            if (curFormat == savedFormat)
+            {
+                return;
+            }
+
             AddCommentChanged = true;
             btnSave.Enabled = true;
 
-            var index = (DateFormat)((ComboBox)sender).SelectedIndex;
-            switch (index)
+            switch ((DateFormat)curFormat)
             {
                 case DateFormat.yyyymmdd:
                     lblDate1.Text = lblDate2.Text = "<yyyymmdd>";
@@ -431,6 +479,8 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         private void chkLogHistory_CheckedChanged(object sender, EventArgs e)
         {
             groupBox2.Enabled = chkLogHistory.Checked;
+            AddHistoryChanged = true;
+            btnSave.Enabled = true;
         }
 
         private void btnCustomForColor_Click(object sender, EventArgs e)
@@ -448,16 +498,6 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             {
 
             }
-        }
-
-        private void cbForgroundColor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lblPreview.ForeColor = cbForgroundColor.SelectedItem.Color;
-        }
-
-        private void cbBackgroundColor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lblPreview.BackColor = cbBackgroundColor.SelectedItem.Color;
         }
 
         private void listGroupCommand_SelectedIndexChanged(object sender, EventArgs e)
@@ -543,6 +583,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, "Can not assign shortcut key. Check and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Logger.LogError(ex);
             }
         }
@@ -560,12 +601,14 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
             try
             {
+                /*set empty hot key*/
                 this.dte2.Commands.Item(strCmd, 0).Bindings = new object[] { };
 
                 InitKeyBinding();
             }
             catch (Exception ex)
             {
+                MessageBox.Show(this, "Can not remove shortcut key. Check and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Logger.LogError(ex);
             }
         }
@@ -587,6 +630,49 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 listGroupCommand.Focus();
                 e.SuppressKeyPress = true;
             }
+        }
+
+        private void numerEmptyLine_ValueChanged(object sender, EventArgs e)
+        {
+            AddCommentChanged = true;
+            btnSave.Enabled = true;
+        }
+
+        private void cmCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            AddCommentChanged = true;
+            btnSave.Enabled = true;
+        }
+
+        private void cbXAModel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int curIndex = cbXAModel.SelectedIndex;
+            int savedIndex = cbXAModel.FindString(settings.HeaderInfo.XAModel);
+
+            if (curIndex == savedIndex)
+            {
+                return;
+            }
+
+            AddHeaderChanged = true;
+            btnSave.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtLogPath.Text = folderBrowserDialog1.SelectedPath;
+
+                AddHistoryChanged = true;
+                btnSave.Enabled = true;
+            }
+        }
+
+        private void typeFile_CheckedChanged(object sender, EventArgs e)
+        {
+            AddHistoryChanged = true;
+            btnSave.Enabled = true;
         }
     }
 }

@@ -82,7 +82,13 @@ namespace Vistaghost.VISTAGHOST.Helper
                 var date = VGOperations.GetDateString(DateFormat.FullDate);
                 var account = VGSetting.SettingData.CommentInfo.Account;
                 var logPath = String.Empty;
-                var dir = VGSetting.SettingData.HeaderInfo.LogPath;
+                var dir = VGSetting.SettingData.HistoryInfo.LogPath;
+
+                if (String.IsNullOrEmpty(dir))
+                {
+                    dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
+                    dir = Path.Combine(dir, VGSettingConstants.LogFolder);
+                }
 
                 if (!Directory.Exists(dir))
                 {

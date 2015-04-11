@@ -73,8 +73,8 @@
             // 
             // txtAccount
             // 
-            this.txtAccount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtAccount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.txtAccount.Location = new System.Drawing.Point(68, 43);
             this.txtAccount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAccount.Name = "txtAccount";
@@ -133,10 +133,10 @@
             this.expMore.Controls.Add(this.txtReplaceWith);
             this.expMore.Controls.Add(this.txtFindWhat);
             this.expMore.ExpandedHeight = 123;
-            this.expMore.IsExpanded = false;
+            this.expMore.IsExpanded = true;
             this.expMore.Location = new System.Drawing.Point(4, 71);
             this.expMore.Name = "expMore";
-            this.expMore.Size = new System.Drawing.Size(452, 32);
+            this.expMore.Size = new System.Drawing.Size(452, 123);
             this.expMore.TabIndex = 4;
             this.expMore.UseAnimation = false;
             this.expMore.ExpandCollapse += new System.EventHandler<MakarovDev.ExpandCollapsePanel.ExpandCollapseEventArgs>(this.expMore_ExpandCollapse);
@@ -217,6 +217,7 @@
             this.expMore.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

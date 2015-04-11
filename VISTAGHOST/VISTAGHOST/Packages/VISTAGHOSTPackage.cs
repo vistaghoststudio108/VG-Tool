@@ -508,7 +508,7 @@ namespace Vistaghost.VISTAGHOST
             if (VGOperations.ProcessTextForAddSingle(DteHelper.Dte, Setting.CurrentDate, content, account, devid, mode, keep_comments, ref info))
             {
                 /*Show history in output window*/
-                if (VGSetting.SettingData.CommentInfo.DisplayHistory)
+                if (VGSetting.SettingData.HistoryInfo.DisplayHistory)
                 {
                     // Add a line of text to the new pane.
                     owP.OutputString(recordNum.ToString() + ">" + info.Path + "(" + info.Line + ")\n");
@@ -530,9 +530,13 @@ namespace Vistaghost.VISTAGHOST
                 }
 
                 /*Write log of history*/
-                if (VGSetting.SettingData.HeaderInfo.LogHistory)
+                if (VGSetting.SettingData.HistoryInfo.WriteLogHistory)
                 {
-                    Logger.LogHistory(LogFileType.Xml, info.Path, info.Line, mode, find, replace, numPh);
+                    LogFileType type = LogFileType.Xml;
+                    if (VGSetting.SettingData.HistoryInfo.LogExtension == ".txt")
+                        type = LogFileType.TextFile;
+
+                    Logger.LogHistory(type, info.Path, info.Line, mode, find, replace, numPh);
                 }
 
                 DteHelper.Dte.StatusBar.Text = Properties.Resources.AddCommentSuccess;
