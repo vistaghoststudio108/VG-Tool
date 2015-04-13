@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using Vistaghost.VISTAGHOST.Helper;
+using EnvDTE80;
 
 namespace Vistaghost.VISTAGHOST.Lib
 {
@@ -115,6 +116,19 @@ namespace Vistaghost.VISTAGHOST.Lib
             }
 
             return false;
+        }
+
+        public static string GetFuncPrototype(DTE2 dte2)
+        {
+            TextSelection selected = (TextSelection)dte2.ActiveDocument.Selection;
+            CodeFunction codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+
+            if (codeFunc != null)
+            {
+                return codeFunc.get_Prototype((int)(vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType));
+            }
+
+            return String.Empty;
         }
 
         /// <summary>
@@ -543,7 +557,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             string tempStr = String.Empty;
 
             string model = "-- " + VGSetting.SettingData.HeaderInfo.XAModel + " --\n" + tab + WhiteSpace3;
-            tempStr = model + GetDateString(DateFormat.DateFormat2) + "     " + VGSetting.SettingData.CommentInfo.Account + "     " + VGSetting.SettingData.HeaderInfo.History;
+            tempStr = model + GetDateString(DateFormat.DateFormat2) + "     " + VGSetting.SettingData.CommentInfo.Account + "     [" + VGSetting.SettingData.HeaderInfo.History + "]    Create new";
 
             return tempStr;
         }

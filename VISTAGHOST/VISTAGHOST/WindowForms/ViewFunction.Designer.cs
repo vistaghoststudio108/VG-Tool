@@ -45,12 +45,12 @@
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbSearchType = new System.Windows.Forms.ComboBox();
             this.dtFunctions = new System.Windows.Forms.DataGridView();
+            this.chkAdded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.onlyViewThisFunctionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.edToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkAdded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dtParamView)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtFunctions)).BeginInit();
@@ -89,7 +89,6 @@
             this.dtParamView.EnableHeadersVisualStyles = false;
             this.dtParamView.Location = new System.Drawing.Point(358, 47);
             this.dtParamView.Name = "dtParamView";
-            this.dtParamView.ReadOnly = true;
             this.dtParamView.RowHeadersVisible = false;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.dtParamView.RowsDefaultCellStyle = dataGridViewCellStyle3;
@@ -107,7 +106,6 @@
             this.txtParaList.FillWeight = 35F;
             this.txtParaList.HeaderText = "Arguments";
             this.txtParaList.Name = "txtParaList";
-            this.txtParaList.ReadOnly = true;
             this.txtParaList.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // chInput
@@ -116,7 +114,6 @@
             this.chInput.FillWeight = 5F;
             this.chInput.HeaderText = "Input";
             this.chInput.Name = "chInput";
-            this.chInput.ReadOnly = true;
             this.chInput.Width = 41;
             // 
             // chOutput
@@ -125,7 +122,6 @@
             this.chOutput.FillWeight = 4.478957F;
             this.chOutput.HeaderText = "Output";
             this.chOutput.Name = "chOutput";
-            this.chOutput.ReadOnly = true;
             this.chOutput.Width = 51;
             // 
             // colValue
@@ -133,7 +129,6 @@
             this.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.colValue.HeaderText = "Value";
             this.colValue.Name = "colValue";
-            this.colValue.ReadOnly = true;
             this.colValue.Visible = false;
             // 
             // statusStrip1
@@ -201,6 +196,25 @@
             this.dtFunctions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtFunctions_KeyDown);
             this.dtFunctions.SelectionChanged += new System.EventHandler(this.dtFunctions_SelectionChanged);
             // 
+            // chkAdded
+            // 
+            this.chkAdded.FillWeight = 10F;
+            this.chkAdded.HeaderText = "Added";
+            this.chkAdded.Name = "chkAdded";
+            this.chkAdded.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridViewTextBoxColumn1.FillWeight = 100.736F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "List of parameters";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // contextMenu
             // 
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -227,25 +241,6 @@
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
-            // 
-            // chkAdded
-            // 
-            this.chkAdded.FillWeight = 10F;
-            this.chkAdded.HeaderText = "Added";
-            this.chkAdded.Name = "chkAdded";
-            this.chkAdded.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridViewTextBoxColumn1.FillWeight = 100.736F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "List of parameters";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ViewFunction
             // 

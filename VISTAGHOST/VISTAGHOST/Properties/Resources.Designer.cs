@@ -106,6 +106,15 @@ namespace Vistaghost.VISTAGHOST.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.CopyPrototype.
+        /// </summary>
+        internal static string CopyPrototype {
+            get {
+                return ResourceManager.GetString("CopyPrototype", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.CountLinesofCode.
         /// </summary>
         internal static string CountLOC {

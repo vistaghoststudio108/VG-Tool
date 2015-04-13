@@ -39,10 +39,10 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             new VGCommand(0, Properties.Resources.AddComment, "[delete]Tags", "Delete", "None"),
             new VGCommand(0, Properties.Resources.AddComment, "[modify]Tags", "Modify", "None"),
             new VGCommand(1, Properties.Resources.DeleteComment, "", "Delete Comments", "None"),
-            new VGCommand(2, Properties.Resources.SingleHeader, "", "Single Header", "None"),
-            new VGCommand(3, Properties.Resources.CountLOC, "", "Count LOC", "None"),
-            new VGCommand(4, Properties.Resources.ChangeInfo, "", "Change Comments Info", "None"),
-            new VGCommand(5, Properties.Resources.HistoryViewer, "", "History Viewer", "None"),
+            new VGCommand(2, Properties.Resources.CopyPrototype, "", "Copy Function Prototype", "None"),
+            new VGCommand(3, Properties.Resources.SingleHeader, "", "Single Header", "None"),
+            new VGCommand(4, Properties.Resources.CountLOC, "", "Count LOC", "None"),
+            new VGCommand(5, Properties.Resources.ChangeInfo, "", "Change Comments Info", "None"),
             new VGCommand(6, Properties.Resources.Config, "", "Configurations", "None"),
             new VGCommand(7, Properties.Resources.MultiHeader, "", "Multi Header", "None"),
             new VGCommand(8, Properties.Resources.ImportExport, "", "Import/Export Settings", "None"),
@@ -152,6 +152,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             txtLogPath.Text = data.HistoryInfo.LogPath;
 
             rdTxtFile.Checked = (data.HistoryInfo.LogExtension == ".txt");
+            rdXmlFile.Checked = (data.HistoryInfo.LogExtension == ".xml");
 
             /*Load keybinding*/
             InitKeyBinding();
@@ -237,7 +238,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 settings.HeaderInfo.BeginHeader = richTextBox1.Text;
                 if (settings.HeaderInfo.HeaderComponents == null || settings.HeaderInfo.HeaderComponents.Count == 0)
                 {
-                    settings.HeaderInfo.HeaderComponents = new List<ComponentInfo>(7);
+                    settings.HeaderInfo.HeaderComponents = new List<ComponentInfo>();
                     settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Name = richTextBox3.Text, Checked = checkBox4.Checked });
                     settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Name = richTextBox4.Text, Checked = checkBox5.Checked });
                     settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Name = richTextBox5.Text, Checked = checkBox6.Checked });
@@ -302,6 +303,14 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                         isoStore.Close();
 
                         VGSetting.SettingData = new Settings();
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents = new List<ComponentInfo>();
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Module Name:" });
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Calling Sequence:" });
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Function:" });
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Arguments:" });
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Return Value:" });
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Note:" });
+                        VGSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "History:" });
 
                         VGSetting.SaveSettings();
                     }
@@ -319,10 +328,20 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     chAutoAddWithoutDialog.Checked = true;
                     chDisHistory.Checked = false;
 
-                    richTextBox3.Text = richTextBox4.Text = richTextBox5.Text = "";
-                    richTextBox6.Text = richTextBox7.Text = richTextBox8.Text = richTextBox9.Text = txtHistory.Text = "";
-                    richTextBox1.Text = "/*<Not set>";
-                    richTextBox2.Text = "<Not set>*/";
+                    richTextBox3.Text = "Module Name:";
+                    richTextBox4.Text = "Calling Sequence:";
+                    richTextBox5.Text = "Function:";
+                    richTextBox6.Text = "Arguments:";
+                    richTextBox7.Text = "Return Value:";
+                    richTextBox8.Text = "Note:";
+                    richTextBox9.Text = "History:";
+
+                    txtHistory.Text = "";
+                    cbXAModel.SelectedIndex = 4;
+                    cbHeaderStyle.SelectedIndex = 0;
+
+                    richTextBox1.Text = "/*=============================================================Aloka===========";
+                    richTextBox2.Text = "==============================================================Aloka==========*/";
 
                     richTextBox3.Enabled = richTextBox4.Enabled = richTextBox5.Enabled = false;
                     richTextBox6.Enabled = richTextBox7.Enabled = richTextBox8.Enabled = richTextBox9.Enabled = false;

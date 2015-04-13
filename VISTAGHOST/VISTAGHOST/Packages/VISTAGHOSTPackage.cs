@@ -223,9 +223,9 @@ namespace Vistaghost.VISTAGHOST
                 MenuCommand addAllHeader = new MenuCommand(AddAllHeaderCallback, addAllHeaderID);
                 mcs.AddCommand(addAllHeader);
 
-                CommandID historyViewerID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidHistoryViewer);
-                MenuCommand historyViewer = new MenuCommand(HistoryViewerCallback, historyViewerID);
-                mcs.AddCommand(historyViewer);
+                CommandID copyPrototypeID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidCopyPrototype);
+                MenuCommand copyPrototype = new MenuCommand(CopyPrototypeCallback, copyPrototypeID);
+                mcs.AddCommand(copyPrototype);
 
                 OutputWindow ow = dte2.ToolWindows.OutputWindow;
                 owP = ow.OutputWindowPanes.Add("Vistaghost");
@@ -264,11 +264,12 @@ namespace Vistaghost.VISTAGHOST
         }
 
         #region Callback methods
-        private void HistoryViewerCallback(object sender, EventArgs e)
+        private void CopyPrototypeCallback(object sender, EventArgs e)
         {
-            HistoryViewer hvf = new HistoryViewer();
-            hvf.OnOpenFile += new HistoryViewerEventHandler(hvf_OnOpenFile);
-            hvf.ShowDialog();
+            string prototype = VGOperations.GetFuncPrototype(DteHelper.Dte2);
+
+            if (!String.IsNullOrEmpty(prototype))
+                Clipboard.SetText(prototype, TextDataFormat.UnicodeText);
         }
 
         private void AddAllHeaderCallback(object sender, EventArgs e)
@@ -498,7 +499,10 @@ namespace Vistaghost.VISTAGHOST
             }
 
             if (mode == ActionType.ChangeInfo)
+            {
+                VGSetting.SaveSettings();
                 return;
+            }
 
             int numPh = -1;
             ActionInfo info = new ActionInfo();
@@ -587,6 +591,7 @@ namespace Vistaghost.VISTAGHOST
                 DteHelper.Dte.StatusBar.Text = Properties.Resources.DeleteCommentSuccess;
                 return;
             }
+
             DteHelper.Dte.StatusBar.Text = Properties.Resources.NoText;
         }
 

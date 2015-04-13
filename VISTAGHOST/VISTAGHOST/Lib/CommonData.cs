@@ -162,12 +162,20 @@ namespace Vistaghost.VISTAGHOST.Lib
 
         public HeaderInfo()
         {
-            BeginHeader = "/*<Not set>";
-            EndHeader = "<Not set>*/";
+            BeginHeader = "/*=============================================================Aloka===========";
+            EndHeader = "==============================================================Aloka==========*/";
             AddBreakLine = false;
             History = String.Empty;
             XAModel = "XA-161";
             Style = 0; //default style is Aloka1
+            //HeaderComponents = new List<ComponentInfo>();
+            //HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Module Name:" });
+            //HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Calling Sequence:" });
+            //HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Function:" });
+            //HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Arguments:" });
+            //HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Return Value:" });
+            //HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Note:" });
+            //HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "History:" });
         }
     }
 
@@ -221,11 +229,15 @@ namespace Vistaghost.VISTAGHOST.Lib
     {
         public string FullPath { get; set; }
         public bool Storge { get; set; }
+        public string UserName { get; set; }
+        public string PassWord { get; set; }
 
         public DataInfo()
         {
             FullPath = String.Empty;
             Storge = true;
+            UserName = "admin";
+            PassWord = "vistaghost";
         }
     }
 

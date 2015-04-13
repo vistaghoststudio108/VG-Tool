@@ -121,6 +121,15 @@ namespace Vistaghost.VISTAGHOST
                 if (isoStore.GetFileNames(VGSettingConstants.SettingFile).Length == 0)
                 {
                     isoStream = new IsolatedStorageFileStream(VGSettingConstants.SettingFile, FileMode.Create, isoStore);
+                    settings.HeaderInfo.HeaderComponents = new List<ComponentInfo>();
+                    settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Module Name:" });
+                    settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Calling Sequence:" });
+                    settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Function:" });
+                    settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Arguments:" });
+                    settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Return Value:" });
+                    settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Note:" });
+                    settings.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "History:" });
+
                     serializer.Serialize(isoStream, settings);
                 }
                 else

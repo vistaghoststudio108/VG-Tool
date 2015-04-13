@@ -132,6 +132,9 @@
   <data name="Config" xml:space="preserve">
     <value>Vistaghost.Configurations</value>
   </data>
+  <data name="CopyPrototype" xml:space="preserve">
+    <value>EditorContextMenus.CodeWindow.CopyPrototype</value>
+  </data>
   <data name="CountLOC" xml:space="preserve">
     <value>EditorContextMenus.CodeWindow.CountLinesofCode</value>
   </data>
