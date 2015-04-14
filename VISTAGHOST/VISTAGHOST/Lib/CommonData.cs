@@ -42,6 +42,12 @@ namespace Vistaghost.VISTAGHOST.Lib
         Unknown
     }
 
+    public enum PrototypeType
+    {
+        FuncName = 0,
+        FullProt
+    }
+
     public enum SearchType
     {
         None = -1,
@@ -63,6 +69,13 @@ namespace Vistaghost.VISTAGHOST.Lib
         DateFormat1,    // dd-mm-yyyy
         DateFormat2,    // dd/mm/yyyy
         FullDate,       // include date and time
+    }
+
+    public enum ErrorType
+    {
+        ErrSystem = 0,
+        ErrNetwork,
+        ErrIOFile
     }
 
     public enum VGDelCommentsType
@@ -229,15 +242,17 @@ namespace Vistaghost.VISTAGHOST.Lib
     {
         public string FullPath { get; set; }
         public bool Storge { get; set; }
-        public string UserName { get; set; }
-        public string PassWord { get; set; }
+        public string ProcessorID { get; set; }
+        public string BeginDate { get; set; }
+        public bool RegisteredOnWeb { get; set; }
 
         public DataInfo()
         {
             FullPath = String.Empty;
             Storge = true;
-            UserName = "admin";
-            PassWord = "vistaghost";
+            ProcessorID = String.Empty;
+            BeginDate = String.Empty;
+            RegisteredOnWeb = false;
         }
     }
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Vistaghost.VISTAGHOST.Lib;
+using Vistaghost.VISTAGHOST.Network;
 
 namespace Vistaghost.VISTAGHOST.WindowForms
 {
@@ -56,6 +57,9 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 };
 
                 VGSetting.RegisterData = regData;
+
+                /*Send registered info to webservice*/
+                VGProduct.RegisterProduct();
 
                 VGSetting.SaveRegisterInfo();
                 index = 2;

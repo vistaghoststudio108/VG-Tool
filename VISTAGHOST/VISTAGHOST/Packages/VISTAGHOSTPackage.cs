@@ -266,7 +266,7 @@ namespace Vistaghost.VISTAGHOST
         #region Callback methods
         private void CopyPrototypeCallback(object sender, EventArgs e)
         {
-            string prototype = VGOperations.GetFuncPrototype(DteHelper.Dte2);
+            string prototype = VGOperations.GetFuncPrototype(DteHelper.Dte2, PrototypeType.FullProt);
 
             if (!String.IsNullOrEmpty(prototype))
                 Clipboard.SetText(prototype, TextDataFormat.UnicodeText);
@@ -536,11 +536,15 @@ namespace Vistaghost.VISTAGHOST
                 /*Write log of history*/
                 if (VGSetting.SettingData.HistoryInfo.WriteLogHistory)
                 {
+                    /*Get function*/
+                    string prototype = VGOperations.GetFuncPrototype(DteHelper.Dte2, PrototypeType.FuncName);
+
                     LogFileType type = LogFileType.Xml;
+
                     if (VGSetting.SettingData.HistoryInfo.LogExtension == ".txt")
                         type = LogFileType.TextFile;
 
-                    Logger.LogHistory(type, info.Path, info.Line, mode, find, replace, numPh);
+                    Logger.LogHistory(type, info.Path, info.Line, mode, find, replace, numPh, prototype);
                 }
 
                 DteHelper.Dte.StatusBar.Text = Properties.Resources.AddCommentSuccess;

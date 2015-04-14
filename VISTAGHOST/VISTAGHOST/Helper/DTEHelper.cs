@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Vistaghost.VISTAGHOST.Lib;
+using Vistaghost.VISTAGHOST.Network;
 
 namespace Vistaghost.VISTAGHOST.Helper
 {
@@ -107,6 +108,12 @@ namespace Vistaghost.VISTAGHOST.Helper
                 VISTAGHOSTPackage.Current.ShowToolBar(true);
 
                 VISTAGHOSTPackage.Current.IsOpened = true;
+            }
+
+            /*If not register, send request for register to website*/
+            if (!VGSetting.SettingData.DataInfo.RegisteredOnWeb)
+            {
+                VGProduct.RegisterProduct();
             }
         }
 

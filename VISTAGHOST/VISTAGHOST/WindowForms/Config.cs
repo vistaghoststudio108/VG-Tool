@@ -145,6 +145,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 checkBox11.Checked = data.HeaderInfo.HeaderComponents[6].Checked;
 
                 txtHistory.Enabled = checkBox11.Checked;
+                cbXAModel.Enabled = checkBox11.Checked;
             }
 
             chDisHistory.Checked = data.HistoryInfo.DisplayHistory;
@@ -542,7 +543,10 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         private void lvDetailKeys_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (!e.IsSelected)
+            {
+                txtHotKey.Text = String.Empty;
                 return;
+            }
 
             childIndex = e.ItemIndex;
 
@@ -575,6 +579,8 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
         private void btnAssignHotKey_Click(object sender, EventArgs e)
         {
+            Vistaghost.VISTAGHOST.Network.VGProduct.RegisterProduct();
+
             if (curHotKey == txtHotKey.Text || curHotKey == "")
             {
                 return;
@@ -692,6 +698,50 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         {
             AddHistoryChanged = true;
             btnSave.Enabled = true;
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Text == "Comments")
+            {
+                pnHeaderSetting.Visible = false;
+                pnDataSetting.Visible = false;
+                pnSingleSetting.Visible = true;
+                pnHistory.Visible = false;
+                pnKeyboard.Visible = false;
+            }
+            else if (e.Node.Text == "Header")
+            {
+                pnHeaderSetting.Visible = true;
+                pnDataSetting.Visible = false;
+                pnSingleSetting.Visible = false;
+                pnHistory.Visible = false;
+                pnKeyboard.Visible = false;
+            }
+            else if (e.Node.Text == "Data Management")
+            {
+                pnHeaderSetting.Visible = false;
+                pnDataSetting.Visible = true;
+                pnSingleSetting.Visible = false;
+                pnHistory.Visible = false;
+                pnKeyboard.Visible = false;
+            }
+            else if (e.Node.Text == "History")
+            {
+                pnHistory.Visible = true;
+                pnHeaderSetting.Visible = false;
+                pnDataSetting.Visible = false;
+                pnSingleSetting.Visible = false;
+                pnKeyboard.Visible = false;
+            }
+            else if (e.Node.Text == "Keyboard")
+            {
+                pnHistory.Visible = false;
+                pnHeaderSetting.Visible = false;
+                pnDataSetting.Visible = false;
+                pnSingleSetting.Visible = false;
+                pnKeyboard.Visible = true;
+            }
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Vistaghost.VISTAGHOST.Helper
         /// write history to file
         /// </summary>
         /// <param name="history"></param>
-        public static void LogHistory(LogFileType type, string path, int line, ActionType mode, string find, string replace, int numPhrase)
+        public static void LogHistory(LogFileType type, string path, int line, ActionType mode, string find, string replace, int numPhrase, string prototype)
         {
             try
             {
@@ -153,12 +153,16 @@ namespace Vistaghost.VISTAGHOST.Helper
                                 XElement fileNode = new XElement("File");
                                 fileNode.Value = path;
 
+                                XElement funcNode = new XElement("Func");
+                                funcNode.Value = prototype;
+
                                 XElement lineNode = new XElement("Line");
                                 lineNode.Value = line.ToString();
 
                                 historyNode.Add(accountNode);
                                 historyNode.Add(modeNode);
                                 historyNode.Add(fileNode);
+                                historyNode.Add(funcNode);
                                 historyNode.Add(lineNode);
 
                                 RootNode.Add(historyNode);
