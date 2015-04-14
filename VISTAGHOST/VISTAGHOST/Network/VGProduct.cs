@@ -107,9 +107,6 @@ namespace Vistaghost.VISTAGHOST.Network
 
             // Start the asynchronous request.
             IAsyncResult result = (IAsyncResult)myHttpWebRequest.BeginGetResponse(new AsyncCallback(RespCallback), myRequestState);
-
-            // Release the HttpWebResponse resource.
-            myRequestState.response.Close();
         }
 
 
@@ -155,6 +152,9 @@ namespace Vistaghost.VISTAGHOST.Network
 
                 // Begin the Reading of the contents of the HTML page and print it to the console.
                 IAsyncResult asynchronousInputRead = responseStream.BeginRead(myRequestState.BufferRead, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), myRequestState);
+
+                // Release the HttpWebResponse resource.
+                myRequestState.response.Close();
                 return;
             }
             catch (WebException wEx)
