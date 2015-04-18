@@ -476,7 +476,7 @@ namespace Vistaghost.VISTAGHOST
             catch (Exception ex)
             {
                 MessageBox.Show("Can not open this file!", "Open Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
         }
 

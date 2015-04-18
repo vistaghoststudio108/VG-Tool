@@ -526,7 +526,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             catch (Exception ex)
             {
                 offsetLine = 0;
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
 
                 return false;
             }
@@ -794,7 +794,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex);
+                    Logger.LogError(ex, false);
                     return false;
                 }
             }

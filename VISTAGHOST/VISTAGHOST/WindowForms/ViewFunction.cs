@@ -249,6 +249,25 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                                 stru.Line = codeStru.StartPoint.Line;
                                 stru.Count = codeStru.Members.Count;
 
+                                foreach (CodeElement member in codeStru.Members)
+                                {
+                                    var mem = new IOType();
+                                    switch (member.Kind)
+                                    {
+                                        case vsCMElement.vsCMElementVariable:
+                                            mem.Name = ((CodeVariable)member).get_Prototype((int)vsCMPrototype.vsCMPrototypeType);
+                                            break;
+                                        case vsCMElement.vsCMElementFunction:
+                                            mem.Name = ((CodeFunction)member).get_Prototype((int)vsCMPrototype.vsCMPrototypeParamNames | (int)vsCMPrototype.vsCMPrototypeParamTypes | (int)vsCMPrototype.vsCMPrototypeType);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                    if (!String.IsNullOrEmpty(mem.Name))
+                                        stru.Parameters.Add(mem);
+                                }
+
                                 objList.Add(stru);
 
                                 dtFunctions.Rows.Add(false, ce.FullName);
@@ -310,6 +329,12 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     }
                     break;
                 case SearchType.Structure:
+                    {
+                        dtParamView.Columns[0].HeaderText = "Members";
+                        dtParamView.Columns[1].Visible = false;
+                        dtParamView.Columns[2].Visible = false;
+                        dtParamView.Columns[3].Visible = false;
+                    }
                     break;
                 case SearchType.Union:
                     break;
@@ -444,7 +469,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         /// <param name="e"></param>
         private void dtFunctions_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && 
+            if (e.KeyCode == Keys.Enter &&
                 (searchType == SearchType.AllFunction ||
                 searchType == SearchType.NoneHeaderFunction) &&
                 dtFunctions.Rows.Count > 0)
@@ -478,6 +503,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                                 copiedText += objList[row.Index].Prototype + "\n";
                             }
                             break;
+                        case SearchType.Class:
                         case SearchType.Enumerable:
                         case SearchType.Structure:
                         case SearchType.Union:
@@ -492,7 +518,8 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 }
 
                 /*Set text to the clipboard*/
-                Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
+                if (!String.IsNullOrEmpty(copiedText))
+                    Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
 
                 e.SuppressKeyPress = true;
                 e.Handled = true;
@@ -511,11 +538,47 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             var count = dtFunctions.SelectedRows.Count;
             if (count > 1)
             {
-                lblStatus.Text = count.ToString(new CultureInfo("en-US")) + " functions are selected";
+                lblStatus.Text = count.ToString(new CultureInfo("en-US"));
+                switch (searchType)
+                {
+                    case SearchType.AllFunction:
+                    case SearchType.NoneHeaderFunction:
+                        {
+                            lblStatus.Text += " functions are selected";
+                        }
+                        break;
+                    case SearchType.Class:
+                        {
+                            lblStatus.Text += " class are selected";
+                        }
+                        break;
+                    case SearchType.Enumerable:
+                        {
+                            lblStatus.Text += " enums are selected";
+                        }
+                        break;
+                    case SearchType.Structure:
+                        {
+                            lblStatus.Text += " structures are selected";
+                        }
+                        break;
+                    case SearchType.Union:
+                        {
+                            lblStatus.Text += " union are selected";
+                        }
+                        break;
+                    case SearchType.TypeDef:
+                        {
+                            lblStatus.Text += " typedef structure are selected";
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
             else if (count == 0)
             {
-                lblStatus.Text = "No functions are selected";
+                lblStatus.Text = "No items are selected";
             }
             else
             {
@@ -535,7 +598,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
                             foreach (var pr in objList[index].Parameters)
                             {
-                                dtParamView.Rows.Add(pr.Name, true, false);
+                                dtParamView.Rows.Add(pr.Name, pr.Input, pr.Output);
                             }
                         }
                         break;
@@ -570,6 +633,39 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                         break;
                 }
             }
+        }
+
+        private void dtParamView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (searchType)
+            {
+                case SearchType.Enumerable:
+                    {
+                        int beginValue = 0;
+                        int index = e.RowIndex;
+                        if (int.TryParse((string)dtParamView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value, out beginValue))
+                        {
+                            for (int i = index + 1; i < dtParamView.Rows.Count; i++)
+                            {
+                                beginValue++;
+                                dtParamView.Rows[i].Cells[e.ColumnIndex].Value = beginValue;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void dtParamView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int selectedFunc = dtFunctions.SelectedRows[0].Index;
+
+            var val = (bool)dtParamView.SelectedRows[0].Cells[e.ColumnIndex].Value;
+
+            //objList[selectedFunc].Parameters[e.RowIndex].Input = (bool)dtParamView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            //objList[selectedFunc].Parameters[e.RowIndex].Output = (bool)dtParamView.Rows[e.RowIndex].Cells[2].Value;
         }
     }
 }

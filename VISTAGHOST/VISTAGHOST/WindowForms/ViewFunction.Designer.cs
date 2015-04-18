@@ -30,11 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnSearch = new System.Windows.Forms.Button();
             this.dtParamView = new System.Windows.Forms.DataGridView();
             this.txtParaList = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,12 +91,14 @@
             this.dtParamView.Location = new System.Drawing.Point(358, 47);
             this.dtParamView.Name = "dtParamView";
             this.dtParamView.RowHeadersVisible = false;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.dtParamView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.dtParamView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dtParamView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.dtParamView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtParamView.Size = new System.Drawing.Size(336, 292);
             this.dtParamView.TabIndex = 4;
+            this.dtParamView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtParamView_CellEndEdit);
+            this.dtParamView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtParamView_CellContentClick);
             // 
             // txtParaList
             // 
@@ -106,6 +109,7 @@
             this.txtParaList.FillWeight = 35F;
             this.txtParaList.HeaderText = "Arguments";
             this.txtParaList.Name = "txtParaList";
+            this.txtParaList.ReadOnly = true;
             this.txtParaList.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // chInput
@@ -127,6 +131,8 @@
             // colValue
             // 
             this.colValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colValue.DefaultCellStyle = dataGridViewCellStyle3;
             this.colValue.HeaderText = "Value";
             this.colValue.Name = "colValue";
             this.colValue.Visible = false;
@@ -172,8 +178,8 @@
             this.dtFunctions.AllowUserToDeleteRows = false;
             this.dtFunctions.AllowUserToResizeColumns = false;
             this.dtFunctions.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.dtFunctions.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.dtFunctions.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dtFunctions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dtFunctions.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dtFunctions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -187,8 +193,8 @@
             this.dtFunctions.Name = "dtFunctions";
             this.dtFunctions.RowHeadersVisible = false;
             this.dtFunctions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.dtFunctions.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.dtFunctions.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dtFunctions.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.dtFunctions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtFunctions.Size = new System.Drawing.Size(336, 292);
@@ -206,9 +212,9 @@
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn1.FillWeight = 100.736F;
             this.dataGridViewTextBoxColumn1.HeaderText = "List of parameters";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
@@ -282,15 +288,15 @@
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ComboBox cbSearchType;
         private System.Windows.Forms.DataGridView dtFunctions;
-        private System.Windows.Forms.DataGridViewTextBoxColumn txtParaList;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn chInput;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn chOutput;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem onlyViewThisFunctionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem edToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chkAdded;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn txtParaList;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chInput;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chOutput;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
     }
 }

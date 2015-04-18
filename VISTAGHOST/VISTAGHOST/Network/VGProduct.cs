@@ -32,13 +32,11 @@ namespace Vistaghost.VISTAGHOST.Network
     public static class VGProduct
     {
         public static string UniqueAddress { get; set; }
-        static bool Succeeded;
         const int BUFFER_SIZE = 512;
 
         static VGProduct()
         {
             UniqueAddress = GetUniqueID();
-            Succeeded = false;
         }
 
         static string GetUniqueID()
@@ -61,7 +59,7 @@ namespace Vistaghost.VISTAGHOST.Network
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, true);
             }
 
             return cpuInfo;
@@ -83,7 +81,7 @@ namespace Vistaghost.VISTAGHOST.Network
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, true);
             }
         }
 
@@ -95,7 +93,7 @@ namespace Vistaghost.VISTAGHOST.Network
         static void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             // Create a HttpWebrequest object to the desired URL. 
-            HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("http://vistaghost-product.somee.com/Register?id={0}&date={1}", UniqueAddress, DateTime.Now.ToShortDateString()));
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("http://vistaghost-product.somee.com/User?id={0}&date={1}", UniqueAddress, DateTime.Now.ToShortDateString()));
 
             myHttpWebRequest.Method = "POST";
             myHttpWebRequest.ContentLength = 0;
@@ -133,7 +131,7 @@ namespace Vistaghost.VISTAGHOST.Network
             }
             catch (WebException wEx)
             {
-                Logger.LogError(wEx);
+                Logger.LogError(wEx, true);
             }
         }
 
@@ -155,11 +153,12 @@ namespace Vistaghost.VISTAGHOST.Network
 
                 // Release the HttpWebResponse resource.
                 myRequestState.response.Close();
+
                 return;
             }
             catch (WebException wEx)
             {
-                Logger.LogMessage(wEx.Message);
+                Logger.LogMessage(wEx.Message, true);
             }
         }
 
@@ -203,7 +202,7 @@ namespace Vistaghost.VISTAGHOST.Network
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, true);
             }
         }
     }
