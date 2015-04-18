@@ -97,7 +97,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             }
             catch (Exception ex)
             {
-                Logger.LogMessage(ex.Message);
+                Logger.LogMessage(ex.Message, false);
             }
         }
 

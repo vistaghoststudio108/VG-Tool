@@ -30,8 +30,6 @@ namespace Vistaghost.VISTAGHOST
         public const string LogXmlFile = "History.xml";
         public const string LogExcelFile = "History.xls";
 
-        public const string HistoryFile = "History.xml";
-
         /*for delete comments*/
         public const string MainCode = @"(@(?:""[^""]*"")+|""(?:[^""\n\\]+|\\.)*""|'(?:[^'\n\\]+|\\.)*')";
         public const string BlockCode = @"/\*(?s:.*?)\*/";
@@ -146,7 +144,7 @@ namespace Vistaghost.VISTAGHOST
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
 
             return settings;
@@ -181,7 +179,7 @@ namespace Vistaghost.VISTAGHOST
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
                 return false;
             }
 
@@ -207,7 +205,7 @@ namespace Vistaghost.VISTAGHOST
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
                 return false;
             }
 
@@ -237,7 +235,7 @@ namespace Vistaghost.VISTAGHOST
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
 
             return regData;
@@ -316,7 +314,7 @@ namespace Vistaghost.VISTAGHOST
             catch (Exception ex)
             {
                 message = "Export failed.";
-                Logger.LogMessage(ex.Message);
+                Logger.LogMessage(ex.Message, false);
                 success = false;
             }
 
@@ -347,7 +345,7 @@ namespace Vistaghost.VISTAGHOST
             catch (Exception ex)
             {
                 message = "Import failed.";
-                Logger.LogMessage(ex.Message);
+                Logger.LogMessage(ex.Message, false);
                 success = false;
             }
 

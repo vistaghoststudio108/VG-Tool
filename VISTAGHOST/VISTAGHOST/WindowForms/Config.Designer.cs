@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Comments");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Header");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Add", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Data Management");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("History");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Keyboard");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Comments");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Header");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Add", new System.Windows.Forms.TreeNode[] {
+            treeNode7,
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Data Management");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("History");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Keyboard");
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -55,7 +55,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.chAutoAddWithoutDialog = new System.Windows.Forms.CheckBox();
-            this.pnSingleSetting = new System.Windows.Forms.Panel();
+            this.pnCommentSetting = new System.Windows.Forms.Panel();
             this.txtOpenEndTag = new System.Windows.Forms.TextBox();
             this.chkJustOneLine = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -116,7 +116,7 @@
             this.txtHotKey = new Vistaghost.VISTAGHOST.User_Control.ShortcutKeyTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).BeginInit();
-            this.pnSingleSetting.SuspendLayout();
+            this.pnCommentSetting.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.pnHeaderSetting.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -154,23 +154,23 @@
             this.treeView1.HideSelection = false;
             this.treeView1.Location = new System.Drawing.Point(8, 7);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "nodeComment";
-            treeNode1.Text = "Comments";
-            treeNode2.Name = "nodeHeader";
-            treeNode2.Text = "Header";
-            treeNode3.Name = "Node2";
-            treeNode3.Text = "Add";
-            treeNode4.Name = "nodeDataManagement";
-            treeNode4.Text = "Data Management";
-            treeNode5.Name = "Node0";
-            treeNode5.Text = "History";
-            treeNode6.Name = "Node0";
-            treeNode6.Text = "Keyboard";
+            treeNode7.Name = "nodeComment";
+            treeNode7.Text = "Comments";
+            treeNode8.Name = "nodeHeader";
+            treeNode8.Text = "Header";
+            treeNode9.Name = "Node2";
+            treeNode9.Text = "Add";
+            treeNode10.Name = "nodeDataManagement";
+            treeNode10.Text = "Data Management";
+            treeNode11.Name = "Node0";
+            treeNode11.Text = "History";
+            treeNode12.Name = "Node0";
+            treeNode12.Text = "Keyboard";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode9,
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.treeView1.ShowNodeToolTips = true;
             this.treeView1.Size = new System.Drawing.Size(161, 355);
             this.treeView1.TabIndex = 0;
@@ -334,17 +334,17 @@
             this.chAutoAddWithoutDialog.UseVisualStyleBackColor = true;
             this.chAutoAddWithoutDialog.CheckedChanged += new System.EventHandler(this.cmCheckbox_CheckedChanged);
             // 
-            // pnSingleSetting
+            // pnCommentSetting
             // 
-            this.pnSingleSetting.Controls.Add(this.txtOpenEndTag);
-            this.pnSingleSetting.Controls.Add(this.groupBox1);
-            this.pnSingleSetting.Controls.Add(this.chkJustOneLine);
-            this.pnSingleSetting.Controls.Add(this.chAutoAddWithoutDialog);
-            this.pnSingleSetting.Location = new System.Drawing.Point(668, 12);
-            this.pnSingleSetting.Name = "pnSingleSetting";
-            this.pnSingleSetting.Size = new System.Drawing.Size(451, 355);
-            this.pnSingleSetting.TabIndex = 3;
-            this.pnSingleSetting.Visible = false;
+            this.pnCommentSetting.Controls.Add(this.txtOpenEndTag);
+            this.pnCommentSetting.Controls.Add(this.groupBox1);
+            this.pnCommentSetting.Controls.Add(this.chkJustOneLine);
+            this.pnCommentSetting.Controls.Add(this.chAutoAddWithoutDialog);
+            this.pnCommentSetting.Location = new System.Drawing.Point(668, 12);
+            this.pnCommentSetting.Name = "pnCommentSetting";
+            this.pnCommentSetting.Size = new System.Drawing.Size(451, 355);
+            this.pnCommentSetting.TabIndex = 3;
+            this.pnCommentSetting.Visible = false;
             // 
             // txtOpenEndTag
             // 
@@ -837,6 +837,7 @@
             // 
             // btnRemoveHotkey
             // 
+            this.btnRemoveHotkey.Enabled = false;
             this.btnRemoveHotkey.Location = new System.Drawing.Point(363, 256);
             this.btnRemoveHotkey.Name = "btnRemoveHotkey";
             this.btnRemoveHotkey.Size = new System.Drawing.Size(75, 25);
@@ -847,6 +848,7 @@
             // 
             // btnAssignHotKey
             // 
+            this.btnAssignHotKey.Enabled = false;
             this.btnAssignHotKey.Location = new System.Drawing.Point(282, 256);
             this.btnAssignHotKey.Name = "btnAssignHotKey";
             this.btnAssignHotKey.Size = new System.Drawing.Size(75, 25);
@@ -950,7 +952,7 @@
             this.ClientSize = new System.Drawing.Size(1131, 827);
             this.Controls.Add(this.pnKeyboard);
             this.Controls.Add(this.pnHistory);
-            this.Controls.Add(this.pnSingleSetting);
+            this.Controls.Add(this.pnCommentSetting);
             this.Controls.Add(this.pnDataSetting);
             this.Controls.Add(this.pnHeaderSetting);
             this.Controls.Add(this.treeView1);
@@ -971,8 +973,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).EndInit();
-            this.pnSingleSetting.ResumeLayout(false);
-            this.pnSingleSetting.PerformLayout();
+            this.pnCommentSetting.ResumeLayout(false);
+            this.pnCommentSetting.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.pnHeaderSetting.ResumeLayout(false);
@@ -997,7 +999,7 @@
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel pnSingleSetting;
+        private System.Windows.Forms.Panel pnCommentSetting;
         private System.Windows.Forms.CheckBox chAutoAddWithoutDialog;
         private System.Windows.Forms.CheckBox chDisHistory;
         private System.Windows.Forms.Panel pnHeaderSetting;

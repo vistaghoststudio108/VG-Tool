@@ -23,8 +23,7 @@ namespace DevenvSetupCustomAction
         {
             base.Install(stateSaver);
 
-            using (RegistryKey setupKey = Registry.LocalMachine.OpenSubKey(
-                  @"SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS"))
+            using (RegistryKey setupKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\9.0\Setup\VS"))
             {
                 if (setupKey != null)
                 {
@@ -40,6 +39,19 @@ namespace DevenvSetupCustomAction
         public override void Uninstall(IDictionary savedState)
         {
             base.Uninstall(savedState);
+
+            using (RegistryKey setupKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{8b00b194-7670-422b-9ff2-40f0b2527890}"))
+            {
+                string path = setupKey.GetValue("CodeBase").ToString();
+
+                if(!String.IsNullOrEmpty(path))
+                {
+                    string rootDir = Directory.GetDirectoryRoot(path);
+
+                    if(Directory.Exists(rootDir))
+                        Directory.Delete(rootDir, true);
+                }
+            }
         }
     }
 }

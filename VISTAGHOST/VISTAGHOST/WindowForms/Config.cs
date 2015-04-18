@@ -29,8 +29,9 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         private HeaderStyle headerStyle = HeaderStyle.Aloka1;
         DTE2 dte2;
 
-        private int parentIndex = 0;
-        private int childIndex = 0;
+        private int parentIndex = -1;
+        private int curIndex = -1;
+        private int childIndex = -1;
 
         private string curHotKey = String.Empty;
 
@@ -53,7 +54,8 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         {
             InitializeComponent();
 
-            pnSingleSetting.Visible = true;
+            settings = new Settings();
+            pnCommentSetting.Visible = true;
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -64,7 +66,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 {
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = false;
-                    pnSingleSetting.Visible = true;
+                    pnCommentSetting.Visible = true;
                     pnHistory.Visible = false;
                     pnKeyboard.Visible = false;
                 }
@@ -72,7 +74,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 {
                     pnHeaderSetting.Visible = true;
                     pnDataSetting.Visible = false;
-                    pnSingleSetting.Visible = false;
+                    pnCommentSetting.Visible = false;
                     pnHistory.Visible = false;
                     pnKeyboard.Visible = false;
                 }
@@ -80,7 +82,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 {
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = true;
-                    pnSingleSetting.Visible = false;
+                    pnCommentSetting.Visible = false;
                     pnHistory.Visible = false;
                     pnKeyboard.Visible = false;
                 }
@@ -89,7 +91,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     pnHistory.Visible = true;
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = false;
-                    pnSingleSetting.Visible = false;
+                    pnCommentSetting.Visible = false;
                     pnKeyboard.Visible = false;
                 }
                 else if (e.Node.Text == "Keyboard")
@@ -97,7 +99,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     pnHistory.Visible = false;
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = false;
-                    pnSingleSetting.Visible = false;
+                    pnCommentSetting.Visible = false;
                     pnKeyboard.Visible = true;
                 }
             }
@@ -183,9 +185,11 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 foreach (object b in bindings)
                 {
                     c.HotKeys = ((string)b).Remove(0, 8);
+                    break;
                 }
             }
 
+            curIndex = -1;
             listGroupCommand_SelectedIndexChanged(null, EventArgs.Empty);
         }
 
@@ -195,8 +199,8 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
             this.Size = new Size(636, 430);
 
-            pnSingleSetting.Location = new Point(175, 7);
-            pnSingleSetting.Size = new Size(451, 355);
+            pnCommentSetting.Location = new Point(175, 7);
+            pnCommentSetting.Size = new Size(451, 355);
 
             pnHeaderSetting.Location = new Point(175, 7);
             pnHeaderSetting.Size = new Size(451, 355);
@@ -214,6 +218,14 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             toolTip1.SetToolTip(txtCloseBeginTag, txtCloseBeginTag.Text);
             treeView1.ExpandAll();
             btnSave.Enabled = false;
+
+            if (String.IsNullOrEmpty(settings.HistoryInfo.LogPath))
+            {
+                string logpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
+                logpath = Path.Combine(logpath, VGSettingConstants.LogFolder);
+
+                txtLogPath.Text = logpath;
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -317,7 +329,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogError(ex);
+                        Logger.LogError(ex, false);
                         return;
                     }
 
@@ -327,7 +339,6 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
                     cbDateFormat.SelectedIndex = 0;
                     chAutoAddWithoutDialog.Checked = true;
-                    chDisHistory.Checked = false;
 
                     richTextBox3.Text = "Module Name:";
                     richTextBox4.Text = "Calling Sequence:";
@@ -349,6 +360,11 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
                     checkBox4.Checked = checkBox5.Checked = checkBox6.Checked = checkBox7.Checked = checkBox8.Checked = false;
                     checkBox9.Checked = checkBox10.Checked = checkBox11.Checked = false;
+
+                    /*Reset history*/
+                    chkLogHistory.Checked = false;
+                    chDisHistory.Checked = false;
+                    txtLogPath.Text = String.Empty;
 
                     txtHistory.Enabled = false;
                     btnSave.Enabled = false;
@@ -523,12 +539,16 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         private void listGroupCommand_SelectedIndexChanged(object sender, EventArgs e)
         {
             parentIndex = listGroupCommand.SelectedIndex;
-            if (parentIndex == -1)
+            if (parentIndex == -1 || parentIndex == curIndex)
                 return;
 
+            curIndex = parentIndex;
             lvDetailKeys.Items.Clear();
             curHotKey = String.Empty;
             childIndex = 0;
+
+            btnAssignHotKey.Enabled = false;
+            btnRemoveHotkey.Enabled = false;
 
             foreach (var c in commands)
             {
@@ -545,8 +565,13 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             if (!e.IsSelected)
             {
                 txtHotKey.Text = String.Empty;
+                btnAssignHotKey.Enabled = false;
+                btnRemoveHotkey.Enabled = false;
                 return;
             }
+
+            btnAssignHotKey.Enabled = true;
+            btnRemoveHotkey.Enabled = true;
 
             childIndex = e.ItemIndex;
 
@@ -579,8 +604,6 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
         private void btnAssignHotKey_Click(object sender, EventArgs e)
         {
-            Vistaghost.VISTAGHOST.Network.VGProduct.RegisterProduct();
-
             if (curHotKey == txtHotKey.Text || curHotKey == "")
             {
                 return;
@@ -609,7 +632,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             catch (Exception ex)
             {
                 MessageBox.Show(this, "Can not assign shortcut key. Check and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
         }
 
@@ -634,7 +657,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             catch (Exception ex)
             {
                 MessageBox.Show(this, "Can not remove shortcut key. Check and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
         }
 
@@ -702,11 +725,14 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (e.Action == TreeViewAction.ByMouse)
+                return;
+
             if (e.Node.Text == "Comments")
             {
                 pnHeaderSetting.Visible = false;
                 pnDataSetting.Visible = false;
-                pnSingleSetting.Visible = true;
+                pnCommentSetting.Visible = true;
                 pnHistory.Visible = false;
                 pnKeyboard.Visible = false;
             }
@@ -714,7 +740,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             {
                 pnHeaderSetting.Visible = true;
                 pnDataSetting.Visible = false;
-                pnSingleSetting.Visible = false;
+                pnCommentSetting.Visible = false;
                 pnHistory.Visible = false;
                 pnKeyboard.Visible = false;
             }
@@ -722,7 +748,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             {
                 pnHeaderSetting.Visible = false;
                 pnDataSetting.Visible = true;
-                pnSingleSetting.Visible = false;
+                pnCommentSetting.Visible = false;
                 pnHistory.Visible = false;
                 pnKeyboard.Visible = false;
             }
@@ -731,7 +757,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 pnHistory.Visible = true;
                 pnHeaderSetting.Visible = false;
                 pnDataSetting.Visible = false;
-                pnSingleSetting.Visible = false;
+                pnCommentSetting.Visible = false;
                 pnKeyboard.Visible = false;
             }
             else if (e.Node.Text == "Keyboard")
@@ -739,7 +765,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
                 pnHistory.Visible = false;
                 pnHeaderSetting.Visible = false;
                 pnDataSetting.Visible = false;
-                pnSingleSetting.Visible = false;
+                pnCommentSetting.Visible = false;
                 pnKeyboard.Visible = true;
             }
         }

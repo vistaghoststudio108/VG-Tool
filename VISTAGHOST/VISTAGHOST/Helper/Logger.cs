@@ -13,8 +13,11 @@ namespace Vistaghost.VISTAGHOST.Helper
     {///<summary>
         ///Log a runtime error.
         ///</summary>
-        public static void LogError(Exception e)
+        public static void LogError(Exception e, bool emptyfunction)
         {
+            if (emptyfunction)
+                return;
+
             var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
             if (!Directory.Exists(dir))
             {
@@ -44,8 +47,11 @@ namespace Vistaghost.VISTAGHOST.Helper
         ///<summary>
         ///Log a runtime error message.
         ///</summary>
-        public static void LogMessage(string message)
+        public static void LogMessage(string message, bool emptyfunction)
         {
+            if (emptyfunction)
+                return;
+
             var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
             if (!Directory.Exists(dir))
             {
@@ -182,7 +188,7 @@ namespace Vistaghost.VISTAGHOST.Helper
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                LogError(ex, false);
             }
         }
     }
