@@ -289,7 +289,40 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             {
                 dtFunctions.Focus();
                 btnSearch.Enabled = false;
-                lblStatus.Text = GetString(searchType, objList.Count);
+                if (dtFunctions.Rows.Count == 1)
+                {
+                    switch (searchType)
+                    {
+                        case SearchType.AllFunction:
+                        case SearchType.NoneHeaderFunction:
+                            {
+                                /*detail of selected function*/
+                                lblStatus.Text = objList[0].Name + ", at line " + objList[0].Line + (((objList[0].Parameters.Count > 0) ? (", contains " + objList[0].Parameters.Count) : (", no")) + " parameters");
+                            }
+                            break;
+                        case SearchType.Class:
+                            {
+                                /*detail of selected class*/
+                                lblStatus.Text = objList[0].Name + ", at line " + objList[0].Line + (((objList[0].Count > 0) ? (", devired from " + objList[0].Count) : (", no base ")) + " class");
+                            }
+                            break;
+                        case SearchType.Enumerable:
+                        case SearchType.Structure:
+                            {
+                                /*detail of selected enum*/
+                                lblStatus.Text = objList[0].Name + ", at line " + objList[0].Line + (((objList[0].Count > 0) ? (", contains " + objList[0].Count) : (", no")) + " members");
+                            }
+                            break;
+                        case SearchType.Union:
+                            break;
+                        case SearchType.TypeDef:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                    lblStatus.Text = GetString(searchType, objList.Count);
             }
             else
             {
@@ -519,7 +552,10 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
                 /*Set text to the clipboard*/
                 if (!String.IsNullOrEmpty(copiedText))
+                {
+                    copiedText = copiedText.Remove(copiedText.Length - 1, 1);
                     Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
+                }
 
                 e.SuppressKeyPress = true;
                 e.Handled = true;
@@ -660,9 +696,18 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
         private void dtParamView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int selectedFunc = dtFunctions.SelectedRows[0].Index;
-
-            var val = (bool)dtParamView.SelectedRows[0].Cells[e.ColumnIndex].Value;
+            switch (searchType)
+            {
+                case SearchType.AllFunction:
+                case SearchType.NoneHeaderFunction:
+                    {
+                        int selectedFunc = dtFunctions.SelectedRows[0].Index;
+                        var val = (bool)dtParamView.SelectedRows[0].Cells[e.ColumnIndex].Value;
+                    }
+                    break;
+                default:
+                    break;
+            }
 
             //objList[selectedFunc].Parameters[e.RowIndex].Input = (bool)dtParamView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
             //objList[selectedFunc].Parameters[e.RowIndex].Output = (bool)dtParamView.Rows[e.RowIndex].Cells[2].Value;
