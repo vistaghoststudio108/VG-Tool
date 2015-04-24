@@ -132,7 +132,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                         _prototype = codeFunc.FullName;
                         break;
                     case PrototypeType.FullProt:
-                        _prototype = codeFunc.get_Prototype((int)(vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType));
+                        _prototype = codeFunc.get_Prototype((int)(vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname));
                         break;
                     default:
                         break;
@@ -185,7 +185,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             return selected;
         }
 
-        static string GetTags(string tag, ActionType mode)
+        static string GetTags(string tag, ActionType mode, bool bJustOne)
         {
             if (String.IsNullOrEmpty(tag))
             {
@@ -207,6 +207,9 @@ namespace Vistaghost.VISTAGHOST.Lib
 
             if (tlist.Count() < 3)
                 return DefaultTag;
+
+            if(bJustOne)
+                return ("//" + tlist[(int)mode - 1] + " ");
 
             return ("//" + tlist[(int)mode - 1] + t[1]);
         }
@@ -252,8 +255,8 @@ namespace Vistaghost.VISTAGHOST.Lib
                 undoObj.Open("add_com", false);    /*add comments undo object*/
             }
 
-            opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
-            closetag = GetTags(VGSetting.SettingData.CommentInfo.CloseTagBegin, mode) + devid + " (" + dateNow + " " + account + ")" + VGSetting.SettingData.CommentInfo.CloseTagEnd;
+            opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode, false) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
+            closetag = GetTags(VGSetting.SettingData.CommentInfo.CloseTagBegin, mode, false) + devid + " (" + dateNow + " " + account + ")" + VGSetting.SettingData.CommentInfo.CloseTagEnd;
 
             var selected = PreProcessSelectionText(dte, true);
 
@@ -341,19 +344,39 @@ namespace Vistaghost.VISTAGHOST.Lib
                         break;
 
                     case ActionType.Add:
-                        //Add new comments tag here without content
-                        selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
-                        selected.Insert(opentag, 1);
-                        selected.NewLine(1);
-                        selected.LineDown(false, numLines - 1);
-                        selected.EndOfLine(false);
-                        selected.NewLine(1);
-                        selected.Insert(closetag, 1);
-                        result = true;
+                        {
+                            if (VGSetting.SettingData.CommentInfo.JustOneLine && selected.TextRanges.Count == 1)
+                            {
+                                opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode, true) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
+                                selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
+                                selected.Insert(opentag, 1);
+                                selected.NewLine(1);
+                            }
+                            else
+                            {
+                                //Add new comments tag here without content
+                                selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
+                                selected.Insert(opentag, 1);
+                                selected.NewLine(1);
+                                selected.LineDown(false, numLines - 1);
+                                selected.EndOfLine(false);
+                                selected.NewLine(1);
+                                selected.Insert(closetag, 1);
+                            }
+                            result = true;
+                        }
                         break;
 
                     case ActionType.Delete:
-                        result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                        {
+                            if (VGSetting.SettingData.CommentInfo.JustOneLine && selected.TextRanges.Count == 1)
+                            {
+                                opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode, true) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
+                                result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                            }
+                            else
+                                result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                        }
                         break;
 
                     default:
