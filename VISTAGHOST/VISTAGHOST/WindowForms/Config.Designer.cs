@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Comments");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Header");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Add", new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Data Management");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("History");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Keyboard");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Comments");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Header");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Add", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Data Management");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("History");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Keyboard");
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -154,23 +154,23 @@
             this.treeView1.HideSelection = false;
             this.treeView1.Location = new System.Drawing.Point(8, 7);
             this.treeView1.Name = "treeView1";
-            treeNode7.Name = "nodeComment";
-            treeNode7.Text = "Comments";
-            treeNode8.Name = "nodeHeader";
-            treeNode8.Text = "Header";
-            treeNode9.Name = "Node2";
-            treeNode9.Text = "Add";
-            treeNode10.Name = "nodeDataManagement";
-            treeNode10.Text = "Data Management";
-            treeNode11.Name = "Node0";
-            treeNode11.Text = "History";
-            treeNode12.Name = "Node0";
-            treeNode12.Text = "Keyboard";
+            treeNode1.Name = "nodeComment";
+            treeNode1.Text = "Comments";
+            treeNode2.Name = "nodeHeader";
+            treeNode2.Text = "Header";
+            treeNode3.Name = "Node2";
+            treeNode3.Text = "Add";
+            treeNode4.Name = "nodeDataManagement";
+            treeNode4.Text = "Data Management";
+            treeNode5.Name = "Node0";
+            treeNode5.Text = "History";
+            treeNode6.Name = "Node0";
+            treeNode6.Text = "Keyboard";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.treeView1.ShowNodeToolTips = true;
             this.treeView1.Size = new System.Drawing.Size(161, 355);
             this.treeView1.TabIndex = 0;
@@ -468,7 +468,7 @@
             this.pnHeaderSetting.Controls.Add(this.cbHeaderStyle);
             this.pnHeaderSetting.Controls.Add(this.groupBox3);
             this.pnHeaderSetting.Controls.Add(this.label4);
-            this.pnHeaderSetting.Location = new System.Drawing.Point(629, 373);
+            this.pnHeaderSetting.Location = new System.Drawing.Point(652, 431);
             this.pnHeaderSetting.Name = "pnHeaderSetting";
             this.pnHeaderSetting.Size = new System.Drawing.Size(451, 355);
             this.pnHeaderSetting.TabIndex = 4;
@@ -726,7 +726,7 @@
             // 
             this.pnDataSetting.Controls.Add(this.btnClearData);
             this.pnDataSetting.Controls.Add(this.groupBox4);
-            this.pnDataSetting.Location = new System.Drawing.Point(457, 720);
+            this.pnDataSetting.Location = new System.Drawing.Point(144, 630);
             this.pnDataSetting.Name = "pnDataSetting";
             this.pnDataSetting.Size = new System.Drawing.Size(451, 355);
             this.pnDataSetting.TabIndex = 5;
@@ -895,7 +895,7 @@
             "DeleteComments",
             "CopyPrototype",
             "CreateSingleHeader",
-            "Count LineOfCode",
+            "CountLineOfCode",
             "ChangeInformation",
             "Configurations",
             "CreateMultiHeader",

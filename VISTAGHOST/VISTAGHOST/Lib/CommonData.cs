@@ -66,8 +66,10 @@ namespace Vistaghost.VISTAGHOST.Lib
         yyyyddmm,
         ddmmyyyy,
         mmddyyyy,
-        DateFormat1,    // dd-mm-yyyy
-        DateFormat2,    // dd/mm/yyyy
+        // dd-mm-yyyy
+        DateFormat1,
+        // dd/mm/yyyy
+        DateFormat2,
         FullDate,       // include date and time
     }
 

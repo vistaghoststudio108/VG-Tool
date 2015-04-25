@@ -132,7 +132,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                         _prototype = codeFunc.FullName;
                         break;
                     case PrototypeType.FullProt:
-                        _prototype = codeFunc.get_Prototype((int)(vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType));
+                        _prototype = codeFunc.get_Prototype((int)(vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname));
                         break;
                     default:
                         break;
@@ -185,7 +185,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             return selected;
         }
 
-        static string GetTags(string tag, ActionType mode)
+        static string GetTags(string tag, ActionType mode, bool bJustOne)
         {
             if (String.IsNullOrEmpty(tag))
             {
@@ -207,6 +207,9 @@ namespace Vistaghost.VISTAGHOST.Lib
 
             if (tlist.Count() < 3)
                 return DefaultTag;
+
+            if(bJustOne)
+                return ("//" + tlist[(int)mode - 1] + " ");
 
             return ("//" + tlist[(int)mode - 1] + t[1]);
         }
@@ -252,8 +255,8 @@ namespace Vistaghost.VISTAGHOST.Lib
                 undoObj.Open("add_com", false);    /*add comments undo object*/
             }
 
-            opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
-            closetag = GetTags(VGSetting.SettingData.CommentInfo.CloseTagBegin, mode) + devid + " (" + dateNow + " " + account + ")" + VGSetting.SettingData.CommentInfo.CloseTagEnd;
+            opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode, false) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
+            closetag = GetTags(VGSetting.SettingData.CommentInfo.CloseTagBegin, mode, false) + devid + " (" + dateNow + " " + account + ")" + VGSetting.SettingData.CommentInfo.CloseTagEnd;
 
             var selected = PreProcessSelectionText(dte, true);
 
@@ -341,19 +344,39 @@ namespace Vistaghost.VISTAGHOST.Lib
                         break;
 
                     case ActionType.Add:
-                        //Add new comments tag here without content
-                        selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
-                        selected.Insert(opentag, 1);
-                        selected.NewLine(1);
-                        selected.LineDown(false, numLines - 1);
-                        selected.EndOfLine(false);
-                        selected.NewLine(1);
-                        selected.Insert(closetag, 1);
-                        result = true;
+                        {
+                            if (VGSetting.SettingData.CommentInfo.JustOneLine && selected.TextRanges.Count == 1)
+                            {
+                                opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode, true) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
+                                selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
+                                selected.Insert(opentag, 1);
+                                selected.NewLine(1);
+                            }
+                            else
+                            {
+                                //Add new comments tag here without content
+                                selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
+                                selected.Insert(opentag, 1);
+                                selected.NewLine(1);
+                                selected.LineDown(false, numLines - 1);
+                                selected.EndOfLine(false);
+                                selected.NewLine(1);
+                                selected.Insert(closetag, 1);
+                            }
+                            result = true;
+                        }
                         break;
 
                     case ActionType.Delete:
-                        result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                        {
+                            if (VGSetting.SettingData.CommentInfo.JustOneLine && selected.TextRanges.Count == 1)
+                            {
+                                opentag = GetTags(VGSetting.SettingData.CommentInfo.OpenTagBegin, mode, true) + devid + " (" + dateNow + " " + account + ") " + content + VGSetting.SettingData.CommentInfo.OpenTagEnd;
+                                result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                            }
+                            else
+                                result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                        }
                         break;
 
                     default:
@@ -818,6 +841,95 @@ namespace Vistaghost.VISTAGHOST.Lib
                 undoObj.Close();
 
             return true;
+        }
+
+
+        public static string AdvanceFind(DTE dte, string searchText)
+        {
+            //if (dte.Documents.Count > 0)
+            //{
+
+            //}
+
+            //string[] path = {
+            //                    "C:\\Users\\thuanpv3\\Documents\\Visual Studio 2008\\Projects\\asdfasdf\\asdfasdf\\asdfasdf.cpp",
+            //                    "C:\\Users\\thuanpv3\\Documents\\Visual Studio 2008\\Projects\\asdfasdf\\asdfasdf\\stdafx.cpp"
+            //                };
+
+            //for (int i = 0; i < path.Count(); i++)
+            //{
+            //    var t = dte.ItemOperations.OpenFile(path[i], Constants.vsViewKindCode).Document;
+            //    TextRanges dummy = null;
+
+            //    var selected = dte.ActiveDocument.Selection as TextSelection;
+            //    while (selected.FindPattern("Review Screen Layout", (int)vsFindOptions.vsFindOptionsMatchCase, ref dummy))
+            //    {
+            //        var pos = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+            //        if (pos != null)
+            //        {
+            //            string name = pos.FullName;
+            //        }
+            //    }
+            //}
+
+
+
+            Find find = dte.Find;
+            find.Action = vsFindAction.vsFindActionFind;
+            find.FindWhat = searchText;
+            find.MatchCase = true;
+            find.Backwards = false;
+            find.ResultsLocation = vsFindResultsLocation.vsFindResultsNone;
+            find.Target = vsFindTarget.vsFindTargetSolution;
+            find.PatternSyntax = vsFindPatternSyntax.vsFindPatternSyntaxLiteral;
+            find.SearchSubfolders = true;
+            find.KeepModifiedDocumentsOpen = false;
+
+            while (find.Execute() != vsFindResult.vsFindResultNotFound)
+            {
+                var t = find.DTE.ActiveDocument.Selection as TextSelection;
+                var l = (CodeFunction)t.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+                if (l != null)
+                {
+                    string name = l.FullName;
+                }
+            }
+
+
+            var findWindow = dte.Windows.Item(EnvDTE.Constants.vsWindowKindFindResults1);
+            string data = String.Empty;
+
+            //if (result == vsFindResult.vsFindResultFound)
+            //{
+            //   // var t = GetFileFromResultWindow(dte);
+            //    var selection = findWindow.Selection as TextSelection;
+            //    var endPoint = selection.AnchorPoint.CreateEditPoint();
+            //    endPoint.EndOfDocument();
+            //    var text = endPoint.GetLines(1, endPoint.Line);
+            //    selection.SelectAll();
+            //    data = selection.Text;
+            //}
+            return data;
+        }
+
+        public static List<string> GetFileFromResultWindow(DTE dte)
+        {
+            List<string> files = new List<string>();
+            string strIndex = String.Empty;
+
+            if(dte.Find.ResultsLocation == vsFindResultsLocation.vsFindResults1)
+                strIndex = EnvDTE.Constants.vsWindowKindFindResults1;
+            else if(dte.Find.ResultsLocation == vsFindResultsLocation.vsFindResults2)
+                strIndex = EnvDTE.Constants.vsWindowKindFindResults2;
+
+            var findWindow = dte.Windows.Item(strIndex);
+
+            var selected = findWindow.Selection as TextSelection;
+            selected.SelectAll();
+
+            var text = selected.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            return text.ToList();
         }
         #endregion
     }

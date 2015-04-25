@@ -24,6 +24,7 @@ namespace Vistaghost.VISTAGHOST.Helper
         SolutionEvents solEvents;
         //WindowEvents wndEvents;
         DTEEvents dteEvents;
+        FindEvents findEvents;
 
         public DTEHelper(DTE dte, DTE2 dte2)
         {
@@ -34,6 +35,9 @@ namespace Vistaghost.VISTAGHOST.Helper
             //docEvents.DocumentOpening += docEvents_DocumentOpening;
             //docEvents.DocumentClosing += docEvents_DocumentClosing;
 
+            findEvents = Dte.Events.FindEvents;
+            findEvents.FindDone += new _dispFindEvents_FindDoneEventHandler(findEvents_FindDone);
+
             solEvents = Dte.Events.SolutionEvents;
             solEvents.Opened += solEvents_Opened;
 
@@ -43,6 +47,14 @@ namespace Vistaghost.VISTAGHOST.Helper
             dteEvents = Dte.Events.DTEEvents;
             dteEvents.OnStartupComplete += dteEvents_OnStartupComplete;
             dteEvents.OnBeginShutdown += dteEvents_OnBeginShutdown;
+        }
+
+        void findEvents_FindDone(vsFindResult Result, bool Cancelled)
+        {
+            if (Result == vsFindResult.vsFindResultNotFound)
+            {
+                var files = VGOperations.GetFileFromResultWindow(this.Dte);
+            }
         }
 
         void docEvents_DocumentClosing(Document Document)
