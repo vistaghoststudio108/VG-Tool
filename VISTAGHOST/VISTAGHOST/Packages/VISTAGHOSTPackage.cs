@@ -460,9 +460,11 @@ namespace Vistaghost.VISTAGHOST
 
         private void AboutCallback(object sender, EventArgs e)
         {
-            AboutVistaghostForm abf = new AboutVistaghostForm();
-            abf.GetLicense(VGSetting.RegisterData);
-            abf.ShowDialog();
+            string result = VGOperations.AdvanceFind(DteHelper.Dte, "Review Screen Layout");
+
+            //AboutVistaghostForm abf = new AboutVistaghostForm();
+            //abf.GetLicense(VGSetting.RegisterData);
+            //abf.ShowDialog();
         }
 
         #endregion

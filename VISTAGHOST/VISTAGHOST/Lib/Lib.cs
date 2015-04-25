@@ -842,6 +842,95 @@ namespace Vistaghost.VISTAGHOST.Lib
 
             return true;
         }
+
+
+        public static string AdvanceFind(DTE dte, string searchText)
+        {
+            //if (dte.Documents.Count > 0)
+            //{
+
+            //}
+
+            //string[] path = {
+            //                    "C:\\Users\\thuanpv3\\Documents\\Visual Studio 2008\\Projects\\asdfasdf\\asdfasdf\\asdfasdf.cpp",
+            //                    "C:\\Users\\thuanpv3\\Documents\\Visual Studio 2008\\Projects\\asdfasdf\\asdfasdf\\stdafx.cpp"
+            //                };
+
+            //for (int i = 0; i < path.Count(); i++)
+            //{
+            //    var t = dte.ItemOperations.OpenFile(path[i], Constants.vsViewKindCode).Document;
+            //    TextRanges dummy = null;
+
+            //    var selected = dte.ActiveDocument.Selection as TextSelection;
+            //    while (selected.FindPattern("Review Screen Layout", (int)vsFindOptions.vsFindOptionsMatchCase, ref dummy))
+            //    {
+            //        var pos = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+            //        if (pos != null)
+            //        {
+            //            string name = pos.FullName;
+            //        }
+            //    }
+            //}
+
+
+
+            Find find = dte.Find;
+            find.Action = vsFindAction.vsFindActionFind;
+            find.FindWhat = searchText;
+            find.MatchCase = true;
+            find.Backwards = false;
+            find.ResultsLocation = vsFindResultsLocation.vsFindResultsNone;
+            find.Target = vsFindTarget.vsFindTargetSolution;
+            find.PatternSyntax = vsFindPatternSyntax.vsFindPatternSyntaxLiteral;
+            find.SearchSubfolders = true;
+            find.KeepModifiedDocumentsOpen = false;
+
+            while (find.Execute() != vsFindResult.vsFindResultNotFound)
+            {
+                var t = find.DTE.ActiveDocument.Selection as TextSelection;
+                var l = (CodeFunction)t.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+                if (l != null)
+                {
+                    string name = l.FullName;
+                }
+            }
+
+
+            var findWindow = dte.Windows.Item(EnvDTE.Constants.vsWindowKindFindResults1);
+            string data = String.Empty;
+
+            //if (result == vsFindResult.vsFindResultFound)
+            //{
+            //   // var t = GetFileFromResultWindow(dte);
+            //    var selection = findWindow.Selection as TextSelection;
+            //    var endPoint = selection.AnchorPoint.CreateEditPoint();
+            //    endPoint.EndOfDocument();
+            //    var text = endPoint.GetLines(1, endPoint.Line);
+            //    selection.SelectAll();
+            //    data = selection.Text;
+            //}
+            return data;
+        }
+
+        public static List<string> GetFileFromResultWindow(DTE dte)
+        {
+            List<string> files = new List<string>();
+            string strIndex = String.Empty;
+
+            if(dte.Find.ResultsLocation == vsFindResultsLocation.vsFindResults1)
+                strIndex = EnvDTE.Constants.vsWindowKindFindResults1;
+            else if(dte.Find.ResultsLocation == vsFindResultsLocation.vsFindResults2)
+                strIndex = EnvDTE.Constants.vsWindowKindFindResults2;
+
+            var findWindow = dte.Windows.Item(strIndex);
+
+            var selected = findWindow.Selection as TextSelection;
+            selected.SelectAll();
+
+            var text = selected.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            return text.ToList();
+        }
         #endregion
     }
 }
