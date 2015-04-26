@@ -22,9 +22,9 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         //DocumentEvents docEvents;
         SolutionEvents solEvents;
-        //WindowEvents wndEvents;
         DTEEvents dteEvents;
         FindEvents findEvents;
+        CommandEvents findinfilesEvent;
 
         public DTEHelper(DTE dte, DTE2 dte2)
         {
@@ -41,19 +41,32 @@ namespace Vistaghost.VISTAGHOST.Helper
             solEvents = Dte.Events.SolutionEvents;
             solEvents.Opened += solEvents_Opened;
 
-            //wndEvents = DTE.Events.WindowEvents;
-            //wndEvents.WindowActivated += wndEvents_WindowActivated;
-
             dteEvents = Dte.Events.DTEEvents;
             dteEvents.OnStartupComplete += dteEvents_OnStartupComplete;
             dteEvents.OnBeginShutdown += dteEvents_OnBeginShutdown;
+
+            findinfilesEvent = dte2.Events.get_CommandEvents("{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 277);
+
+            findinfilesEvent.BeforeExecute += new _dispCommandEvents_BeforeExecuteEventHandler(findinfilesEvent_BeforeExecute);
+            findinfilesEvent.AfterExecute += new _dispCommandEvents_AfterExecuteEventHandler(findinfilesEvent_AfterExecute);
+        }
+
+        void findinfilesEvent_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
+        {
+        }
+
+        void findinfilesEvent_BeforeExecute(string Guid, int ID, object CustomIn, object CustomOut, ref bool CancelDefault)
+        {
+            // Cancel Find in Files event by setting CancelDefault = true
+            CancelDefault = true;
+            //throw new NotImplementedException();
         }
 
         void findEvents_FindDone(vsFindResult Result, bool Cancelled)
         {
-            if (Result == vsFindResult.vsFindResultNotFound)
+            if (Result == vsFindResult.vsFindResultFound)
             {
-                var files = VGOperations.GetFileFromResultWindow(this.Dte);
+                VGSetting.Instance.FileList = VGOperations.GetFileFromResultWindow(this.Dte, FileFilter.ffSource);
             }
         }
 

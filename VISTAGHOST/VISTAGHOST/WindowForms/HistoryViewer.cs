@@ -87,6 +87,14 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+             List<ObjectType> funcs = VGOperations.GetFunctionProtFromHistory(VISTAGHOSTPackage.Current.DTE);
+
+             foreach (var f in funcs)
+             {
+                 ListViewItem item = new ListViewItem(new string[] {f.Prototype, "","" });
+                 listView1.Items.Add(item);
+             }
+
             var path = txtHistoryPath.Text;
             if (!File.Exists(path))
             {

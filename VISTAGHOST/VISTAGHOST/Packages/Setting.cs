@@ -72,6 +72,9 @@ namespace Vistaghost.VISTAGHOST
             }
         }
 
+        public List<string> FileList { get; set; }
+        public string FindWhat { get; set; }
+
         public VGSetting()
         {
             Title = "========== " + DateTime.Today.DayOfWeek.ToString() + ", " +
@@ -81,6 +84,8 @@ namespace Vistaghost.VISTAGHOST
 
             SettingData = LoadSettings();
             RegisterData = LoadRegisterInfo();
+
+            FileList = new List<string>();
         }
 
         public static string DefaultFileName(ExImType eiType)

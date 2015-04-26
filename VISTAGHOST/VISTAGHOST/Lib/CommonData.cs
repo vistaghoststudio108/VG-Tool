@@ -310,4 +310,20 @@ namespace Vistaghost.VISTAGHOST.Lib
         public int Index { get; set; }
         public string FuncString { get; set; }
     }
+
+    public enum FileFilter
+    {
+        ffSource = 0,
+        ffHeader,
+        ffAll
+    }
+
+    /// <summary>
+    /// need to remove
+    /// </summary>
+    public class FileDetail
+    {
+        public string Name { get; set; }
+        public int Line { get; set; }
+    }
 }

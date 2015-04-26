@@ -460,8 +460,9 @@ namespace Vistaghost.VISTAGHOST
 
         private void AboutCallback(object sender, EventArgs e)
         {
-            string result = VGOperations.AdvanceFind(DteHelper.Dte, "Review Screen Layout");
-
+            VGOperations.AdvanceFind(DteHelper.Dte, "ThuanPV3");
+            //HistoryViewer hvf = new HistoryViewer();
+            //hvf.ShowDialog();
             //AboutVistaghostForm abf = new AboutVistaghostForm();
             //abf.GetLicense(VGSetting.RegisterData);
             //abf.ShowDialog();
