@@ -969,37 +969,64 @@ namespace Vistaghost.VISTAGHOST.Lib
         public static List<ObjectType> GetFunctionProtFromHistory(DTE dte)
         {
             List<ObjectType> funcList = new List<ObjectType>();
+            Document doc;
+            bool bOpen = false;
+            string fileName = String.Empty;
 
-            for (int i = 0; i < VGSetting.Instance.FileList.Count; i++)
+            try
             {
-                var doc = dte.ItemOperations.OpenFile(Path.GetFullPath(VGSetting.Instance.FileList[i]), Constants.vsViewKindCode).Document;
-                TextRanges dummy = null;
-
-                if (doc == null)
-                    return null;
-
-                var selected = doc.Selection as TextSelection;
-                selected.StartOfDocument(false);
-                while (selected.FindPattern(VGSetting.Instance.FindWhat, (int)(vsFindOptions.vsFindOptionsMatchCase | vsFindOptions.vsFindOptionsMatchWholeWord), ref dummy))
+                for (int i = 0; i < VGSetting.Instance.FileList.Count; i++)
                 {
-                    try
-                    {
-                        var codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
-                        if (codeFunc != null)
-                        {
-                            var func = new ObjectType();
-                            func.Name = codeFunc.Name;
-                            func.Prototype = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
-                            func.Line = codeFunc.StartPoint.Line;
-                            func.Description = codeFunc.Comment;
+                    fileName = Path.GetFullPath(VGSetting.Instance.FileList[i]);
 
-                            funcList.Add(func);
+                    if (dte.ItemOperations.IsFileOpen(fileName, Constants.vsViewKindCode))
+                    {
+                        doc = dte.Documents.Item(fileName);
+                        //doc.Activate();
+                    }
+                    else
+                    {
+                        doc = dte.ItemOperations.OpenFile(fileName, Constants.vsViewKindCode).Document;
+                        bOpen = true;
+                    }
+                    TextRanges dummy = null;
+
+                    if (doc == null)
+                        return null;
+
+                    var selected = doc.Selection as TextSelection;
+                    selected.StartOfDocument(false);
+                    while (selected.FindPattern(VGSetting.Instance.FindWhat, (int)(vsFindOptions.vsFindOptionsMatchCase | vsFindOptions.vsFindOptionsMatchWholeWord), ref dummy))
+                    {
+                        try
+                        {
+                            var codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+                            if (codeFunc != null)
+                            {
+                                var func = new ObjectType();
+                                func.Name = codeFunc.Name;
+                                func.Prototype = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
+                                func.Line = codeFunc.StartPoint.Line;
+                                //func.Description = codeFunc.Comment;
+
+                                funcList.Add(func);
+                            }
+                        }
+                        catch
+                        {
                         }
                     }
-                    catch
+
+                    if (bOpen)
                     {
+                        bOpen = false;
+                        dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesPrompt);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, false);
             }
 
             return funcList;
