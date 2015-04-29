@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Vistaghost.VISTAGHOST.ToolWindows.VistaghostWindowControls"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui ="clr-namespace:Vistaghost.VISTAGHOST.ToolWindows"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Margin="0,0,-168,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="FunctionOutputArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown" Text="Function area"
+			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="HistoryOutputArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown" Text="History area"
+        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="ErrorListOutputArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown" Text="Error List area"
+        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Text="Show output from:"/>
+            <ComboBox x:Name="Combo_SearchType" Width="150" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="0" SelectionChanged="Combo_SearchType_SelectionChanged">
+                <ComboBoxItem Content="Functions"/>
+                <ComboBoxItem Content="History"/>
+                <ComboBoxItem Content="Error List"/>
+            </ComboBox>
+            <Line Y1="2" Y2="20" Width="1" Height="22" Margin="4,0" Stroke="#FFBDBCBC" Fill="#FF4F4A4A" Stretch="Fill" X2="1"/>
+            <Button Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search changed functions" Click="Button_Click">
+                <Image Source="/VISTAGHOST;component/Resources/search.png"/>
+            </Button>
+            <Button Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="search select text in all files">
+                <Image Source="/VISTAGHOST;component/Resources/copy.png"/>
+            </Button>
+            <Button Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="search select text in all files">
+                <Image Source="/VISTAGHOST;component/Resources/search2.png"/>
+            </Button>
+            <Button Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="search select text in all files">
+                <Image Source="/VISTAGHOST;component/Resources/stop_search.png"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -21,6 +21,7 @@ using System.ComponentModel;
 using Vistaghost.VISTAGHOST.Helper;
 using Vistaghost.VISTAGHOST.Packages;
 using Vistaghost.VISTAGHOST.WindowForms;
+using Vistaghost.VISTAGHOST.ToolWindows;
 
 namespace Vistaghost.VISTAGHOST
 {
@@ -57,12 +58,18 @@ namespace Vistaghost.VISTAGHOST
     [ProvideAutoLoad(UIContextGuids.NoSolution)]
     [Description("Vistaghost Tools Package")]
     [ProvideAutomationObject("Vistaghost")]
+    [ProvideToolWindow(typeof(VistaghostWindowPane),
+        Style = VsDockStyle.Linked,
+        Orientation = ToolWindowOrientation.Left,
+        Window = ToolWindowGuids80.Outputwindow
+        )]
     public sealed class VISTAGHOSTPackage : Package, IDisposable, IVsShellPropertyEvents
     {
         private DTE2 dte2;
         uint cookie;
 
         private OutputWindowPane owP;
+        private VistaghostWindowPane vgwPane;
         private int recordNum = 1;
 
         private List<string> lines = new List<string>();
@@ -94,6 +101,19 @@ namespace Vistaghost.VISTAGHOST
             }
         }
 
+        public VistaghostWindowPane VistaghostOutputWindow
+        {
+            get
+            {
+                return vgwPane;
+            }
+
+            set
+            {
+                vgwPane = value;
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -121,7 +141,7 @@ namespace Vistaghost.VISTAGHOST
         /// </summary>
         protected override void Initialize()
         {
-            Trace.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
+            Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
             // set an eventlistener for shell property changes
@@ -219,19 +239,25 @@ namespace Vistaghost.VISTAGHOST
                 MenuCommand menuChangeInfo = new MenuCommand(ChangeInfoCallback, menuChangeID);
                 mcs.AddCommand(menuChangeInfo);
 
-                CommandID addAllHeaderID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidCreateMultiHeader);
-                MenuCommand addAllHeader = new MenuCommand(AddAllHeaderCallback, addAllHeaderID);
-                mcs.AddCommand(addAllHeader);
+                CommandID menuAddAllHeaderID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidCreateMultiHeader);
+                MenuCommand menuAddAllHeader = new MenuCommand(AddAllHeaderCallback, menuAddAllHeaderID);
+                mcs.AddCommand(menuAddAllHeader);
 
-                CommandID copyPrototypeID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidCopyPrototype);
-                MenuCommand copyPrototype = new MenuCommand(CopyPrototypeCallback, copyPrototypeID);
-                mcs.AddCommand(copyPrototype);
+                CommandID menuCopyPrototypeID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidCopyPrototype);
+                MenuCommand menuCopyPrototype = new MenuCommand(CopyPrototypeCallback, menuCopyPrototypeID);
+                mcs.AddCommand(menuCopyPrototype);
+
+                CommandID menuExportFuncID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidExportFunc);
+                MenuCommand menuExportFunc = new MenuCommand(ExportFuncCallback, menuExportFuncID);
+                mcs.AddCommand(menuExportFunc);
 
                 OutputWindow ow = dte2.ToolWindows.OutputWindow;
                 owP = ow.OutputWindowPanes.Add("Vistaghost");
                 //owP = ow.OutputWindowPanes.Add("Vistaghost-Notifications");
 
                 owP.Collection.Item("Vistaghost").OutputString(Setting.Title);
+
+                VistaghostOutputWindow = (VistaghostWindowPane)this.FindToolWindow(typeof(VistaghostWindowPane), 0, true);
             }
         }
 
@@ -261,9 +287,64 @@ namespace Vistaghost.VISTAGHOST
 
             var lua = menu.Controls["Vistaghost"] as CommandBarPopup;
             lua.Controls["ShotKeys"].Visible = false;
+
+            if (show)
+                ShowToolWindow();
+        }
+
+        public void ShowToolWindow()
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(VistaghostWindowPane), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new NotSupportedException(Properties.Resources.CanNotCreateWindow);
+            }
+
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            if (windowFrame.IsVisible() == VSConstants.S_FALSE)
+                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.ShowNoActivate());
+        }
+
+        public void EnableButton(int cmdidButton, bool enabled)
+        {
+            var svc = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+
+            CommandID idBtn = new CommandID(GuidList.guidVISTAGHOSTCmdSet, cmdidButton);
+            var cmd = svc.FindCommand(idBtn) as MenuCommand;
+
+            if (cmd != null)
+                cmd.Enabled = enabled;
         }
 
         #region Callback methods
+        private void ExportFuncCallback(object sender, EventArgs e)
+        {
+            ((MenuCommand)sender).Enabled = false;
+
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+            bw.RunWorkerAsync();
+        }
+
+        List<ObjectType> funcs;
+        void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //vgwPane.AddString("adfasdf");
+            funcs = VGOperations.GetFunctionProtFromHistory(this.DTE);
+        }
+
+        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //ShowToolWindow();
+            EnableButton((int)PkgCmdIDList.cmdidExportFunc, true);
+
+            vgwPane.AddString("Number of functions found: " + funcs.Count);
+        }
+
         private void CopyPrototypeCallback(object sender, EventArgs e)
         {
             string prototype = VGOperations.GetFuncPrototype(DteHelper.Dte2, PrototypeType.FullProt);
@@ -460,11 +541,9 @@ namespace Vistaghost.VISTAGHOST
 
         private void AboutCallback(object sender, EventArgs e)
         {
-            string result = VGOperations.AdvanceFind(DteHelper.Dte, "Review Screen Layout");
-
-            //AboutVistaghostForm abf = new AboutVistaghostForm();
-            //abf.GetLicense(VGSetting.RegisterData);
-            //abf.ShowDialog();
+            AboutVistaghostForm abf = new AboutVistaghostForm();
+            abf.GetLicense(VGSetting.RegisterData);
+            abf.ShowDialog();
         }
 
         #endregion

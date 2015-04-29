@@ -260,6 +260,25 @@
         </Strings>
       </Button>
 
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidExportFunc" priority="0x0400" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_FINDRESULTS1_STOPFIND" />
+        <Icon guid="guidImages" id="bmpPicExportFunc" />
+        <Strings>
+          <ButtonText>Export Functions</ButtonText>
+          <CommandName>cmdidExportFunc</CommandName>
+        </Strings>
+      </Button>
+      
+      <!--add tool window-->
+      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidMyToolWindow" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
+        <Icon guid="guidImages" id="bmpPicSearch" />
+        <Strings>
+          <CommandName>cmdidMyToolWindow</CommandName>
+          <ButtonText>Vistaghost Results</ButtonText>
+        </Strings>
+      </Button>
+
     </Buttons>
    
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -269,7 +288,7 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used 
             inside a button definition. An important aspect of this declaration is that the element id 
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\icons2.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicMulti, bmpPicSingle "/>
+      <Bitmap guid="guidImages" href="Resources\icon3.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicMulti, bmpPicSingle, bmpPicExportFunc "/>
 
     </Bitmaps>
  
@@ -329,7 +348,8 @@
       <IDSymbol name ="cmdidExportHistory" value ="0x010f"/>
       <IDSymbol name ="cmdidChangeInfo" value ="0x0110"/>
       <IDSymbol name ="cmdidCopyPrototype" value ="0x1110"/>
-      
+      <IDSymbol name ="cmdidExportFunc" value ="0x4440"/>
+      <IDSymbol name ="cmdidMyToolWindow" value ="0x1010"/>
     </GuidSymbol>
     
     
@@ -341,6 +361,7 @@
       <IDSymbol name="bmpPicX" value="4" />
       <IDSymbol name="bmpPicMulti" value="5" />
       <IDSymbol name="bmpPicSingle" value="6" />
+      <IDSymbol name="bmpPicExportFunc" value="7" />
     </GuidSymbol>
   </Symbols>
 

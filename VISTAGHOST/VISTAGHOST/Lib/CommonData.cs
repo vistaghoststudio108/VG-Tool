@@ -289,6 +289,12 @@ namespace Vistaghost.VISTAGHOST.Lib
         public string FullPath { get; set; }
     }
 
+    public class Range
+    {
+        public int Start { get; set; }
+        public int End { get; set; }
+    }
+
     public class ObjectType
     {
         public string Name { get; set; }
@@ -298,6 +304,7 @@ namespace Vistaghost.VISTAGHOST.Lib
         public string Description { get; set; }
         public List<IOType> Parameters { get; set; }
         public int Count { get; set; }
+        public Range FuncRange { get; set; }
 
         public ObjectType()
         {
@@ -309,5 +316,23 @@ namespace Vistaghost.VISTAGHOST.Lib
     {
         public int Index { get; set; }
         public string FuncString { get; set; }
+    }
+
+    public enum FileFilter
+    {
+        ffSource = 0,
+        ffHeader,
+        ffAll
+    }
+
+    public class FileContainer
+    {
+        public string FileName { get; set; }
+        public List<int> Lines { get; set; }
+
+        public FileContainer()
+        {
+            Lines = new List<int>();
+        }
     }
 }

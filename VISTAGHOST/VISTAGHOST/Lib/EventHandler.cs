@@ -25,4 +25,6 @@ namespace Vistaghost.VISTAGHOST.Lib
     public delegate void HeaderNotifyEventHandler(int index);
 
     public delegate void HistoryViewerEventHandler(string file);
+
+    public delegate void ToolWindowPaneEventHandler(int swCode);
 }
