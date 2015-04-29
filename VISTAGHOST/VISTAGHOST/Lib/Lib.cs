@@ -208,7 +208,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             if (tlist.Count() < 3)
                 return DefaultTag;
 
-            if(bJustOne)
+            if (bJustOne)
                 return ("//" + tlist[(int)mode - 1] + " ");
 
             return ("//" + tlist[(int)mode - 1] + t[1]);
@@ -843,127 +843,109 @@ namespace Vistaghost.VISTAGHOST.Lib
             return true;
         }
 
-
-        public static string AdvanceFind(DTE dte, string searchText)
+        static string GetFileName(string input)
         {
-            //if (dte.Documents.Count > 0)
-            //{
-
-            //}
-
-            //string[] path = {
-            //                    "C:\\Users\\thuanpv3\\Documents\\Visual Studio 2008\\Projects\\asdfasdf\\asdfasdf\\asdfasdf.cpp",
-            //                    "C:\\Users\\thuanpv3\\Documents\\Visual Studio 2008\\Projects\\asdfasdf\\asdfasdf\\stdafx.cpp"
-            //                };
-
-            //for (int i = 0; i < path.Count(); i++)
-            //{
-            //    var t = dte.ItemOperations.OpenFile(path[i], Constants.vsViewKindCode).Document;
-            //    TextRanges dummy = null;
-
-            //    var selected = dte.ActiveDocument.Selection as TextSelection;
-            //    while (selected.FindPattern("Review Screen Layout", (int)vsFindOptions.vsFindOptionsMatchCase, ref dummy))
-            //    {
-            //        var pos = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
-            //        if (pos != null)
-            //        {
-            //            string name = pos.FullName;
-            //        }
-            //    }
-            //}
-            //var selected = dte.ActiveDocument.Selection as TextSelection;
-
-            //for (int i = 1; i < selected.TextRanges.Count; i++)
-            //{
-            //    var endpoint = selected.TextRanges.Item(i).EndPoint;
-            //    var str = selected.TextRanges.Item(i).StartPoint.GetText(endpoint);
-            //}
-
-            //GetFileFromResultWindow(dte, FileFilter.ffSource);
-
-            //return String.Empty;
-
-            Find2 find = (Find2)dte.Find;
-            find.WaitForFindToComplete = true;
-
-            find.Action = vsFindAction.vsFindActionFindAll;
-            find.FindWhat = searchText;
-            find.MatchCase = true;
-            find.Backwards = false;
-            find.ResultsLocation = vsFindResultsLocation.vsFindResults1;
-            find.Target = vsFindTarget.vsFindTargetFiles;
-            find.PatternSyntax = vsFindPatternSyntax.vsFindPatternSyntaxRegExpr;
-            find.SearchSubfolders = true;
-            find.SearchPath = "Entire Solution";
-            find.KeepModifiedDocumentsOpen = false;
-
-            find.Execute();
-
-            //while (find.Execute() != vsFindResult.vsFindResultNotFound)
-            //{
-            //    var t = find.DTE.ActiveDocument.Selection as TextSelection;
-            //    var l = (CodeFunction)t.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
-            //    if (l != null)
-            //    {
-            //        string name = l.FullName;
-            //    }
-            //}
-
-
-            var findWindow = dte.Windows.Item(EnvDTE.Constants.vsWindowKindFindResults1);
-            string data = String.Empty;
-            
-
-            //if (result == vsFindResult.vsFindResultFound)
-            //{
-            //   // var t = GetFileFromResultWindow(dte);
-            //    var selection = findWindow.Selection as TextSelection;
-            //    var endPoint = selection.AnchorPoint.CreateEditPoint();
-            //    endPoint.EndOfDocument();
-            //    var text = endPoint.GetLines(1, endPoint.Line);
-            //    selection.SelectAll();
-            //    data = selection.Text;
-            //}
-            return data;
+            var parts = input.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+            var pos = parts[1].LastIndexOf("(");
+            return parts[0] + ":" +parts[1].Remove(pos);
         }
 
-        public static List<string> GetFileFromResultWindow(DTE dte, FileFilter filter)
+        static int GetLine(string input)
         {
-            List<string> files = new List<string>();
-            Window findWindow = dte.ActiveWindow;
+            var parts = input.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+            var begin = parts[1].LastIndexOf("(");
+            var end = parts[1].LastIndexOf(")");
+
+            int numLine;
+            if (int.TryParse(parts[1].Substring(begin + 1, end - begin - 1), out numLine))
+                return numLine;
+
+            return -1;
+        }
+
+        public static List<FileContainer> GetFileFromResultWindow(DTE dte, FileFilter filter)
+        {
+            List<FileContainer> fContainer = new List<FileContainer>();
+            string curFileName = String.Empty;
+            string newFileName = String.Empty;
+            int nLine = 0;
+
+            var findWindow = dte.ActiveWindow;
             TextSelection selected = findWindow.Selection as TextSelection;
 
-            if (findWindow.DTE.Find.Action == vsFindAction.vsFindActionFindAll && findWindow.DTE.Find.Target == vsFindTarget.vsFindTargetFiles)
-            {
-                var fileOfType = findWindow.DTE.Find.FilesOfType;
-                VGSetting.Instance.FindWhat = findWindow.DTE.Find.FindWhat;
-                selected.SelectAll();
-                files = selected.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                files.RemoveAt(0);
-                files.RemoveAt(files.Count - 1);
+            selected.SelectAll();
 
+            var files = selected.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            if (files[0].Contains("List filenames only"))
+            {
+                VGSetting.Instance.FileNameOnly = true;
+                VGSetting.Instance.FindWhat = findWindow.DTE.Find.FindWhat;
+            }
+                
+            files.RemoveAt(0);
+            files.RemoveAt(files.Count - 1);
+
+            foreach (var f in files)
+            {
                 switch (filter)
                 {
-                    case FileFilter.ffAll:
-                        break;
-                    case FileFilter.ffHeader:
-                        {
-
-                        }
-                        break;
-
                     case FileFilter.ffSource:
                         {
- 
+                            if(!f.Contains(".cpp"))
+                                continue;
                         }
                         break;
-
-                    default:
+                    case FileFilter.ffHeader:
                         break;
+                    case FileFilter.ffAll:
+                        break;
+                }
+
+                if (VGSetting.Instance.FileNameOnly)
+                {
+                    var fc = new FileContainer();
+                    fc.FileName = f;
+                    fContainer.Add(fc);
+                }
+                else
+                {
+                    newFileName = GetFileName(f);
+                    nLine = GetLine(f);
+
+                    if (nLine == -1)
+                        continue;
+
+                    if (newFileName == curFileName)
+                    {
+                        fContainer[fContainer.Count - 1].Lines.Add(nLine);
+                    }
+                    else
+                    {
+                        curFileName = newFileName;
+                        var fc = new FileContainer();
+                        fc.FileName = newFileName;
+                        fc.Lines.Add(nLine);
+
+                        fContainer.Add(fc);
+                    }
                 }
             }
 
-            return files;
+            selected.Cancel();
+
+            return fContainer;
+        }
+
+        static bool InSideFunc(CodeFunction codeFunc, List<int> lines)
+        {
+            foreach (var line in lines)
+            {
+                if (line <= codeFunc.EndPoint.Line && line >= codeFunc.StartPoint.Line)
+                    return true;
+            }
+
+            return false;
         }
 
         public static List<ObjectType> GetFunctionProtFromHistory(DTE dte)
@@ -972,12 +954,15 @@ namespace Vistaghost.VISTAGHOST.Lib
             Document doc;
             bool bOpen = false;
             string fileName = String.Empty;
+            List<int> lines;
+            FileCodeModel fcm;
 
             try
             {
                 for (int i = 0; i < VGSetting.Instance.FileList.Count; i++)
                 {
-                    fileName = Path.GetFullPath(VGSetting.Instance.FileList[i]);
+                    fileName = Path.GetFullPath(VGSetting.Instance.FileList[i].FileName);
+                    string curProt = String.Empty;
 
                     if (dte.ItemOperations.IsFileOpen(fileName, Constants.vsViewKindCode))
                     {
@@ -989,38 +974,83 @@ namespace Vistaghost.VISTAGHOST.Lib
                         doc = dte.ItemOperations.OpenFile(fileName, Constants.vsViewKindCode).Document;
                         bOpen = true;
                     }
-                    TextRanges dummy = null;
 
-                    if (doc == null)
-                        return null;
+                    if (doc == null || doc.ProjectItem == null || doc.ProjectItem.FileCodeModel == null)
+                        continue;
 
                     var selected = doc.Selection as TextSelection;
                     selected.StartOfDocument(false);
-                    while (selected.FindPattern(VGSetting.Instance.FindWhat, (int)(vsFindOptions.vsFindOptionsMatchCase | vsFindOptions.vsFindOptionsMatchWholeWord), ref dummy))
+                        
+                    if (VGSetting.Instance.FileNameOnly)
                     {
-                        try
+                        while (selected.FindText(VGSetting.Instance.FindWhat, (int)(vsFindOptions.vsFindOptionsMatchCase | vsFindOptions.vsFindOptionsMatchWholeWord)))
                         {
-                            var codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
-                            if (codeFunc != null)
+                            try
+                            {
+                                var codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+                                if (codeFunc != null)
+                                {
+                                    var func = new ObjectType();
+                                    func.Name = codeFunc.Name;
+                                    func.Prototype = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
+
+                                    if (func.Prototype != curProt)
+                                    {
+                                        curProt = func.Prototype;
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+
+                                    func.Line = codeFunc.StartPoint.Line;
+                                    func.Description = codeFunc.Comment;
+
+                                    funcList.Add(func);
+                                }
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    }
+                    else
+                    {
+                        fcm = doc.ProjectItem.FileCodeModel;
+                        var codeFuncs = fcm.CodeElements.OfType<CodeFunction>();
+                        lines = VGSetting.Instance.FileList[i].Lines;
+
+                        if (codeFuncs.Count() == 0)
+                            continue;
+
+                        foreach (var codeFunc in codeFuncs)
+                        {
+                            if (InSideFunc(codeFunc, lines))
                             {
                                 var func = new ObjectType();
                                 func.Name = codeFunc.Name;
                                 func.Prototype = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
+
+                                if (func.Prototype != curProt)
+                                {
+                                    curProt = func.Prototype;
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+
                                 func.Line = codeFunc.StartPoint.Line;
-                                //func.Description = codeFunc.Comment;
 
                                 funcList.Add(func);
                             }
-                        }
-                        catch
-                        {
                         }
                     }
 
                     if (bOpen)
                     {
                         bOpen = false;
-                        dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesPrompt);
+                        dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesYes);
                     }
                 }
             }

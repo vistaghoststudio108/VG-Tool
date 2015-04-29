@@ -87,6 +87,22 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap bg {
+            get {
+                object obj = ResourceManager.GetObject("bg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not create tool window..
+        /// </summary>
+        internal static string CanNotCreateWindow {
+            get {
+                return ResourceManager.GetString("CanNotCreateWindow", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Vistaghost.ChangeInfo.
         /// </summary>
@@ -240,12 +256,35 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap search {
+            get {
+                object obj = ResourceManager.GetObject("search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap search2 {
+            get {
+                object obj = ResourceManager.GetObject("search2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.MakeFunctionHeader.
         /// </summary>
         internal static string SingleHeader {
             get {
                 return ResourceManager.GetString("SingleHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vistaghost Results.
+        /// </summary>
+        internal static string VistaghostWindowTitle {
+            get {
+                return ResourceManager.GetString("VistaghostWindowTitle", resourceCulture);
             }
         }
     }

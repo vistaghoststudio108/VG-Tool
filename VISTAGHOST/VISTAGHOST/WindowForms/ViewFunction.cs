@@ -119,7 +119,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             Added = false;
             objList.Clear();
 
-            var fcm = dte2Object.ActiveDocument.ProjectItem.FileCodeModel;
+            var fcm = pri.FileCodeModel;
 
             /*open a file that not included in project*/
             if (fcm == null)

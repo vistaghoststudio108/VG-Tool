@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using Vistaghost.VISTAGHOST.Lib;
 using Vistaghost.VISTAGHOST.Network;
+using System.ComponentModel;
 
 namespace Vistaghost.VISTAGHOST.Helper
 {
@@ -58,16 +59,27 @@ namespace Vistaghost.VISTAGHOST.Helper
         void findinfilesEvent_BeforeExecute(string Guid, int ID, object CustomIn, object CustomOut, ref bool CancelDefault)
         {
             // Cancel Find in Files event by setting CancelDefault = true
-            CancelDefault = true;
-            //throw new NotImplementedException();
+            //CancelDefault = true;
         }
 
         void findEvents_FindDone(vsFindResult Result, bool Cancelled)
         {
             if (Result == vsFindResult.vsFindResultFound)
             {
-                VGSetting.Instance.FileList = VGOperations.GetFileFromResultWindow(this.Dte, FileFilter.ffSource);
+                VGSetting.Instance.FileList = Vistaghost.VISTAGHOST.Lib.VGOperations.GetFileFromResultWindow(this.Dte, FileFilter.ffSource);
+
+                //BackgroundWorker bw = new BackgroundWorker();
+                //bw.DoWork += new DoWorkEventHandler(bw_DoWork);
+                //bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+                //bw.RunWorkerAsync();
             }
+        }
+
+        void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+        }
+        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
         }
 
         void docEvents_DocumentClosing(Document Document)

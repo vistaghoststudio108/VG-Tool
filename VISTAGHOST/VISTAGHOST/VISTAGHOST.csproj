@@ -63,6 +63,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\PublicAssemblies\EnvDTE90a.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.TeamFoundation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.TeamFoundation.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 2008 SDK\VisualStudioIntegration\Common\Assemblies\Microsoft.TeamFoundation.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.CommandBars, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.CommandBars.dll</HintPath>
@@ -77,6 +84,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -89,6 +102,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +132,13 @@
     <Compile Include="Packages\VISTAGHOSTPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Packages\PkgCmdID.cs" />
+    <Compile Include="ToolWindows\VistaghostWindowControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ToolWindows\VistaghostWindowControl.Designer.cs">
+      <DependentUpon>VistaghostWindowControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindows\VistaghostWindowPane.cs" />
     <Compile Include="User Control\ColorComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,6 +157,11 @@
     <Compile Include="User Control\ShortcutKeyTextBox.Designer.cs">
       <DependentUpon>ShortcutKeyTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="VSPackage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VSPackage.resx</DependentUpon>
+    </Compile>
     <Compile Include="WindowForms\AboutVistaghostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +179,12 @@
     </Compile>
     <Compile Include="WindowForms\DeleteForm.Designer.cs">
       <DependentUpon>DeleteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowForms\ExportFunctionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowForms\ExportFunctionForm.Designer.cs">
+      <DependentUpon>ExportFunctionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowForms\ExportHistoryForm.cs">
       <SubType>Form</SubType>
@@ -201,14 +241,22 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ToolWindows\VistaghostWindowControl.resx">
+      <DependentUpon>VistaghostWindowControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>VSPackage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowForms\AboutVistaghostForm.resx">
       <DependentUpon>AboutVistaghostForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowForms\Config.resx">
       <DependentUpon>Config.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowForms\ExportFunctionForm.resx">
+      <DependentUpon>ExportFunctionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowForms\HistoryViewer.resx">
       <DependentUpon>HistoryViewer.cs</DependentUpon>
@@ -236,10 +284,15 @@
     <None Include="Resources\Images_32bit.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\bg.png" />
+    <Content Include="Resources\icon3.png" />
+    <Content Include="Resources\imagelis.bmp" />
     <Content Include="Resources\Log.xml" />
     <Content Include="Resources\icons.png" />
     <Content Include="Resources\icons2.png" />
     <Content Include="Resources\Package.ico" />
+    <Content Include="Resources\search.png" />
+    <Content Include="Resources\search2.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UserControl\MakarovDev.ExpandCollapsePanel\MakarovDev.ExpandCollapsePanel.csproj">

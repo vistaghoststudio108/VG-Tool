@@ -72,8 +72,9 @@ namespace Vistaghost.VISTAGHOST
             }
         }
 
-        public List<string> FileList { get; set; }
+        public List<FileContainer> FileList { get; set; }
         public string FindWhat { get; set; }
+        public bool FileNameOnly { get; set; }
 
         public VGSetting()
         {
@@ -85,7 +86,8 @@ namespace Vistaghost.VISTAGHOST
             SettingData = LoadSettings();
             RegisterData = LoadRegisterInfo();
 
-            FileList = new List<string>();
+            FileList = new List<FileContainer>();
+            FileNameOnly = false;
         }
 
         public static string DefaultFileName(ExImType eiType)
