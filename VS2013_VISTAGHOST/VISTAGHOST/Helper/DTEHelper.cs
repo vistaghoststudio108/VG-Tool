@@ -24,33 +24,72 @@ namespace Vistaghost.VISTAGHOST.Helper
         DTEEvents dteEvents;
         FindEvents findEvents;
         CommandEvents findinfilesEvent;
+        SelectionEvents selEvent;
+        CodeModelEvents codeModelEvent;
 
         public DTEHelper(DTE dte, DTE2 dte2)
         {
             this.DTE = dte;
             this.DTE2 = dte2;
 
+            // Document events
             docEvents = DTE.Events.DocumentEvents;
             docEvents.DocumentOpening += docEvents_DocumentOpening;
             docEvents.DocumentClosing += docEvents_DocumentClosing;
+            docEvents.DocumentOpened += docEvents_DocumentOpened;
+            docEvents.DocumentSaved += docEvents_DocumentSaved;
 
+            // Solution events
             solEvents = DTE.Events.SolutionEvents;
             solEvents.Opened += solEvents_Opened;
 
+            // Window events
             wndEvents = DTE.Events.WindowEvents;
             wndEvents.WindowActivated += wndEvents_WindowActivated;
 
+            // DTE events
             dteEvents = DTE.Events.DTEEvents;
             dteEvents.OnStartupComplete += dteEvents_OnStartupComplete;
             dteEvents.OnBeginShutdown += dteEvents_OnBeginShutdown;
 
+            // Find events
             findEvents = DTE.Events.FindEvents;
             findEvents.FindDone += findEvents_FindDone;
 
             findinfilesEvent = dte2.Events.get_CommandEvents("{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 277);
-
             findinfilesEvent.BeforeExecute += new _dispCommandEvents_BeforeExecuteEventHandler(findinfilesEvent_BeforeExecute);
             findinfilesEvent.AfterExecute += new _dispCommandEvents_AfterExecuteEventHandler(findinfilesEvent_AfterExecute);
+
+            //Code model event
+            //codeModelEvent.ElementAdded += codeModelEvent_ElementAdded;
+            //codeModelEvent.ElementChanged += codeModelEvent_ElementChanged;
+            //codeModelEvent.ElementDeleted += codeModelEvent_ElementDeleted;
+        }
+
+        void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
+        {
+            
+        }
+
+        void codeModelEvent_ElementChanged(CodeElement Element, vsCMChangeKind Change)
+        {
+            
+        }
+
+        void codeModelEvent_ElementAdded(CodeElement Element)
+        {
+            
+        }
+
+        void docEvents_DocumentSaved(Document Document)
+        {
+            var fcm = Document.ProjectItem.FileCodeModel;
+            var cf = fcm.CodeElements.OfType<CodeFunction>();
+        }
+
+        void docEvents_DocumentOpened(Document Document)
+        {
+            
         }
 
         void findinfilesEvent_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
@@ -65,22 +104,19 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void findEvents_FindDone(vsFindResult Result, bool Cancelled)
         {
-            if (Result == vsFindResult.vsFindResultFound)
-            {
-                vgSetting.Instance.FileList = Vistaghost.VISTAGHOST.Lib.vgOperations.GetFileFromResultWindow(this.DTE, FileFilter.ffSource);
+            vgSetting.Instance.FileList.Clear();
 
-                //BackgroundWorker bw = new BackgroundWorker();
-                //bw.DoWork += new DoWorkEventHandler(bw_DoWork);
-                //bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-                //bw.RunWorkerAsync();
+            switch (Result)
+            {
+                case vsFindResult.vsFindResultFound:
+                    vgSetting.Instance.FileList = Vistaghost.VISTAGHOST.Lib.vgOperations.GetFileFromResultWindow(this.DTE, FileFilter.ffSource);
+                    break;
+                case vsFindResult.vsFindResultNotFound:
+                    vgSetting.Instance.FindWhat = String.Empty;
+                    break;
+                default:
+                    break;
             }
-        }
-        
-        static void bw_DoWork(object sender, DoWorkEventArgs e)
-        {
-        }
-        static void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
         }
 
         void docEvents_DocumentClosing(Document Document)

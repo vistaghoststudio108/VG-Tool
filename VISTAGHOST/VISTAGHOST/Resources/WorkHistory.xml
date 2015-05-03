@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<WorkHistory from="20/12/2015" to="unknown" project="Review Screen Layout" author="ThuanPV3">
+  <Logic>
+    <ChangedFile>
+      <!--<File action="mod">file path</File>-->
+    </ChangedFile>
+    <CodeElement>
+      <!--<Element type="func" action="mod">
+        <name>function name</name>
+        <file>file path</file>
+      </Element>-->
+    </CodeElement>
+  </Logic>
+  <Comment>
+
+  </Comment>
+</WorkHistory>

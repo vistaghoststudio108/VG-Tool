@@ -32,6 +32,6 @@ namespace Vistaghost.VISTAGHOST
 
         public const uint cmdidExportFunc = 0x4440;
 
-        public const uint cmdidToolWindow = 0x1010;
+        public const uint cmdidMyToolWindow = 0x1010;
     };
 }

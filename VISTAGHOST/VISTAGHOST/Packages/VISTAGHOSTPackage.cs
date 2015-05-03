@@ -97,7 +97,7 @@ namespace Vistaghost.VISTAGHOST
         {
             get
             {
-                return DteHelper.Dte;
+                return DteHelper.DTE;
             }
         }
 
@@ -247,9 +247,13 @@ namespace Vistaghost.VISTAGHOST
                 MenuCommand menuCopyPrototype = new MenuCommand(CopyPrototypeCallback, menuCopyPrototypeID);
                 mcs.AddCommand(menuCopyPrototype);
 
-                CommandID menuExportFuncID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidExportFunc);
-                MenuCommand menuExportFunc = new MenuCommand(ExportFuncCallback, menuExportFuncID);
-                mcs.AddCommand(menuExportFunc);
+                //CommandID menuExportFuncID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidExportFunc);
+                //MenuCommand menuExportFunc = new MenuCommand(ExportFuncCallback, menuExportFuncID);
+                //mcs.AddCommand(menuExportFunc);
+
+                CommandID menuToolWindowID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidMyToolWindow);
+                MenuCommand menuToolWindow = new MenuCommand(ShowToolWindowCallback, menuToolWindowID);
+                mcs.AddCommand(menuToolWindow);
 
                 OutputWindow ow = dte2.ToolWindows.OutputWindow;
                 owP = ow.OutputWindowPanes.Add("Vistaghost");
@@ -280,7 +284,7 @@ namespace Vistaghost.VISTAGHOST
 
         public void ShowToolBar(bool show)
         {
-            var cmdBars = (CommandBars)DteHelper.Dte.CommandBars;
+            var cmdBars = (CommandBars)DteHelper.DTE.CommandBars;
             var menu = cmdBars.ActiveMenuBar;
 
             menu.Controls["Vistaghost"].Visible = show;
@@ -320,34 +324,18 @@ namespace Vistaghost.VISTAGHOST
         }
 
         #region Callback methods
-        private void ExportFuncCallback(object sender, EventArgs e)
+        //private void ExportFuncCallback(object sender, EventArgs e)
+        //{
+        //}
+
+        private void ShowToolWindowCallback(object sender, EventArgs e)
         {
-            ((MenuCommand)sender).Enabled = false;
-
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-            bw.RunWorkerAsync();
-        }
-
-        List<ObjectType> funcs;
-        void bw_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //vgwPane.AddString("adfasdf");
-            funcs = VGOperations.GetFunctionProtFromHistory(this.DTE);
-        }
-
-        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //ShowToolWindow();
-            EnableButton((int)PkgCmdIDList.cmdidExportFunc, true);
-
-            vgwPane.AddString("Number of functions found: " + funcs.Count);
+            ShowToolWindow();
         }
 
         private void CopyPrototypeCallback(object sender, EventArgs e)
         {
-            string prototype = VGOperations.GetFuncPrototype(DteHelper.Dte2, PrototypeType.FullProt);
+            string prototype = VGOperations.GetFuncPrototype(DteHelper.DTE2, PrototypeType.FullProt);
 
             if (!String.IsNullOrEmpty(prototype))
                 Clipboard.SetText(prototype, TextDataFormat.UnicodeText);
@@ -355,7 +343,7 @@ namespace Vistaghost.VISTAGHOST
 
         private void AddAllHeaderCallback(object sender, EventArgs e)
         {
-            ViewFunction vff = new ViewFunction(DteHelper.Dte, DteHelper.Dte2);
+            ViewFunction vff = new ViewFunction(DteHelper.DTE, DteHelper.DTE2);
             vff.ShowDialog();
         }
 
@@ -387,7 +375,7 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            SingleHeader ihf = new SingleHeader(DteHelper.Dte2);
+            SingleHeader ihf = new SingleHeader(DteHelper.DTE2);
             ihf.OnSendData += new AddHeaderEventHandler(ihf_OnSendData);
             ihf.ShowDialog();
 
@@ -402,7 +390,7 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            if (DteHelper.Dte.ActiveDocument == null || DteHelper.Dte.ActiveDocument.Selection == null)
+            if (DteHelper.DTE.ActiveDocument == null || DteHelper.DTE.ActiveDocument.Selection == null)
                 return;
 
             if (VGSetting.SettingData.CommentInfo.AutoShowInputDialog)
@@ -431,7 +419,7 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            if (DteHelper.Dte.ActiveDocument == null || DteHelper.Dte.ActiveDocument.Selection == null)
+            if (DteHelper.DTE.ActiveDocument == null || DteHelper.DTE.ActiveDocument.Selection == null)
                 return;
 
             if (VGSetting.SettingData.CommentInfo.AutoShowInputDialog)
@@ -466,7 +454,7 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            if (DteHelper.Dte.ActiveDocument == null || DteHelper.Dte.ActiveDocument.Selection == null)
+            if (DteHelper.DTE.ActiveDocument == null || DteHelper.DTE.ActiveDocument.Selection == null)
                 return;
 
             if (VGSetting.SettingData.CommentInfo.AutoShowInputDialog)
@@ -497,7 +485,7 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            cff.LoadConfig(DteHelper.Dte2, VGSetting.SettingData);
+            cff.LoadConfig(DteHelper.DTE2, VGSetting.SettingData);
             cff.ShowDialog();
         }
 
@@ -522,12 +510,12 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            if (DteHelper.Dte.ActiveDocument == null || DteHelper.Dte.ActiveDocument.Selection == null)
+            if (DteHelper.DTE.ActiveDocument == null || DteHelper.DTE.ActiveDocument.Selection == null)
                 return;
 
             string line = String.Empty;
 
-            var selected = DteHelper.Dte.ActiveDocument.Selection as TextSelection;
+            var selected = DteHelper.DTE.ActiveDocument.Selection as TextSelection;
 
             if (!selected.IsEmpty)
             {
@@ -590,7 +578,7 @@ namespace Vistaghost.VISTAGHOST
 
             owP.Collection.Item("Vistaghost").Activate();
 
-            if (VGOperations.ProcessTextForAddSingle(DteHelper.Dte, Setting.CurrentDate, content, account, devid, mode, keep_comments, ref info))
+            if (VGOperations.ProcessTextForAddSingle(DteHelper.DTE, Setting.CurrentDate, content, account, devid, mode, keep_comments, ref info))
             {
                 /*Show history in output window*/
                 if (VGSetting.SettingData.HistoryInfo.DisplayHistory)
@@ -600,7 +588,7 @@ namespace Vistaghost.VISTAGHOST
                     owP.OutputString(recordNum.ToString() + ">   [" + account + "] -> " + notify[(int)mode - 1]);
                     if (moreopt && (int)mode == 1)
                     {
-                        numPh = VGOperations.Replace(DteHelper.Dte, find, replace);
+                        numPh = VGOperations.Replace(DteHelper.DTE, find, replace);
                         if (numPh != -1)
                         {
                             owP.OutputString(recordNum.ToString() + ">   [" + account + "] -> Replace '" + find + "'" + " to '" + replace + "' succeeded (" + numPh.ToString() + " matched)\n");
@@ -618,7 +606,7 @@ namespace Vistaghost.VISTAGHOST
                 if (VGSetting.SettingData.HistoryInfo.WriteLogHistory)
                 {
                     /*Get function*/
-                    string prototype = VGOperations.GetFuncPrototype(DteHelper.Dte2, PrototypeType.FuncName);
+                    string prototype = VGOperations.GetFuncPrototype(DteHelper.DTE2, PrototypeType.FuncName);
 
                     LogFileType type = LogFileType.Xml;
 
@@ -628,10 +616,10 @@ namespace Vistaghost.VISTAGHOST
                     Logger.LogHistory(type, info.Path, info.Line, mode, find, replace, numPh, prototype);
                 }
 
-                DteHelper.Dte.StatusBar.Text = Properties.Resources.AddCommentSuccess;
+                DteHelper.DTE.StatusBar.Text = Properties.Resources.AddCommentSuccess;
             }
             else
-                DteHelper.Dte.StatusBar.Text = Properties.Resources.NoText;
+                DteHelper.DTE.StatusBar.Text = Properties.Resources.NoText;
         }
 
         private void cff_OnSendData(Settings data)
@@ -644,12 +632,12 @@ namespace Vistaghost.VISTAGHOST
         private void ihf_OnSendData(ObjectType func)
         {
             int offsetLine = 0;
-            if (VGOperations.ProcessStringForAddHeader(DteHelper.Dte, func, out offsetLine))
+            if (VGOperations.ProcessStringForAddHeader(DteHelper.DTE, func, out offsetLine))
             {
-                DteHelper.Dte.StatusBar.Text = Properties.Resources.MakeHeaderSuccess;
+                DteHelper.DTE.StatusBar.Text = Properties.Resources.MakeHeaderSuccess;
             }
             else
-                DteHelper.Dte.StatusBar.Text = Properties.Resources.MakeHeaderFaield;
+                DteHelper.DTE.StatusBar.Text = Properties.Resources.MakeHeaderFaield;
         }
 
         private void df_OnSendData(bool delDS, bool delSS, bool delBL, bool smartFM)
@@ -671,13 +659,13 @@ namespace Vistaghost.VISTAGHOST
                 dOpt |= VGDelCommentsOptions.SmartFormat;
 
 
-            if (VGOperations.ClearCommentWithSelectedText(DteHelper.Dte, dType, dOpt))
+            if (VGOperations.ClearCommentWithSelectedText(DteHelper.DTE, dType, dOpt))
             {
-                DteHelper.Dte.StatusBar.Text = Properties.Resources.DeleteCommentSuccess;
+                DteHelper.DTE.StatusBar.Text = Properties.Resources.DeleteCommentSuccess;
                 return;
             }
 
-            DteHelper.Dte.StatusBar.Text = Properties.Resources.NoText;
+            DteHelper.DTE.StatusBar.Text = Properties.Resources.NoText;
         }
 
         private void esf_OnExportResult(string message, bool success)
@@ -686,10 +674,10 @@ namespace Vistaghost.VISTAGHOST
             {
                 owP.Collection.Item("Vistaghost").Activate();
                 owP.OutputString(message + "\n");
-                DteHelper.Dte.StatusBar.Text = Properties.Resources.ExportFailedMessage;
+                DteHelper.DTE.StatusBar.Text = Properties.Resources.ExportFailedMessage;
             }
             else
-                DteHelper.Dte.StatusBar.Text = message;
+                DteHelper.DTE.StatusBar.Text = message;
         }
 
         public void Dispose()

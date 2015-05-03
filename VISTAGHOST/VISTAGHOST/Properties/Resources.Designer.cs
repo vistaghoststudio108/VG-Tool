@@ -121,6 +121,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CopyHS {
+            get {
+                object obj = ResourceManager.GetObject("CopyHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.CopyPrototype.
         /// </summary>
@@ -157,6 +164,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap DeleteHS {
+            get {
+                object obj = ResourceManager.GetObject("DeleteHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Settings can not be exported. Please try again.
         /// </summary>
@@ -172,6 +186,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
         internal static string ExportSuccessMessage {
             get {
                 return ResourceManager.GetString("ExportSuccessMessage", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap FunctionHS {
+            get {
+                object obj = ResourceManager.GetObject("FunctionHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -256,6 +277,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap PrintPreviewHS {
+            get {
+                object obj = ResourceManager.GetObject("PrintPreviewHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap search {
             get {
                 object obj = ResourceManager.GetObject("search", resourceCulture);
@@ -266,6 +294,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
         internal static System.Drawing.Bitmap search2 {
             get {
                 object obj = ResourceManager.GetObject("search2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SearchFunc {
+            get {
+                object obj = ResourceManager.GetObject("SearchFunc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

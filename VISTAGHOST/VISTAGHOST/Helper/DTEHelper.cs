@@ -15,41 +15,73 @@ namespace Vistaghost.VISTAGHOST.Helper
 {
     class DTEHelper
     {
-        public DTE Dte { get; private set; }
+        public DTE DTE { get; private set; }
 
-        public DTE2 Dte2 { get; set; }
+        public DTE2 DTE2 { get; set; }
 
-        string type = String.Empty;
-
-        //DocumentEvents docEvents;
+        DocumentEvents docEvents;
         SolutionEvents solEvents;
         DTEEvents dteEvents;
         FindEvents findEvents;
         CommandEvents findinfilesEvent;
+        CodeModelEvents codeModelEvent;
+        SelectionEvents selEvent;
 
         public DTEHelper(DTE dte, DTE2 dte2)
         {
-            this.Dte = dte;
-            this.Dte2 = dte2;
+            this.DTE = dte;
+            this.DTE2 = dte2;
 
-            //docEvents = DTE.Events.DocumentEvents;
-            //docEvents.DocumentOpening += docEvents_DocumentOpening;
-            //docEvents.DocumentClosing += docEvents_DocumentClosing;
+            docEvents = DTE.Events.get_DocumentEvents(DTE.ActiveDocument);
+            docEvents.DocumentOpening += docEvents_DocumentOpening;
+            docEvents.DocumentClosing += docEvents_DocumentClosing;
+            docEvents.DocumentOpened += docEvents_DocumentOpened;
 
-            findEvents = Dte.Events.FindEvents;
+            findEvents = DTE.Events.FindEvents;
             findEvents.FindDone += new _dispFindEvents_FindDoneEventHandler(findEvents_FindDone);
 
-            solEvents = Dte.Events.SolutionEvents;
+            solEvents = DTE.Events.SolutionEvents;
             solEvents.Opened += solEvents_Opened;
 
-            dteEvents = Dte.Events.DTEEvents;
+            dteEvents = DTE.Events.DTEEvents;
             dteEvents.OnStartupComplete += dteEvents_OnStartupComplete;
             dteEvents.OnBeginShutdown += dteEvents_OnBeginShutdown;
 
-            findinfilesEvent = dte2.Events.get_CommandEvents("{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 277);
+            findinfilesEvent = DTE2.Events.get_CommandEvents("{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 277);
 
             findinfilesEvent.BeforeExecute += new _dispCommandEvents_BeforeExecuteEventHandler(findinfilesEvent_BeforeExecute);
             findinfilesEvent.AfterExecute += new _dispCommandEvents_AfterExecuteEventHandler(findinfilesEvent_AfterExecute);
+
+            //Code model event
+            //codeModelEvent.ElementAdded += new _dispCodeModelEvents_ElementAddedEventHandler(codeModelEvent_ElementAdded);
+            //codeModelEvent.ElementChanged += new _dispCodeModelEvents_ElementChangedEventHandler(codeModelEvent_ElementChanged);
+            //codeModelEvent.ElementDeleted += new _dispCodeModelEvents_ElementDeletedEventHandler(codeModelEvent_ElementDeleted);
+
+            // Selection event
+            selEvent = DTE.Events.SelectionEvents;
+            selEvent.OnChange += new _dispSelectionEvents_OnChangeEventHandler(selEvent_OnChange);
+        }
+
+        void selEvent_OnChange()
+        {
+            
+        }
+
+        void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
+        {
+            
+        }
+
+        void codeModelEvent_ElementChanged(CodeElement Element, vsCMChangeKind Change)
+        {
+        }
+
+        void codeModelEvent_ElementAdded(CodeElement Element)
+        {
+            if (Element is CodeFunction)
+            {
+                var codeFunc = (CodeFunction)Element;
+            }
         }
 
         void findinfilesEvent_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
@@ -64,22 +96,19 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void findEvents_FindDone(vsFindResult Result, bool Cancelled)
         {
-            if (Result == vsFindResult.vsFindResultFound)
+            VGSetting.Instance.FileList.Clear();
+
+            switch (Result)
             {
-                VGSetting.Instance.FileList = Vistaghost.VISTAGHOST.Lib.VGOperations.GetFileFromResultWindow(this.Dte, FileFilter.ffSource);
-
-                //BackgroundWorker bw = new BackgroundWorker();
-                //bw.DoWork += new DoWorkEventHandler(bw_DoWork);
-                //bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-                //bw.RunWorkerAsync();
+                case vsFindResult.vsFindResultFound:
+                    VGSetting.Instance.FileList = Vistaghost.VISTAGHOST.Lib.VGOperations.GetFileFromResultWindow(this.DTE, FileFilter.ffSource);
+                    break;
+                case vsFindResult.vsFindResultNotFound:
+                    VGSetting.Instance.FindWhat = String.Empty;
+                    break;
+                default:
+                    break;
             }
-        }
-
-        void bw_DoWork(object sender, DoWorkEventArgs e)
-        {
-        }
-        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
         }
 
         void docEvents_DocumentClosing(Document Document)
@@ -88,6 +117,11 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void docEvents_DocumentOpening(string DocumentPath, bool ReadOnly)
         {
+        }
+
+        void docEvents_DocumentOpened(Document Document)
+        {
+            
         }
 
         void dteEvents_OnBeginShutdown()
@@ -105,7 +139,7 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         public void SetStatusBarText(string text)
         {
-            Dte.StatusBar.Text = text;
+            DTE.StatusBar.Text = text;
         }
 
         public void AddErrorToErrorListWindow(string error)
@@ -134,7 +168,7 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         public StatusBar GetStatusBar()
         {
-            return Dte.StatusBar;
+            return DTE.StatusBar;
         }
 
         void solEvents_Opened()
@@ -156,8 +190,8 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         public void ExecuteCmd(string cmd, string args)
         {
-            if (Dte == null) return;
-            Dte.ExecuteCommand(cmd, args);
+            if (DTE == null) return;
+            DTE.ExecuteCommand(cmd, args);
         }
     }
 }

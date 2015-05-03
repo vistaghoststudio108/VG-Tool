@@ -21,13 +21,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             
             this.BitmapResourceID = 301;
             this.BitmapIndex = 1;
-
-            //this.Frame = DTEHelper.Current.DTE.MainWindow.LinkedWindowFrame;
             
             Current = this;
 
             vgControl = new VistaghostWindowControl();
-            vgControl.OnClicked += new Vistaghost.VISTAGHOST.Lib.ToolWindowPaneEventHandler(vgControl_OnClicked);
         }
 
         public override IWin32Window Window
@@ -37,15 +34,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 return (IWin32Window)vgControl;
             }
         }
-
-        #region event handler
-
-        private void vgControl_OnClicked(int swCode)
-        {
-            vgControl.AddString("This is test by vistaghost studio, lead by ThuanPV3");
-        }
-
-        #endregion
 
         #region overide methods
 
@@ -63,17 +51,14 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         #region Common methods
 
-        public void AddString(string strToAdd)
+        public void AddString(string Text)
         {
-            if (vgControl != null)
-            {
-                vgControl.AddString(strToAdd);
-            }
+            vgControl.AddString(Text);
         }
 
-        public void ClearContent()
+        public void Clear()
         {
- 
+            vgControl.Clear();
         }
 
         #endregion

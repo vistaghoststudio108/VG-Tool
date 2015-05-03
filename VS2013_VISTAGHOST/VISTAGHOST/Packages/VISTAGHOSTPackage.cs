@@ -54,8 +54,8 @@ namespace Vistaghost.VISTAGHOST
         private DTE2 dte2;
         uint cookie;
 
-        private OutputWindowPane owP;
         private VistaghostWindowPane vgwPane;
+        private OutputWindowPane owP;
         private int recordNum = 1;
 
         private List<string> lines = new List<string>();
@@ -84,6 +84,14 @@ namespace Vistaghost.VISTAGHOST
             get
             {
                 return DTEHelper.DTE;
+            }
+        }
+
+        public DTE2 DTE2
+        {
+            get
+            {
+                return DTEHelper.DTE2;
             }
         }
 
@@ -233,15 +241,19 @@ namespace Vistaghost.VISTAGHOST
                 MenuCommand menuCopyPrototype = new MenuCommand(CopyPrototypeCallback, menuCopyPrototypeID);
                 mcs.AddCommand(menuCopyPrototype);
 
-                CommandID menuExportFuncID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidExportFunc);
-                MenuCommand menuExportFunc = new MenuCommand(ExportFuncCallback, menuExportFuncID);
-                mcs.AddCommand(menuExportFunc);
+                //CommandID menuExportFuncID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidExportFunc);
+                //MenuCommand menuExportFunc = new MenuCommand(ExportFuncCallback, menuExportFuncID);
+                //mcs.AddCommand(menuExportFunc);
+
+                CommandID menuToolWindowID = new CommandID(GuidList.guidVISTAGHOSTCmdSet, (int)PkgCmdIDList.cmdidMyToolWindow);
+                MenuCommand menuToolWindow = new MenuCommand(ShowToolWindowCallback, menuToolWindowID);
+                mcs.AddCommand(menuToolWindow);
 
                 OutputWindow ow = dte2.ToolWindows.OutputWindow;
                 owP = ow.OutputWindowPanes.Add("Vistaghost");
                 //owP = ow.OutputWindowPanes.Add("Vistaghost-Notifications");
 
-                owP.Collection.Item("Vistaghost").OutputString(Setting.Title);
+                owP.OutputString(Setting.Title);
 
                 VistaghostOutputWindow = (VistaghostWindowPane)this.FindToolWindow(typeof(VistaghostWindowPane), 0, true);
             }
@@ -305,25 +317,13 @@ namespace Vistaghost.VISTAGHOST
         }
 
         #region Callback methods
-        private void ExportFuncCallback(object sender, EventArgs e)
-        {
-            ((MenuCommand)sender).Enabled = false;
 
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-            bw.RunWorkerAsync();
-        }
+        //private void ExportFuncCallback(object sender, EventArgs e)
+        //{ }
 
-        void bw_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var funcs = vgOperations.GetFunctionProtFromHistory(this.DTE);
-        }
-
-        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void ShowToolWindowCallback(object sender, EventArgs e)
         {
             ShowToolWindow();
-            EnableButton((int)PkgCmdIDList.cmdidExportFunc, true);
         }
 
         private void CopyPrototypeCallback(object sender, EventArgs e)
@@ -569,7 +569,7 @@ namespace Vistaghost.VISTAGHOST
             int numPh = -1;
             ActionInfo info = new ActionInfo();
 
-            owP.Collection.Item("Vistaghost").Activate();
+            owP.Activate();
 
             if (vgOperations.ProcessTextForAddSingle(DTEHelper.DTE, Setting.CurrentDate, content, account, devid, mode, keep_comments, ref info))
             {
@@ -661,7 +661,7 @@ namespace Vistaghost.VISTAGHOST
         {
             if (!success)
             {
-                owP.Collection.Item("Vistaghost").Activate();
+                owP.Activate();
                 owP.OutputString(message + "\n");
                 DTEHelper.DTE.StatusBar.Text = Properties.Resources.ExportFailedMessage;
             }

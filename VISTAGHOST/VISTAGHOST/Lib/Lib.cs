@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using Vistaghost.VISTAGHOST.Helper;
 using EnvDTE80;
+using Vistaghost.VISTAGHOST.ToolWindows;
 
 namespace Vistaghost.VISTAGHOST.Lib
 {
@@ -948,7 +949,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             return false;
         }
 
-        public static List<ObjectType> GetFunctionProtFromHistory(DTE dte)
+        public static List<ObjectType> GetFunctionProtFromHistory(DTE dte, ref VistaghostWindowPane outPane, ref bool Canceled)
         {
             List<ObjectType> funcList = new List<ObjectType>();
             Document doc;
@@ -1007,11 +1008,16 @@ namespace Vistaghost.VISTAGHOST.Lib
                                     func.Description = codeFunc.Comment;
 
                                     funcList.Add(func);
+
+                                    outPane.AddString(func.Prototype);
                                 }
                             }
                             catch
                             {
                             }
+
+                            if (Canceled)
+                                break;
                         }
                     }
                     else
@@ -1043,7 +1049,12 @@ namespace Vistaghost.VISTAGHOST.Lib
                                 func.Line = codeFunc.StartPoint.Line;
 
                                 funcList.Add(func);
+
+                                outPane.AddString(func.Prototype);
                             }
+
+                            if (Canceled)
+                                break;
                         }
                     }
 
@@ -1052,6 +1063,9 @@ namespace Vistaghost.VISTAGHOST.Lib
                         bOpen = false;
                         dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesYes);
                     }
+
+                    if (Canceled)
+                        break;
                 }
             }
             catch (Exception ex)

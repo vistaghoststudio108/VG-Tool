@@ -260,14 +260,14 @@
         </Strings>
       </Button>
 
-      <Button guid="guidVISTAGHOSTCmdSet" id="cmdidExportFunc" priority="0x0400" type="Button">
+      <!--<Button guid="guidVISTAGHOSTCmdSet" id="cmdidExportFunc" priority="0x0400" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_FINDRESULTS1_STOPFIND" />
         <Icon guid="guidImages" id="bmpPicExportFunc" />
         <Strings>
           <ButtonText>Export Functions</ButtonText>
           <CommandName>cmdidExportFunc</CommandName>
         </Strings>
-      </Button>
+      </Button>-->
       
       <!--add tool window-->
       <Button guid="guidVISTAGHOSTCmdSet" id="cmdidMyToolWindow" priority="0x0100" type="Button">
@@ -348,7 +348,7 @@
       <IDSymbol name ="cmdidExportHistory" value ="0x010f"/>
       <IDSymbol name ="cmdidChangeInfo" value ="0x0110"/>
       <IDSymbol name ="cmdidCopyPrototype" value ="0x1110"/>
-      <IDSymbol name ="cmdidExportFunc" value ="0x4440"/>
+      <!--<IDSymbol name ="cmdidExportFunc" value ="0x4440"/>-->
       <IDSymbol name ="cmdidMyToolWindow" value ="0x1010"/>
     </GuidSymbol>
     

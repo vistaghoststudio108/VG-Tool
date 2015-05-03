@@ -93,5 +93,12 @@ namespace Vistaghost.VISTAGHOST {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap Find_5650 {
+            get {
+                object obj = ResourceManager.GetObject("Find_5650", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

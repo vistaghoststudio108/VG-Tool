@@ -22,23 +22,40 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             this.BitmapIndex = 1;
 
             vgWinControl = new VistaghostWindowControls();
-            vgWinControl.OnClicked += new Lib.ToolWindowPaneEventHandler(vgWinControl_OnClicked);
 
             base.Content = vgWinControl;
         }
 
         #region event handler
 
-        private void vgWinControl_OnClicked(int swCode)
+        #endregion
+
+        #region Common methods
+        /// <summary>
+        /// Add text to tool window
+        /// </summary>
+        /// <param name="Text">string need to add</param>
+        public void OutputString(string Text)
         {
- 
+            if (String.IsNullOrEmpty(Text))
+                return;
+
+            vgWinControl.AddString(Text);
+        }
+
+        public void Activate()
+        {
+
+        }
+
+        /// <summary>
+        /// Clear content of window
+        /// </summary>
+        public void Clear()
+        {
+            vgWinControl.Clear();
         }
 
         #endregion
-
-        public override void ClearSearch()
-        {
-            base.ClearSearch();
-        }
     }
 }

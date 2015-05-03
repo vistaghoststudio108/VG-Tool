@@ -132,6 +132,9 @@
     <Compile Include="Packages\VISTAGHOSTPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Packages\PkgCmdID.cs" />
+    <Compile Include="ToolWindows\UCVistaghostWindow.xaml.cs">
+      <DependentUpon>UCVistaghostWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolWindows\VistaghostWindowControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -284,15 +287,25 @@
     <None Include="Resources\Images_32bit.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\bg.png" />
+    <Resource Include="Resources\bg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Include="Resources\DeleteHS.png" />
+    <Resource Include="Resources\CopyHS.png" />
+    <None Include="Resources\FunctionHS.png" />
+    <Resource Include="Resources\Find_5650.png" />
     <Content Include="Resources\icon3.png" />
+    <None Include="Resources\Image1.bmp" />
     <Content Include="Resources\imagelis.bmp" />
     <Content Include="Resources\Log.xml" />
     <Content Include="Resources\icons.png" />
     <Content Include="Resources\icons2.png" />
     <Content Include="Resources\Package.ico" />
+    <None Include="Resources\PrintPreviewHS.png" />
     <Content Include="Resources\search.png" />
     <Content Include="Resources\search2.png" />
+    <Content Include="Resources\WorkHistory.xml" />
+    <None Include="Resources\SearchFunc.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UserControl\MakarovDev.ExpandCollapsePanel\MakarovDev.ExpandCollapsePanel.csproj">
@@ -336,6 +349,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ToolWindows\UCVistaghostWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup>
     <!--

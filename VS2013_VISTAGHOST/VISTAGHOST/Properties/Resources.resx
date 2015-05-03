@@ -126,6 +126,9 @@
   <data name="AddCommentSuccess" xml:space="preserve">
     <value>Add comment tags succeeded</value>
   </data>
+  <data name="BreakLine" xml:space="preserve">
+    <value>"\n"</value>
+  </data>
   <data name="CanNotCreateWindow" xml:space="preserve">
     <value>Can not create tool window.</value>
   </data>
@@ -180,5 +183,8 @@
   </data>
   <data name="VistaghostWindowTitle" xml:space="preserve">
     <value>Vistaghost Results</value>
+  </data>
+  <data name="WorkHistory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WorkHistory.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

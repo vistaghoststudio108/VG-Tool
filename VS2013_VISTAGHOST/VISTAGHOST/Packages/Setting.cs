@@ -28,6 +28,9 @@ namespace Vistaghost.VISTAGHOST
         public const string LogTextFile = "History.txt";
         public const string LogXmlFile = "History.xml";
         public const string LogExcelFile = "History.xls";
+        public const string WorkHistoryFolder = "WorkHistory";
+        public const string WorkHistoryFile = "WorkHistory.xml";
+        public const string ProjectStatusFile = "ProjectStatus.xml";
 
         /*for delete comments*/
         public const string MainCode = @"(@(?:""[^""]*"")+|""(?:[^""\n\\]+|\\.)*""|'(?:[^'\n\\]+|\\.)*')";
@@ -75,6 +78,7 @@ namespace Vistaghost.VISTAGHOST
 
             SettingData = LoadSettings();
             RegisterData = LoadRegisterInfo();
+            ProjectStatus = LoadProjectStatus();
 
             FileList = new List<FileContainer>();
 
@@ -101,6 +105,8 @@ namespace Vistaghost.VISTAGHOST
         public static Settings SettingData { get; set; }
 
         public static RegisterData RegisterData { get; set; }
+
+        public static ProjectStatus ProjectStatus { get; set; }
 
         #region Data methods
         public static Settings LoadSettings()
@@ -148,6 +154,54 @@ namespace Vistaghost.VISTAGHOST
             return settings;
         }
 
+        public static void SaveProjectStatus()
+        {
+            try
+            {
+                var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+                var isoStream = new IsolatedStorageFileStream(vgSettingConstants.ProjectStatusFile, FileMode.Create, isoStore);
+
+                XmlSerializer serializer = new XmlSerializer(typeof(ProjectStatus));
+                serializer.Serialize(isoStream, ProjectStatus);
+
+                isoStream.Close();
+                isoStore.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex);
+            }
+        }
+
+        public static ProjectStatus LoadProjectStatus()
+        {
+            Lib.ProjectStatus projStatus = new ProjectStatus { NotStarted = true, ProjectID = 0 };
+
+            try
+            {
+                var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+                if (!isoStore.FileExists(vgSettingConstants.ProjectStatusFile))
+                    return projStatus;
+
+                var isoStream = new IsolatedStorageFileStream(vgSettingConstants.ProjectStatusFile, FileMode.Open, isoStore);
+
+                if (!isoStream.CanRead)
+                    return projStatus;
+
+                XmlSerializer serializer = new XmlSerializer(typeof(Lib.ProjectStatus));
+                projStatus = (Lib.ProjectStatus)serializer.Deserialize(isoStream);
+
+                isoStream.Close();
+                isoStore.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex);
+            }
+
+            return projStatus;
+        }
+
         public static bool SaveSettings()
         {
             try
@@ -180,7 +234,7 @@ namespace Vistaghost.VISTAGHOST
                 Logger.LogError(ex);
                 return false;
             }
-            
+
             return true;
         }
 

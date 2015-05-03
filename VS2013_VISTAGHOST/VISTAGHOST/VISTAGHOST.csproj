@@ -76,7 +76,9 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE">
@@ -312,6 +314,10 @@
     <None Include="Resources\Images.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\WorkHistory.xml">
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Terminate.png" />
     <Resource Include="Resources\stop_search.png" />
     <Resource Include="Resources\relative.png" />
     <Resource Include="Resources\search.png" />
@@ -319,13 +325,20 @@
     <Resource Include="Resources\icons.png" />
     <Resource Include="Resources\icons2.png" />
     <None Include="Resources\logo.png" />
-    <Resource Include="Resources\Log.xml" />
+    <Resource Include="Resources\Log.xml">
+      <SubType>Designer</SubType>
+    </Resource>
     <Resource Include="Resources\icon3.png" />
     <Resource Include="Resources\copy.png" />
     <Resource Include="Resources\delete.png" />
     <Resource Include="Resources\file.png" />
     <Resource Include="Resources\folder.png" />
     <Resource Include="Resources\imagelis.bmp" />
+    <Resource Include="Resources\Clearallrequests_8816.png" />
+    <Resource Include="Resources\Clearwindowcontent.png" />
+    <Resource Include="Resources\action_Cancel_16xLG.png" />
+    <Resource Include="Resources\FindResults1_6264.png" />
+    <Resource Include="Resources\Copy_6524.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
