@@ -61,9 +61,10 @@ namespace Vistaghost.VISTAGHOST.Helper
             findinfilesEvent.AfterExecute += new _dispCommandEvents_AfterExecuteEventHandler(findinfilesEvent_AfterExecute);
 
             //Code model event
-            //codeModelEvent.ElementAdded += codeModelEvent_ElementAdded;
-            //codeModelEvent.ElementChanged += codeModelEvent_ElementChanged;
-            //codeModelEvent.ElementDeleted += codeModelEvent_ElementDeleted;
+            codeModelEvent = ((EnvDTE80.Events2)dte.Events).get_CodeModelEvents();
+            codeModelEvent.ElementAdded += codeModelEvent_ElementAdded;
+            codeModelEvent.ElementChanged += codeModelEvent_ElementChanged;
+            codeModelEvent.ElementDeleted += codeModelEvent_ElementDeleted;
         }
 
         void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
