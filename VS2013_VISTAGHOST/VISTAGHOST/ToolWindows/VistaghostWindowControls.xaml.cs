@@ -18,6 +18,7 @@ using System.Xaml;
 using System.Xml.Linq;
 using Vistaghost.VISTAGHOST.Helper;
 using Vistaghost.VISTAGHOST.Lib;
+using Vistaghost.VISTAGHOST.User_Control;
 
 namespace Vistaghost.VISTAGHOST.ToolWindows
 {
@@ -366,6 +367,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             {
                 bw.CancelAsync();
                 IsCanceled = true;
+                IsSearching = false;
+                SearchResultArea.AppendText("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched);
             }
         }
 

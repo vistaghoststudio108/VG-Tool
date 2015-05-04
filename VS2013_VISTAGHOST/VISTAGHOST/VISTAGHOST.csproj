@@ -143,6 +143,7 @@
       <DependentUpon>VistaghostWindowControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\VistaghostWindowPane.cs" />
+    <Compile Include="User Control\AutoGreyableImage.cs" />
     <Compile Include="User Control\ColorComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

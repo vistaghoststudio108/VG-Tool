@@ -42,7 +42,17 @@
                     <ComboBoxItem Content="Find Results 2"/>
                 </ComboBox>
                 <Button x:Name="BtnSearchElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search all changed elements" Click="BtnSearchElement_Click">
-                    <Image Source="/VISTAGHOST;component/Resources/FindResults1_6264.png"/>
+                    <Image Source="/VISTAGHOST;component/Resources/FindResults1_6264.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.4"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
                 </Button>
                 <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements" Click="BtnCopyElement_Click">
                     <Image Source="/VISTAGHOST;component/Resources/Copy_6524.png"/>
