@@ -4,19 +4,61 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ui ="clr-namespace:Vistaghost.VISTAGHOST.ToolWindows"
+             xmlns:ToolWindows="clr-namespace:Vistaghost.VISTAGHOST.ToolWindows"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <ToolWindows:BoolVisibilityConventer x:Key="BoolVisibilityConventer"/>
+            <DataTemplate x:Key="ListItemTemplate">
+                <TextBlock Background="{Binding Background}"><InlineUIContainer>
+            			<TextBlock Text="{Binding Id}" Background="Transparent"/>
+            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
+            			<TextBlock Text="{Binding PathBase}" Background="Transparent" Visibility="{Binding IsChecked, Converter={StaticResource BoolVisibilityConventer}, ElementName=Button_RelativePath}"/>
+            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
+            			<TextBlock Text="{Binding Left}" Background="Transparent"/>
+            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
+            			<TextBlock Text="{Binding Highlight}" Background="Tomato" Foreground="Black" Margin="-3,0"/>
+            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
+            			<TextBlock Text="{Binding Right}" Background="Transparent"/>
+            		</InlineUIContainer></TextBlock>
+            </DataTemplate>
+            <Style x:Key="ListViewItemStyle1" TargetType="{x:Type ListViewItem}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="Border" BorderBrush="Red" BorderThickness="0" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="Content" Content="{TemplateBinding Content}" ContentTemplate="{DynamicResource ListItemTemplate}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static ui:Controls.ControlBorderPressedKey}}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static ui:Controls.ControlBackgroundHoverKey}}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Margin="0,0,-700,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="SearchResultArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown"
-			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas"/>
+			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="SearchResultArea_TextChanged"/>
         <TextBox x:Name="WorkingHistoryArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown"
-        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas"/>
+        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="WorkingHistoryArea_TextChanged"/>
         <TextBox x:Name="NotesArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown"
-        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas"/>
+        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="NotesArea_TextChanged"/>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Text="Show output from:"/>
             <ComboBox x:Name="Combo_SearchType" Width="130" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectionChanged="Combo_SearchType_SelectionChanged">
@@ -25,7 +67,7 @@
                 <ComboBoxItem Content="Notes"/>
             </ComboBox>
             <Line Y1="2" Y2="20" Width="1" Height="22" Margin="4,0" Stroke="#FFBDBCBC" Fill="#FF4F4A4A" Stretch="Fill" X2="1"/>
-            <StackPanel x:Name="ChangedElementPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
+            <StackPanel x:Name="ChangedElementPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Element type</TextBlock>
                 <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="0" SelectionChanged="Combo_ElementType_SelectionChanged">
                     <ComboBoxItem Content="Function"/>
@@ -41,32 +83,22 @@
                     <ComboBoxItem Content="Find Results 1"/>
                     <ComboBoxItem Content="Find Results 2"/>
                 </ComboBox>
-                <Button x:Name="BtnSearchElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search all changed elements" Click="BtnSearchElement_Click">
-                    <Image Source="/VISTAGHOST;component/Resources/FindResults1_6264.png">
-                        <Image.Style>
-                            <Style TargetType="Image">
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.4"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Image.Style>
-                    </Image>
+                <Button x:Name="BtnSearchElement" Width="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search all changed elements" Click="BtnSearchElement_Click" IsEnabled="False">
+                    <Image Source="/VISTAGHOST;component/Resources/search.png"/>
                 </Button>
                 <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements" Click="BtnCopyElement_Click">
-                    <Image Source="/VISTAGHOST;component/Resources/Copy_6524.png"/>
+                    <Image Source="/VISTAGHOST;component/Resources/copy.png"/>
                 </Button>
                 <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click">
-                    <Image Source="/VISTAGHOST;component/Resources/Terminate.png"/>
+                    <Image Source="/VISTAGHOST;component/Resources/delete.png"/>
                 </Button>
             </StackPanel>
             <StackPanel x:Name="WorkingHistoryPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
                 <Button x:Name="BtnClearAll" Width="20" Height="20" BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Clear All" Click="BtnClearAll_Click">
-                    <Image Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>
+                    <Image Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>
                 </Button>
                 <Button Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="ghi">
-                    <Image Source="/VISTAGHOST;component/Resources/action_Cancel_16xLG.png"/>
+                    <Image Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/action_Cancel_16xLG.png"/>
                 </Button>
             </StackPanel>
         </StackPanel>

@@ -408,5 +408,23 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
         }
+
+        private void SearchResultArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchResultArea.SelectionStart = SearchResultArea.Text.Length;
+            SearchResultArea.ScrollToEnd();
+        }
+
+        private void WorkingHistoryArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            WorkingHistoryArea.SelectionStart = WorkingHistoryArea.Text.Length;
+            WorkingHistoryArea.ScrollToEnd();
+        }
+
+        private void NotesArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            NotesArea.SelectionStart = NotesArea.Text.Length;
+            NotesArea.ScrollToEnd();
+        }
     }
 }

@@ -139,11 +139,12 @@
   <ItemGroup>
     <Compile Include="Network\VGProduct.cs" />
     <Compile Include="Packages\OleComponent.cs" />
+    <Compile Include="ToolWindows\BoolVisibilityConventer.cs" />
+    <Compile Include="ToolWindows\Controls.cs" />
     <Compile Include="ToolWindows\VistaghostWindowControls.xaml.cs">
       <DependentUpon>VistaghostWindowControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\VistaghostWindowPane.cs" />
-    <Compile Include="User Control\AutoGreyableImage.cs" />
     <Compile Include="User Control\ColorComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -349,6 +350,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ToolWindows\ResourceDic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ToolWindows\VistaghostWindowControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
