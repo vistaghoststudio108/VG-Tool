@@ -1,6 +1,6 @@
-﻿namespace Vistaghost.VISTAGHOST.User_Control
+﻿namespace Vistaghost.VISTAGHOST.VGUserControl
 {
-    partial class ExListView
+    partial class ColorComboBox
     {
         /// <summary>
         /// Required designer variable.

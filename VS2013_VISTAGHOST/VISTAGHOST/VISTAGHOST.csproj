@@ -137,30 +137,34 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\FileManager.cs" />
     <Compile Include="Network\VGProduct.cs" />
     <Compile Include="Packages\OleComponent.cs" />
     <Compile Include="ToolWindows\BoolVisibilityConventer.cs" />
     <Compile Include="ToolWindows\Controls.cs" />
+    <Compile Include="ToolWindows\SearchListItem.cs" />
     <Compile Include="ToolWindows\VistaghostWindowControls.xaml.cs">
       <DependentUpon>VistaghostWindowControls.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\VistaghostWindowPane.cs" />
-    <Compile Include="User Control\ColorComboBox.cs">
+    <Compile Include="ToolWindows\WindowManager.cs" />
+    <Compile Include="VGUserControl\AutoGreyableImage.cs" />
+    <Compile Include="VGUserControl\ColorComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="User Control\ColorComboBox.Designer.cs">
+    <Compile Include="VGUserControl\ColorComboBox.Designer.cs">
       <DependentUpon>ColorComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Control\ExListView.cs">
+    <Compile Include="VGUserControl\ExListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="User Control\ExListView.Designer.cs">
+    <Compile Include="VGUserControl\ExListView.Designer.cs">
       <DependentUpon>ExListView.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Control\ShortcutKeyTextBox.cs">
+    <Compile Include="VGUserControl\ShortcutKeyTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="User Control\ShortcutKeyTextBox.Designer.cs">
+    <Compile Include="VGUserControl\ShortcutKeyTextBox.Designer.cs">
       <DependentUpon>ShortcutKeyTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowForms\AboutVistaghostForm.cs">

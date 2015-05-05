@@ -1,4 +1,4 @@
-﻿namespace Vistaghost.VISTAGHOST.User_Control
+﻿namespace Vistaghost.VISTAGHOST.VGUserControl
 {
     partial class ShortcutKeyTextBox
     {

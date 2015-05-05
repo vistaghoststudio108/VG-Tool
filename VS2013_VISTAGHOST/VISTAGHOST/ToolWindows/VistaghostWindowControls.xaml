@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ui ="clr-namespace:Vistaghost.VISTAGHOST.ToolWindows"
              xmlns:ToolWindows="clr-namespace:Vistaghost.VISTAGHOST.ToolWindows"
+             xmlns:gImage="clr-namespace:Vistaghost.VISTAGHOST.VGUserControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -12,40 +13,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ResourceDic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <ToolWindows:BoolVisibilityConventer x:Key="BoolVisibilityConventer"/>
-            <DataTemplate x:Key="ListItemTemplate">
-                <TextBlock Background="{Binding Background}"><InlineUIContainer>
-            			<TextBlock Text="{Binding Id}" Background="Transparent"/>
-            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
-            			<TextBlock Text="{Binding PathBase}" Background="Transparent" Visibility="{Binding IsChecked, Converter={StaticResource BoolVisibilityConventer}, ElementName=Button_RelativePath}"/>
-            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
-            			<TextBlock Text="{Binding Left}" Background="Transparent"/>
-            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
-            			<TextBlock Text="{Binding Highlight}" Background="Tomato" Foreground="Black" Margin="-3,0"/>
-            		</InlineUIContainer><Run Text=" "/><InlineUIContainer>
-            			<TextBlock Text="{Binding Right}" Background="Transparent"/>
-            		</InlineUIContainer></TextBlock>
-            </DataTemplate>
-            <Style x:Key="ListViewItemStyle1" TargetType="{x:Type ListViewItem}">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                            <Border x:Name="Border" BorderBrush="Red" BorderThickness="0" Background="{TemplateBinding Background}">
-                                <ContentPresenter x:Name="Content" Content="{TemplateBinding Content}" ContentTemplate="{DynamicResource ListItemTemplate}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="true">
-                                    <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static ui:Controls.ControlBorderPressedKey}}"/>
-                                </Trigger>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static ui:Controls.ControlBackgroundHoverKey}}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="0,0,-700,0">
@@ -53,13 +20,13 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="SearchResultArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown"
+        <TextBox x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
 			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="SearchResultArea_TextChanged"/>
-        <TextBox x:Name="WorkingHistoryArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown"
+        <TextBox x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
         	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="WorkingHistoryArea_TextChanged"/>
-        <TextBox x:Name="NotesArea" Grid.Row="1" Background="#E6E7E8" KeyDown="TextViewArea_KeyDown"
+        <TextBox x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
         	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="NotesArea_TextChanged"/>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Text="Show output from:"/>
             <ComboBox x:Name="Combo_SearchType" Width="130" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectionChanged="Combo_SearchType_SelectionChanged">
                 <ComboBoxItem Content="Changed Element"/>
@@ -76,29 +43,27 @@
                     <ComboBoxItem Content="Struct"/>
                 </ComboBox>
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Key word</TextBlock>
-                <ComboBox x:Name="Combo_Keyword" Width="120" IsEditable="True" Margin="5,2,2,2"/>
+                <!--<ComboBox x:Name="Combo_Keyword" Width="120" Margin="5,2,2,2"/>-->
+                <TextBox x:Name="Combo_Keyword" Width="120" Height="20" Margin="5,0,0,0" Text="dfdfdf"/>
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Source</TextBlock>
                 <ComboBox x:Name="Combo_BaseSource" Width="110" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="0" SelectionChanged="Combo_BaseSource_SelectionChanged">
                     <ComboBoxItem Content="Work History"/>
                     <ComboBoxItem Content="Find Results 1"/>
                     <ComboBoxItem Content="Find Results 2"/>
                 </ComboBox>
-                <Button x:Name="BtnSearchElement" Width="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search all changed elements" Click="BtnSearchElement_Click" IsEnabled="False">
-                    <Image Source="/VISTAGHOST;component/Resources/search.png"/>
+                <Button x:Name="BtnSearchElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search all changed elements" Click="BtnSearchElement_Click">
+                    <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/FindResults1_6264.png"/>
                 </Button>
                 <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements" Click="BtnCopyElement_Click">
-                    <Image Source="/VISTAGHOST;component/Resources/copy.png"/>
+                    <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Copy_6524.png"/>
                 </Button>
                 <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click">
-                    <Image Source="/VISTAGHOST;component/Resources/delete.png"/>
+                    <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Terminate.png"/>
                 </Button>
             </StackPanel>
-            <StackPanel x:Name="WorkingHistoryPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
+            <StackPanel x:Name="WorkingHistoryPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
                 <Button x:Name="BtnClearAll" Width="20" Height="20" BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Clear All" Click="BtnClearAll_Click">
-                    <Image Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>
-                </Button>
-                <Button Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="ghi">
-                    <Image Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/action_Cancel_16xLG.png"/>
+                    <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>
                 </Button>
             </StackPanel>
         </StackPanel>

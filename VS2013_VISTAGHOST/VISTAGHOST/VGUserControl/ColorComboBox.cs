@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vistaghost.VISTAGHOST.User_Control
+namespace Vistaghost.VISTAGHOST.VGUserControl
 {
     public partial class ColorComboBox : Component
     {

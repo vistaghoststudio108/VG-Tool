@@ -119,7 +119,7 @@ namespace Vistaghost.VISTAGHOST.Helper
             switch (Result)
             {
                 case vsFindResult.vsFindResultFound:
-                    vgSetting.Instance.FileList = Vistaghost.VISTAGHOST.Lib.vgOperations.GetFileFromResultWindow(this.DTE, FileFilter.ffSource);
+                    //vgSetting.Instance.FileList = vgOperations.GetFileFromResultWindow(this.DTE,  FileFilter.ffSource);
                     break;
                 case vsFindResult.vsFindResultNotFound:
                     vgSetting.Instance.FindWhat = String.Empty;
@@ -143,6 +143,7 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void wndEvents_WindowActivated(Window GotFocus, Window LostFocus)
         {
+            VISTAGHOSTPackage.WindowManager.WindowActivate(GotFocus, LostFocus);
         }
 
         void dteEvents_OnStartupComplete()

@@ -867,19 +867,26 @@ namespace Vistaghost.VISTAGHOST.Lib
             return -1;
         }
 
-        public static List<FileContainer> GetFileFromResultWindow(DTE dte, FileFilter filter)
+        public static List<FileContainer> GetFileFromResultWindow(DTE dte, string wndGuid, FileFilter filter)
         {
             List<FileContainer> fContainer = new List<FileContainer>();
             string curFileName = String.Empty;
             string newFileName = String.Empty;
             int nLine = 0;
 
-            var findWindow = dte.ActiveWindow;
+            var findWindow = dte.Windows.Item(wndGuid);
+            if(findWindow == null)
+            {
+                return fContainer;
+            }
+
             TextSelection selected = findWindow.Selection as TextSelection;
 
             selected.SelectAll();
 
             var files = selected.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (files.Count == 0)
+                return fContainer;
 
             if (files[0].Contains("List filenames only"))
             {
@@ -989,7 +996,11 @@ namespace Vistaghost.VISTAGHOST.Lib
             return bValied;
         }
 
-        public static List<ObjectType> GetFunctionProtFromHistory(DTE dte, List<FileContainer> fileList, SearchType sType, ref VistaghostWindowControls owPane, ref bool Canceled)
+        public static List<ObjectType> GetFunctionProtFromHistory(DTE dte, List<FileContainer> fileList,
+                                                                  SearchType sType,
+                                                                  ref VistaghostWindowControls owPane,
+                                                                  out int totalFileSearched,
+                                                                  ref bool Canceled)
         {
             List<ObjectType> elementList = new List<ObjectType>();
             Document doc;
@@ -997,6 +1008,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             string fileName = String.Empty;
             List<int> lines;
             FileCodeModel fcm;
+            totalFileSearched = 0;
 
             try
             {
@@ -1005,6 +1017,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                     fileName = Path.GetFullPath(fileList[i].FileName);
                     lines = fileList[i].Lines;
                     string curElement = String.Empty;
+                    totalFileSearched++;
 
                     if (dte.ItemOperations.IsFileOpen(fileName, Constants.vsViewKindCode))
                     {
@@ -1133,7 +1146,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                     else
                     {
                         fcm = doc.ProjectItem.FileCodeModel;
-                        lines = vgSetting.Instance.FileList[i].Lines;
+                        lines = fileList[i].Lines;
 
                         switch (sType)
                         {

@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Windows.Threading;
 
 namespace Vistaghost.VISTAGHOST.ToolWindows
 {
     [Guid(GuidList.guidVISTAGHOSTWindow)]
     public class VistaghostWindowPane : ToolWindowPane
     {
-        private VistaghostWindowControls vgWinControl;
+        private VistaghostWindowControls wnd;
+        public static VistaghostWindowPane Current;
 
         public VistaghostWindowPane()
             : base(null)
@@ -21,9 +23,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             this.BitmapResourceID = 301;
             this.BitmapIndex = 1;
 
-            vgWinControl = new VistaghostWindowControls();
+            wnd = new VistaghostWindowControls();
 
-            base.Content = vgWinControl;
+            base.Content = wnd;
+            Current = this;
         }
 
         #region event handler
@@ -40,7 +43,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             if (String.IsNullOrEmpty(Text))
                 return;
 
-            vgWinControl.AddString(Text);
+            wnd.Dispatcher.Invoke(() =>
+                {
+                    wnd.SearchResultArea.AppendText(Text);
+                });
         }
 
         public void Activate()
@@ -53,7 +59,23 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         /// </summary>
         public void Clear()
         {
-            vgWinControl.Clear();
+            switch (wnd.Combo_SearchType.SelectedIndex)
+            {
+                case 0:
+                    wnd.SearchResultArea.Clear();
+                    break;
+
+                case 1:
+                    wnd.WorkingHistoryArea.Clear();
+                    break;
+
+                case 2:
+                    wnd.NotesArea.Clear();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         #endregion

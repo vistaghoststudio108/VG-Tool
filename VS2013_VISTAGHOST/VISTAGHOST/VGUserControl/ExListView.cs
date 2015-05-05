@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Vistaghost.VISTAGHOST.User_Control
+namespace Vistaghost.VISTAGHOST.VGUserControl
 {
     public partial class ExListView : ListView
     {

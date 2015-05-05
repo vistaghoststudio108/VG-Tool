@@ -16,9 +16,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xaml;
 using System.Xml.Linq;
+using Vistaghost.VISTAGHOST.DataModel;
 using Vistaghost.VISTAGHOST.Helper;
 using Vistaghost.VISTAGHOST.Lib;
-using Vistaghost.VISTAGHOST.User_Control;
+using Vistaghost.VISTAGHOST.VGUserControl;
 
 namespace Vistaghost.VISTAGHOST.ToolWindows
 {
@@ -42,6 +43,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             InitializeComponent();
 
             Combo_SearchType.SelectedIndex = 0;
+            Combo_ElementType.SelectedIndex = 0;
+            Combo_BaseSource.SelectedIndex = 1;
 
             bw = new BackgroundWorker();
             bw.WorkerSupportsCancellation = true;
@@ -57,7 +60,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             Dispatcher.Invoke(() =>
                 {
-                    SearchResultArea.AppendText(" " + numItem + ">" + Text + "\n");
+                    SearchResultArea.AppendText(" --> " + Text + "\n");
                 });
 
             numItem++;
@@ -141,15 +144,14 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             {
                 case 0: // from working history
                     {
-                        //Combo_Keyword.IsEnabled = true;
-                        //Combo_Keyword.Text = String.Empty;
+                        Combo_Keyword.IsEnabled = true;
                     }
                     break;
 
                 case 1: // from result 1 or result 2
                 case 2:
                     {
-                        Combo_Keyword.Text = vgSetting.Instance.FindWhat;
+                        Combo_Keyword.IsEnabled = false;
                     }
                     break;
 
@@ -209,51 +211,12 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             }
         }
 
-        List<FileContainer> GetChangedItemsFromWorkHistory()
-        {
-            List<FileContainer> fList = new List<FileContainer>();
-            var dir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), vgSettingConstants.VGFolder,  vgSettingConstants.WorkHistoryFolder);
-            var path = System.IO.Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
-
-            //if (!System.IO.File.Exists(path))
-            //{
-            //    using (var stream = System.IO.File.CreateText(path))
-            //    {
-            //        /*Create new log file based on exists file*/
-            //        stream.Write(Properties.Resources.WorkHistory);
-            //    }
-            //}
-
-            if (System.IO.File.Exists(path))
-            {
-                XDocument doc;
-                doc = XDocument.Load(path, LoadOptions.SetBaseUri);
-                foreach (var sNode in doc.Root.Elements())
-                {
-                    if (sNode.Attribute("id").Value == "1")
-                    {
-                        var fNode = sNode.Element("ChangedFile");
-                        foreach (var fn in fNode.Elements())
-                        {
-                            if (fn.Attribute("action").Value == "mod" || fn.Attribute("action").Value == "add")
-                            {
-                                fList.Add(new FileContainer { FileName = fn.Value });
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            }
-
-            return fList;
-        }
-
-        bool CheckSource(out string message, out List<FileContainer> fileList)
+        bool CheckSource(out string message, out List<FileContainer> fileList, out string keyword)
         {
             bool bValid = true;
             message = String.Empty;
             fileList = null;
+            keyword = String.Empty;
 
             switch (Combo_BaseSource.SelectedIndex)
             {
@@ -266,11 +229,15 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                         }
                         else
                         {
-                            fileList = GetChangedItemsFromWorkHistory();
+                            fileList = FileManager.Instance.SearchFileFromWorkHistory();
                             if (fileList.Count == 0)
                             {
                                 bValid = false;
                                 message = "There is no changed items in work history";
+                            }
+                            else
+                            {
+                                keyword = Combo_Keyword.Text;
                             }
                         }
                     }
@@ -278,24 +245,52 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
                 case 1:
                     {
-                        fileList = vgSetting.Instance.FileList;
+                        fileList = vgOperations.GetFileFromResultWindow(VISTAGHOSTPackage.DTEHelper.DTE, EnvDTE.Constants.vsWindowKindFindResults1, FileFilter.ffSource);
                         if (fileList.Count == 0)
                         {
                             bValid = false;
                             message = "Find Results 1 is empty";
+                        }
+                        else
+                        {
+                            keyword = vgSetting.Instance.FindWhat;
                         }
                     }
                     break;
 
                 case 2:
                     {
-                        fileList = vgSetting.Instance.FileList;
+                        fileList = vgOperations.GetFileFromResultWindow(VISTAGHOSTPackage.DTEHelper.DTE, EnvDTE.Constants.vsWindowKindFindResults2, FileFilter.ffSource);
                         if (fileList.Count == 0)
                         {
                             bValid = false;
                             message = "Find Results 2 is empty";
                         }
+                        else
+                        {
+                            keyword = vgSetting.Instance.FindWhat;
+                        }
                     }
+                    break;
+            }
+
+            return bValid;
+        }
+
+        bool IsKeyWordValid(string keyword)
+        {
+            bool bValid = true;
+
+            switch (Combo_BaseSource.SelectedIndex)
+            {
+                case 0:
+                    {
+                        if (String.IsNullOrEmpty(keyword))
+                            bValid = false;
+                    }
+                    break;
+
+                default:
                     break;
             }
 
@@ -308,7 +303,9 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             if (IsSearching)
                 return;
 
-            if(String.IsNullOrEmpty(Combo_Keyword.Text))
+            string _keyWord = String.Empty;
+
+            if (!IsKeyWordValid(Combo_Keyword.Text))
             {
                 SearchResultArea.AppendText("Enter key word and try again.\n");
                 return;
@@ -316,32 +313,33 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             string message = String.Empty;
 
-            if(!CheckSource(out message, out FileList))
+            if (!CheckSource(out message, out FileList, out _keyWord))
             {
                 SearchResultArea.AppendText(message + "\n");
                 return;
             }
 
+            SearchResultArea.Clear();
+            SearchResultArea.AppendText("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"\n");
+
             IsCanceled = false;
             IsSearching = true;
             bw.RunWorkerAsync();
-
-            this.Clear();
-            SearchResultArea.AppendText("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + Combo_Keyword.Text + "\"\n");
         }
 
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if(e.Cancelled)
+            if (e.Cancelled)
             {
-
+                SearchResultArea.AppendText("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled\n");
             }
             else
             {
-                // Finish searching
-                IsSearching = false;
-                SearchResultArea.AppendText("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched);
+                SearchResultArea.AppendText(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "\n");
             }
+
+            // Finish searching
+            IsSearching = false;
         }
 
         void bw_DoWork(object sender, DoWorkEventArgs e)
@@ -349,9 +347,9 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             var _dte = Vistaghost.VISTAGHOST.VISTAGHOSTPackage.Current.DTE;
             try
             {
-                Results = Vistaghost.VISTAGHOST.Lib.vgOperations.GetFunctionProtFromHistory(_dte, this.FileList, searchType, ref Instance, ref IsCanceled);
+                Results = vgOperations.GetFunctionProtFromHistory(_dte, this.FileList, searchType, ref Instance, out totalFileSearched, ref IsCanceled);
 
-                if (IsCanceled)
+                if (IsCanceled && totalFileSearched != this.FileList.Count)
                     e.Cancel = true;
             }
             catch (Exception ex)
@@ -368,7 +366,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 bw.CancelAsync();
                 IsCanceled = true;
                 IsSearching = false;
-                SearchResultArea.AppendText("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched);
             }
         }
 
@@ -404,9 +401,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 }
             }
 
-            copiedText = copiedText.Remove(copiedText.Length - 1);
-
-            Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
+            if (copiedText.Length != 0)
+            {
+                copiedText = copiedText.Remove(copiedText.Length - 1);
+                Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
+            }
         }
 
         private void SearchResultArea_TextChanged(object sender, TextChangedEventArgs e)
