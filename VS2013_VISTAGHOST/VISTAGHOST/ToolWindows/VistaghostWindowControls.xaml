@@ -57,7 +57,7 @@
                 <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements" Click="BtnCopyElement_Click">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Copy_6524.png"/>
                 </Button>
-                <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click">
+                <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click" IsEnabled="False">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Terminate.png"/>
                 </Button>
             </StackPanel>

@@ -316,8 +316,8 @@
                 <!--<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBorderPressedKey}}"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBackgroundHoverKey}}"/>
-                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBorderDisabledKey}}"/>
+                <Setter Property="Background" TargetName="border" Value="#cfd6e5"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#cfd6e5"/>
                 <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource {x:Static cur:Controls.ControlForegroundDisabledKey}}"/>
             </Trigger>
         </ControlTemplate.Triggers>

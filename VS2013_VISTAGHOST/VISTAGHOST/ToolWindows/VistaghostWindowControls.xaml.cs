@@ -325,6 +325,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             /*disable some buttons*/
             BtnSearchElement.IsEnabled = false;
             BtnCopyElement.IsEnabled = false;
+            BtnStopSearch.IsEnabled = true;
 
             IsCanceled = false;
             IsSearching = true;
@@ -345,6 +346,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             /*Enable some buttons*/
             BtnSearchElement.IsEnabled = true;
             BtnCopyElement.IsEnabled = true;
+            BtnStopSearch.IsEnabled = false;
 
             // Finish searching
             IsSearching = false;
@@ -371,9 +373,18 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             if (bw.IsBusy)
             {
-                bw.CancelAsync();
-                IsCanceled = true;
-                IsSearching = false;
+                try
+                {
+                    bw.CancelAsync();
+                    IsCanceled = true;
+                    IsSearching = false;
+
+                    BtnStopSearch.IsEnabled = false;
+                }
+                catch
+                {
+                }
+
             }
         }
 
@@ -412,7 +423,14 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             if (copiedText.Length != 0)
             {
                 copiedText = copiedText.Remove(copiedText.Length - 1);
-                Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
+                try
+                {
+                    Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
+                }
+                catch
+                {
+                    VISTAGHOSTPackage.Current.DTE.StatusBar.Text = "Copy failed";
+                }
             }
         }
 

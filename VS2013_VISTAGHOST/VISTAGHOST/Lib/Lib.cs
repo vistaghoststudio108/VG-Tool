@@ -1282,7 +1282,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                     if (bOpen)
                     {
                         bOpen = false;
-                        dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesYes);
+                        //dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesYes);
                     }
 
                     if(Canceled)
