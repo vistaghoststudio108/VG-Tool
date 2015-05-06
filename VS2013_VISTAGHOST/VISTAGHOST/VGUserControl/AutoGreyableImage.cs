@@ -12,7 +12,6 @@ namespace Vistaghost.VISTAGHOST.VGUserControl
 {
     /// <summary>
     /// Class used to have an image that is able to be gray when the control is not enabled.
-    /// Author: Thomas LEBRUN (http://blogs.developpeur.org/tom)
     /// </summary>
     public class AutoGreyableImage : Image
     {

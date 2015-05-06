@@ -322,6 +322,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             SearchResultArea.Clear();
             SearchResultArea.AppendText("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"\n");
 
+            /*disable some buttons*/
+            BtnSearchElement.IsEnabled = false;
+            BtnCopyElement.IsEnabled = false;
+
             IsCanceled = false;
             IsSearching = true;
             bw.RunWorkerAsync();
@@ -337,6 +341,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             {
                 SearchResultArea.AppendText(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "\n");
             }
+
+            /*Enable some buttons*/
+            BtnSearchElement.IsEnabled = true;
+            BtnCopyElement.IsEnabled = true;
 
             // Finish searching
             IsSearching = false;
