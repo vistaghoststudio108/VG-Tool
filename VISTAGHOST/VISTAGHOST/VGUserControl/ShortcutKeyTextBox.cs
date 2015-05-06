@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using EnvDTE80;
 
-namespace Vistaghost.VISTAGHOST.User_Control
+namespace Vistaghost.VISTAGHOST.VGUserControl
 {
     public partial class ShortcutKeyTextBox : TextBox
     {

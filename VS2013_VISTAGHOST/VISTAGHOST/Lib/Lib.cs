@@ -867,6 +867,21 @@ namespace Vistaghost.VISTAGHOST.Lib
             return -1;
         }
 
+        static void GetFindWhatString(string text)
+        {
+            int pos1 = text.IndexOf("\"");
+            int pos2 = -1;
+            if(pos1 != -1)
+            {
+                pos2 = text.IndexOf("\"", pos1 + 1);
+            }
+
+            if(pos2 != -1)
+            {
+                vgSetting.Instance.FindWhat = text.Substring(pos1 + 1, pos2 - pos1 - 1);
+            }
+        }
+
         public static List<FileContainer> GetFileFromResultWindow(DTE dte, string wndGuid, FileFilter filter)
         {
             List<FileContainer> fContainer = new List<FileContainer>();
@@ -885,7 +900,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             selected.SelectAll();
 
             var files = selected.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            if (files.Count == 0)
+            if (files.Count == 0 || files.Count == 1 || files.Count == 2)
                 return fContainer;
 
             if (files[0].Contains("List filenames only"))
@@ -893,7 +908,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                 vgSetting.Instance.FileNameOnly = true;
             }
 
-            vgSetting.Instance.FindWhat = findWindow.DTE.Find.FindWhat;
+            GetFindWhatString(files[0]);
 
             files.RemoveAt(0);
             files.RemoveAt(files.Count - 1);

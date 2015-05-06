@@ -1,19 +1,30 @@
 ﻿<UserControl x:Class="Vistaghost.VISTAGHOST.ToolWindows.UCVistaghostWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:gImage="clr-namespace:Vistaghost.VISTAGHOST.VGUserControl"
     Height="300" Width="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Margin="0,0,-700,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
 			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
-        <TextBox x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
         	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
-        <TextBox x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
         	FontSize="12" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/VISTAGHOST;component/Resources/bg.png"/>
+            </StackPanel.Background>
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Text="Show output from:"/>
             <ComboBox x:Name="Combo_SearchType" Width="130" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectionChanged="Combo_SearchType_SelectionChanged">
                 <ComboBoxItem Content="Changed Element"/>
@@ -21,7 +32,10 @@
                 <ComboBoxItem Content="Notes"/>
             </ComboBox>
             <Line Y1="2" Y2="20" Width="1" Height="22" Margin="4,0" Stroke="#FFBDBCBC" Fill="#FF4F4A4A" Stretch="Fill" X2="1"/>
-            <StackPanel x:Name="ChangedElementPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Collapsed" Background="#cfd6e5">
+            <StackPanel x:Name="ChangedElementPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Collapsed">
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="/VISTAGHOST;component/Resources/bg.png"/>
+                </StackPanel.Background>
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Element type</TextBlock>
                 <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="0" SelectionChanged="Combo_ElementType_SelectionChanged">
                     <ComboBoxItem Content="Function"/>
@@ -37,17 +51,20 @@
                     <ComboBoxItem Content="Find Results 1"/>
                     <ComboBoxItem Content="Find Results 2"/>
                 </ComboBox>
-                <Button x:Name="BtnSearchElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search changed functions" Click="BtnSearchElement_Click">
-                    <!--<Image Source="/VISTAGHOST;component/Resources/FindResults1_6264.png"/>-->
+                <Button x:Name="BtnSearchElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search changed functions" Click="BtnSearchElement_Click" IsEnabled="False">
+                    <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Find_5650.png"/>
                 </Button>
                 <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements">
-                    <!--<Image Source="/VISTAGHOST;component/Resources/Copy_6524.png"/>-->
+                    <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/search.png"/>
                 </Button>
                 <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click">
-                    <!--<Image Source="/VISTAGHOST;component/Resources/stop_search.png"/>-->
+                    <!--<gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Addacomment_8818.png"/>-->
                 </Button>
             </StackPanel>
-            <StackPanel x:Name="WorkingHistoryPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
+            <StackPanel x:Name="WorkingHistoryPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="/VISTAGHOST;component/Resources/bg.png"/>
+                </StackPanel.Background>
                 <Button Width="20" Height="20" BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="abc">
                     <!--<Image Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>-->
                 </Button>

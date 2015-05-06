@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Collections;
 using System.Reflection;
 
-namespace Vistaghost.VISTAGHOST.User_Control
+namespace Vistaghost.VISTAGHOST.VGUserControl
 {
     public partial class ColorComboBox : ComboBox
     {

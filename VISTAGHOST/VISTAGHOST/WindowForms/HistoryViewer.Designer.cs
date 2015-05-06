@@ -39,7 +39,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.goToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listView1 = new Vistaghost.VISTAGHOST.User_Control.ExListView();
+            this.listView1 = new Vistaghost.VISTAGHOST.VGUserControl.ExListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
@@ -207,7 +207,7 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private Vistaghost.VISTAGHOST.User_Control.ExListView listView1;
+        private Vistaghost.VISTAGHOST.VGUserControl.ExListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;

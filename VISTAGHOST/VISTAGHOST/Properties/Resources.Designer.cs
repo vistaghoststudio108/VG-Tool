@@ -69,6 +69,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Addacomment_8818 {
+            get {
+                object obj = ResourceManager.GetObject("Addacomment_8818", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.AddComments.
         /// </summary>
@@ -118,13 +125,6 @@ namespace Vistaghost.VISTAGHOST.Properties {
         internal static string Config {
             get {
                 return ResourceManager.GetString("Config", resourceCulture);
-            }
-        }
-        
-        internal static System.Drawing.Bitmap CopyHS {
-            get {
-                object obj = ResourceManager.GetObject("CopyHS", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

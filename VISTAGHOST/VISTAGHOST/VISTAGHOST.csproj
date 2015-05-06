@@ -142,22 +142,23 @@
       <DependentUpon>VistaghostWindowControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\VistaghostWindowPane.cs" />
-    <Compile Include="User Control\ColorComboBox.cs">
+    <Compile Include="VGUserControl\AutoGreyableImage.cs" />
+    <Compile Include="VGUserControl\ColorComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="User Control\ColorComboBox.Designer.cs">
+    <Compile Include="VGUserControl\ColorComboBox.Designer.cs">
       <DependentUpon>ColorComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Control\ExListView.cs">
+    <Compile Include="VGUserControl\ExListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="User Control\ExListView.Designer.cs">
+    <Compile Include="VGUserControl\ExListView.Designer.cs">
       <DependentUpon>ExListView.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Control\ShortcutKeyTextBox.cs">
+    <Compile Include="VGUserControl\ShortcutKeyTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="User Control\ShortcutKeyTextBox.Designer.cs">
+    <Compile Include="VGUserControl\ShortcutKeyTextBox.Designer.cs">
       <DependentUpon>ShortcutKeyTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="VSPackage.Designer.cs">
@@ -284,28 +285,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
-    <None Include="Resources\Images_32bit.bmp" />
+    <Resource Include="Resources\Images_32bit.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\bg.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <None Include="Resources\DeleteHS.png" />
-    <Resource Include="Resources\CopyHS.png" />
-    <None Include="Resources\FunctionHS.png" />
+    <Resource Include="Resources\DeleteHS.png" />
+    <Resource Include="Resources\FunctionHS.png" />
     <Resource Include="Resources\Find_5650.png" />
-    <Content Include="Resources\icon3.png" />
-    <None Include="Resources\Image1.bmp" />
-    <Content Include="Resources\imagelis.bmp" />
-    <Content Include="Resources\Log.xml" />
-    <Content Include="Resources\icons.png" />
-    <Content Include="Resources\icons2.png" />
-    <Content Include="Resources\Package.ico" />
-    <None Include="Resources\PrintPreviewHS.png" />
-    <Content Include="Resources\search.png" />
-    <Content Include="Resources\search2.png" />
-    <Content Include="Resources\WorkHistory.xml" />
-    <None Include="Resources\SearchFunc.png" />
+    <Resource Include="Resources\icon3.png" />
+    <Resource Include="Resources\Image1.bmp" />
+    <Resource Include="Resources\imagelis.bmp" />
+    <Resource Include="Resources\Log.xml" />
+    <Resource Include="Resources\icons.png" />
+    <Resource Include="Resources\icons2.png" />
+    <Resource Include="Resources\Package.ico" />
+    <Resource Include="Resources\PrintPreviewHS.png" />
+    <Resource Include="Resources\search.png" />
+    <Resource Include="Resources\search2.png" />
+    <Resource Include="Resources\WorkHistory.xml" />
+    <Resource Include="Resources\SearchFunc.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UserControl\MakarovDev.ExpandCollapsePanel\MakarovDev.ExpandCollapsePanel.csproj">
@@ -351,10 +350,17 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ToolWindows\ResourceDic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ToolWindows\UCVistaghostWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Addacomment_8818.png" />
   </ItemGroup>
   <PropertyGroup>
     <!--

@@ -113,7 +113,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtHotKey = new Vistaghost.VISTAGHOST.User_Control.ShortcutKeyTextBox();
+            this.txtHotKey = new Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).BeginInit();
             this.pnCommentSetting.SuspendLayout();
@@ -1063,7 +1063,7 @@
         private System.Windows.Forms.ColumnHeader colKey;
         private System.Windows.Forms.Button btnRemoveHotkey;
         private System.Windows.Forms.Button btnAssignHotKey;
-        private Vistaghost.VISTAGHOST.User_Control.ShortcutKeyTextBox txtHotKey;
+        private Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox txtHotKey;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cbCurrentShortcut;
         private System.Windows.Forms.Label label15;
