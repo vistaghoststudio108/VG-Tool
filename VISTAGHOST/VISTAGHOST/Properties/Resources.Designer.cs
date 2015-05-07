@@ -69,6 +69,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ActualSizeHS {
+            get {
+                object obj = ResourceManager.GetObject("ActualSizeHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Addacomment_8818 {
             get {
                 object obj = ResourceManager.GetObject("Addacomment_8818", resourceCulture);
@@ -125,6 +132,13 @@ namespace Vistaghost.VISTAGHOST.Properties {
         internal static string Config {
             get {
                 return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap CopyHS {
+            get {
+                object obj = ResourceManager.GetObject("CopyHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -298,19 +312,19 @@ namespace Vistaghost.VISTAGHOST.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap SearchFunc {
-            get {
-                object obj = ResourceManager.GetObject("SearchFunc", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to EditorContextMenus.CodeWindow.MakeFunctionHeader.
         /// </summary>
         internal static string SingleHeader {
             get {
                 return ResourceManager.GetString("SingleHeader", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap StopHS {
+            get {
+                object obj = ResourceManager.GetObject("StopHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

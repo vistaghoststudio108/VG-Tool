@@ -292,7 +292,6 @@
     </Resource>
     <Resource Include="Resources\DeleteHS.png" />
     <Resource Include="Resources\FunctionHS.png" />
-    <Resource Include="Resources\Find_5650.png" />
     <Resource Include="Resources\icon3.png" />
     <Resource Include="Resources\Image1.bmp" />
     <Resource Include="Resources\imagelis.bmp" />
@@ -361,6 +360,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Addacomment_8818.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ActualSizeHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CopyHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StopHS.png" />
   </ItemGroup>
   <PropertyGroup>
     <!--

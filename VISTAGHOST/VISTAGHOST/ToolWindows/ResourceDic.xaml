@@ -33,20 +33,20 @@
                 <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" TargetName="border" Value="#FF4F4A4A"/>
-                <Setter Property="BorderBrush" TargetName="border" Value="#FF4F4A4A"/>
+                <Setter Property="Background" TargetName="border" Value="#adc1ee"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#adc1ee"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" TargetName="border" Value="#FF4F4A4A"/>
+                <Setter Property="Background" TargetName="border" Value="#89a5e3"/>
                 <!--<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBorderPressedKey}}"/>-->
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" TargetName="border" Value="#FF4F4A4A"/>
+                <Setter Property="Background" TargetName="border" Value="#89a5e3"/>
                 <!--<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBorderPressedKey}}"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" TargetName="border" Value="#cfd6e5"/>
-                <Setter Property="BorderBrush" TargetName="border" Value="#cfd6e5"/>
+                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
                 <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF4F4A4A"/>
             </Trigger>
         </ControlTemplate.Triggers>
