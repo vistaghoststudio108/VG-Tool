@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\FileManager.cs" />
     <Compile Include="Network\VGProduct.cs" />
     <Compile Include="Packages\Guids.cs" />
     <Compile Include="Helper\DTEHelper.cs" />

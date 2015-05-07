@@ -29,6 +29,9 @@ namespace Vistaghost.VISTAGHOST
         public const string LogTextFile = "History.txt";
         public const string LogXmlFile = "History.xml";
         public const string LogExcelFile = "History.xls";
+        public const string WorkHistoryFolder = "WorkHistory";
+        public const string WorkHistoryFile = "WorkHistory.xml";
+        public const string ProjectStatusFile = "ProjectStatus.xml";
 
         /*for delete comments*/
         public const string MainCode = @"(@(?:""[^""]*"")+|""(?:[^""\n\\]+|\\.)*""|'(?:[^'\n\\]+|\\.)*')";
@@ -110,6 +113,8 @@ namespace Vistaghost.VISTAGHOST
         public static Settings SettingData { get; set; }
 
         public static RegisterData RegisterData { get; set; }
+
+        public static ProjectStatus ProjectStatus { get; set; }
 
         #region Data methods
         public static Settings LoadSettings()

@@ -102,7 +102,9 @@ namespace Vistaghost.VISTAGHOST.Helper
             switch (Result)
             {
                 case vsFindResult.vsFindResultFound:
-                    VGSetting.Instance.FileList = Vistaghost.VISTAGHOST.Lib.VGOperations.GetFileFromResultWindow(this.DTE, FileFilter.ffSource);
+                    {
+                        //TODO what
+                    }
                     break;
                 case vsFindResult.vsFindResultNotFound:
                     VGSetting.Instance.FindWhat = String.Empty;

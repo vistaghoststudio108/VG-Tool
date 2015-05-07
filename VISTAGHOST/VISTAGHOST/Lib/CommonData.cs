@@ -335,4 +335,16 @@ namespace Vistaghost.VISTAGHOST.Lib
             Lines = new List<int>();
         }
     }
+
+    public class WorkHistory
+    {
+        public List<string> ChangedFile { get; set; }
+    }
+
+    [Serializable]
+    public class ProjectStatus
+    {
+        public bool NotStarted { get; set; }
+        public int ProjectID { get; set; }
+    }
 }
