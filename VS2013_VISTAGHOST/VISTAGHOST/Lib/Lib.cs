@@ -18,33 +18,20 @@ namespace Vistaghost.VISTAGHOST.Lib
     public class vgOperations
     {
         #region user definition
-
         public const string LEFT_BRACKET = "(";
-
         public const string RIGHT_BRACKET = ")";
-
         public const string DEFAULT_TAG = "//<Not set> ";
-
         public const char COMMA = ',';
-
         public const string NO_INDENT = "";
-
         public const string WHITE_SPACE4 = "    ";           // 4x space
-
         public const string WHITE_SPACE3 = "   ";          // 3x space
-
         public const string END_OF_LINE1 = "\n";
         public const string END_OF_LINE2 = "\n\n";
         public const string END_OF_LINE_STAR = "\n*\n";
-
         public const string STAR_SYMBOL = "*" + WHITE_SPACE3;
-
         public const string WHITE_SPACE6 = WHITE_SPACE3 + WHITE_SPACE3;
-
         public const string NONE_JP = "なし";
-
         public const string NONE_EN = "None";
-
         #endregion
 
         public static string[] langType = { 
@@ -53,18 +40,6 @@ namespace Vistaghost.VISTAGHOST.Lib
                                              "'",       // Visual Basic
                                              "<!--"     // Xml file
                                          };
-
-        //public static string[] doxygenKey = {
-        //                                        "@fn			",
-        //                                        "@brief		    ",
-        //                                        "@param		    ",
-        //                                        "@return		",
-        //                                        "@author		",
-        //                                        "@date		    ",
-        //                                        "@note		    ",
-        //                                        "@attention	    ",
-        //                                        "@date		    "
-        //                                    };
 
         #region Common methods
         public static string GetDateString(DateFormat format)
@@ -871,12 +846,12 @@ namespace Vistaghost.VISTAGHOST.Lib
         {
             int pos1 = text.IndexOf("\"");
             int pos2 = -1;
-            if(pos1 != -1)
+            if (pos1 != -1)
             {
                 pos2 = text.IndexOf("\"", pos1 + 1);
             }
 
-            if(pos2 != -1)
+            if (pos2 != -1)
             {
                 vgSetting.Instance.FindWhat = text.Substring(pos1 + 1, pos2 - pos1 - 1);
             }
@@ -890,7 +865,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             int nLine = 0;
 
             var findWindow = dte.Windows.Item(wndGuid);
-            if(findWindow == null)
+            if (findWindow == null)
             {
                 return fContainer;
             }
@@ -1086,7 +1061,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                                     case SearchType.Class:
                                         {
                                             var codeClass = (CodeClass)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementClass);
-                                            if(codeClass != null)
+                                            if (codeClass != null)
                                             {
                                                 var _class = new ObjectType();
                                                 _class.Name = codeClass.FullName;
@@ -1107,7 +1082,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                                     case SearchType.Enumerable:
                                         {
                                             var codeEnum = (CodeEnum)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementEnum);
-                                            if(codeEnum != null)
+                                            if (codeEnum != null)
                                             {
                                                 var _enum = new ObjectType();
                                                 _enum.Name = codeEnum.FullName;
@@ -1284,7 +1259,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                                             owPane.AddString(_struct.Name);
                                         }
 
-                                        if(Canceled)
+                                        if (Canceled)
                                             break;
                                     }
                                 }
@@ -1300,7 +1275,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                         //dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesYes);
                     }
 
-                    if(Canceled)
+                    if (Canceled)
                     {
                         break;
                     }
@@ -1314,5 +1289,34 @@ namespace Vistaghost.VISTAGHOST.Lib
             return elementList;
         }
         #endregion
+
+        public static void UpdateWorkHistory(CodeElement Element, ActionType type)
+        {
+            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), vgSettingConstants.VGFolder, vgSettingConstants.WorkHistoryFolder);
+            var path = Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+
+            if (!File.Exists(path))
+            {
+                using (var stream = File.CreateText(path))
+                {
+                    /*Create new log file based on exists file*/
+                    stream.Write(Properties.Resources.WorkHistory);
+                }
+            }
+            else
+            {
+                switch (type)
+                {
+                    case ActionType.MODIFY:
+                        break;
+                    case ActionType.ADD:
+                        break;
+                    case ActionType.DELETE:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

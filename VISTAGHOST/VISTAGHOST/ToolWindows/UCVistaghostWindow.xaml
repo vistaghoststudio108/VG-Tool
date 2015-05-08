@@ -54,7 +54,7 @@
                 <Button x:Name="BtnSearchElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search changed functions" Click="BtnSearchElement_Click">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/ActualSizeHS.png"/>
                 </Button>
-                <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements">
+                <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements" Click="BtnCopyElement_Click" >
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/CopyHS.png"/>
                 </Button>
                 <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click">

@@ -368,5 +368,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             Combo_BaseSource.IsEnabled = true;
             BtnCopyElement.IsEnabled = true;
         }
+
+        private void BtnCopyElement_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

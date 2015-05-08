@@ -78,7 +78,7 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
         {
-            
+            vgOperations.UpdateWorkHistory(Element, ActionType.DELETE);
         }
 
         void codeModelEvent_ElementChanged(CodeElement Element, vsCMChangeKind Change)
@@ -88,7 +88,7 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void codeModelEvent_ElementAdded(CodeElement Element)
         {
-            
+            vgOperations.UpdateWorkHistory(Element, ActionType.ADD);
         }
 
         void docEvents_DocumentSaved(Document Document)
