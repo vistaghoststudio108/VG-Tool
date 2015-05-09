@@ -34,7 +34,7 @@
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Add", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Data Management");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Project");
             System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("History");
             System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Keyboard");
             this.btnCancel = new System.Windows.Forms.Button();
@@ -95,13 +95,8 @@
             this.pnDataSetting = new System.Windows.Forms.Panel();
             this.btnClearData = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.btnBrowseExternal = new System.Windows.Forms.Button();
-            this.txtExternalLink = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnHistory = new System.Windows.Forms.Panel();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.pnKeyboard = new System.Windows.Forms.Panel();
             this.cbCurrentShortcut = new System.Windows.Forms.ComboBox();
             this.btnRemoveHotkey = new System.Windows.Forms.Button();
@@ -113,6 +108,11 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnStartProject = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.txtHotKey = new Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).BeginInit();
@@ -160,8 +160,8 @@
             treeNode2.Text = "Header";
             treeNode3.Name = "Node2";
             treeNode3.Text = "Add";
-            treeNode4.Name = "nodeDataManagement";
-            treeNode4.Text = "Data Management";
+            treeNode4.Name = "nodeProject";
+            treeNode4.Text = "Project";
             treeNode5.Name = "Node0";
             treeNode5.Text = "History";
             treeNode6.Name = "Node0";
@@ -468,7 +468,7 @@
             this.pnHeaderSetting.Controls.Add(this.cbHeaderStyle);
             this.pnHeaderSetting.Controls.Add(this.groupBox3);
             this.pnHeaderSetting.Controls.Add(this.label4);
-            this.pnHeaderSetting.Location = new System.Drawing.Point(629, 373);
+            this.pnHeaderSetting.Location = new System.Drawing.Point(1008, 399);
             this.pnHeaderSetting.Name = "pnHeaderSetting";
             this.pnHeaderSetting.Size = new System.Drawing.Size(451, 355);
             this.pnHeaderSetting.TabIndex = 4;
@@ -726,7 +726,7 @@
             // 
             this.pnDataSetting.Controls.Add(this.btnClearData);
             this.pnDataSetting.Controls.Add(this.groupBox4);
-            this.pnDataSetting.Location = new System.Drawing.Point(457, 720);
+            this.pnDataSetting.Location = new System.Drawing.Point(319, 431);
             this.pnDataSetting.Name = "pnDataSetting";
             this.pnDataSetting.Size = new System.Drawing.Size(451, 355);
             this.pnDataSetting.TabIndex = 5;
@@ -734,7 +734,7 @@
             // 
             // btnClearData
             // 
-            this.btnClearData.Location = new System.Drawing.Point(7, 109);
+            this.btnClearData.Location = new System.Drawing.Point(304, 315);
             this.btnClearData.Name = "btnClearData";
             this.btnClearData.Size = new System.Drawing.Size(111, 26);
             this.btnClearData.TabIndex = 39;
@@ -744,58 +744,17 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.radioButton4);
-            this.groupBox4.Controls.Add(this.radioButton3);
-            this.groupBox4.Controls.Add(this.btnBrowseExternal);
-            this.groupBox4.Controls.Add(this.txtExternalLink);
-            this.groupBox4.Location = new System.Drawing.Point(7, 3);
+            this.groupBox4.Controls.Add(this.textBox2);
+            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Controls.Add(this.btnStartProject);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Location = new System.Drawing.Point(7, 15);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(441, 100);
+            this.groupBox4.Size = new System.Drawing.Size(441, 140);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(10, 50);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(174, 19);
-            this.radioButton4.TabIndex = 36;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Save data at external storage";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.storage_CheckedChanged);
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(10, 22);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(173, 19);
-            this.radioButton3.TabIndex = 35;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Save data at internal storage";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.storage_CheckedChanged);
-            // 
-            // btnBrowseExternal
-            // 
-            this.btnBrowseExternal.Enabled = false;
-            this.btnBrowseExternal.Location = new System.Drawing.Point(402, 47);
-            this.btnBrowseExternal.Name = "btnBrowseExternal";
-            this.btnBrowseExternal.Size = new System.Drawing.Size(33, 24);
-            this.btnBrowseExternal.TabIndex = 38;
-            this.btnBrowseExternal.Text = "...";
-            this.btnBrowseExternal.UseVisualStyleBackColor = true;
-            // 
-            // txtExternalLink
-            // 
-            this.txtExternalLink.Enabled = false;
-            this.txtExternalLink.Location = new System.Drawing.Point(190, 48);
-            this.txtExternalLink.Name = "txtExternalLink";
-            this.txtExternalLink.Size = new System.Drawing.Size(206, 23);
-            this.txtExternalLink.TabIndex = 37;
+            this.groupBox4.Text = "Project tracking";
             // 
             // pnHistory
             // 
@@ -804,7 +763,7 @@
             this.pnHistory.Controls.Add(this.chDisHistory);
             this.pnHistory.Location = new System.Drawing.Point(12, 399);
             this.pnHistory.Name = "pnHistory";
-            this.pnHistory.Size = new System.Drawing.Size(451, 225);
+            this.pnHistory.Size = new System.Drawing.Size(157, 135);
             this.pnHistory.TabIndex = 46;
             this.pnHistory.Visible = false;
             // 
@@ -936,6 +895,49 @@
             this.label13.TabIndex = 5;
             this.label13.Text = "Hotkeyable Items";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(19, 27);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 15);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Project name";
+            // 
+            // btnStartProject
+            // 
+            this.btnStartProject.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnStartProject.Location = new System.Drawing.Point(16, 95);
+            this.btnStartProject.Name = "btnStartProject";
+            this.btnStartProject.Size = new System.Drawing.Size(79, 28);
+            this.btnStartProject.TabIndex = 1;
+            this.btnStartProject.Text = "Start";
+            this.btnStartProject.UseVisualStyleBackColor = true;
+            this.btnStartProject.Click += new System.EventHandler(this.btnStartProject_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(102, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(326, 23);
+            this.textBox1.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(38, 61);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(58, 15);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Project ID";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(102, 53);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(148, 23);
+            this.textBox2.TabIndex = 2;
+            // 
             // txtHotKey
             // 
             this.txtHotKey.DTE2Object = null;
@@ -1023,12 +1025,8 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Panel pnDataSetting;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button btnBrowseExternal;
-        private System.Windows.Forms.TextBox txtExternalLink;
         private System.Windows.Forms.Button btnClearData;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.TextBox txtHistory;
         private System.Windows.Forms.TextBox richTextBox2;
         private System.Windows.Forms.TextBox richTextBox1;
@@ -1054,7 +1052,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox chkLogHistory;
         private System.Windows.Forms.Panel pnHistory;
-        private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Panel pnKeyboard;
         private System.Windows.Forms.ListBox listGroupCommand;
         private System.Windows.Forms.Label label13;
@@ -1071,5 +1068,10 @@
         private System.Windows.Forms.CheckBox chkJustOneLine;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown numerEmptyLine;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnStartProject;
+        private System.Windows.Forms.Label label10;
     }
 }

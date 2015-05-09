@@ -53,7 +53,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                SearchResultArea.AppendText(Text + "\n");
+                SearchResultArea.AppendText(" " + Text + "\n");
             }), null);
         }
 
@@ -83,7 +83,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             if (e.Cancelled)
             {
-                SearchResultArea.AppendText("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled\n");
+                SearchResultArea.AppendText(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled\n");
             }
             else
             {
@@ -114,6 +114,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 e.Cancel = true;
                 Logger.LogError(ex, false);
             }
+
+            _dte.StatusBar.Text = "";
         }
 
         private void TextViewArea_KeyDown(object sender, KeyEventArgs e)
@@ -371,7 +373,64 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         private void BtnCopyElement_Click(object sender, RoutedEventArgs e)
         {
+            if (IsSearching)
+                return;
 
+            string copiedText = String.Empty;
+            foreach (var item in Results)
+            {
+                switch (searchType)
+                {
+                    case SearchType.AllFunction:
+                        {
+                            copiedText += item.Prototype + "\n";
+                        }
+                        break;
+                    case SearchType.Class:
+                    case SearchType.Enumerable:
+                    case SearchType.Structure:
+                        {
+                            copiedText += item.Name + "\n";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (copiedText.Length != 0)
+            {
+                copiedText = copiedText.Remove(copiedText.Length - 1);
+                try
+                {
+                    Clipboard.SetText(copiedText, TextDataFormat.UnicodeText);
+                }
+                catch
+                {
+                    VISTAGHOSTPackage.Current.DTE.StatusBar.Text = "Copy failed";
+                }
+            }
+        }
+
+        private void SearchResultArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SearchResultArea.CaretIndex == SearchResultArea.Text.Length)
+            {
+                SearchResultArea.SelectionStart = SearchResultArea.Text.Length;
+                SearchResultArea.ScrollToEnd();
+            }
+        }
+
+        private void WorkingHistoryArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            WorkingHistoryArea.SelectionStart = WorkingHistoryArea.Text.Length;
+            WorkingHistoryArea.ScrollToEnd();
+        }
+
+        private void NotesArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            NotesArea.SelectionStart = NotesArea.Text.Length;
+            NotesArea.ScrollToEnd();
         }
     }
 }

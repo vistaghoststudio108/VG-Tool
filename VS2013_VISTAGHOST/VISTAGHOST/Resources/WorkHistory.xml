@@ -7,7 +7,7 @@
     <CodeElement>
       <!--<Element type="func" action="mod">
         <name>function name</name>
-        <file>file path</file>
+        <path>file path</path>
       </Element>-->
     </CodeElement>
     <Comment>

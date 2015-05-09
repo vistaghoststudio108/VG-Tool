@@ -11,6 +11,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
     public class FileManager
     {
         static FileManager _instance;
+        private string whPath = String.Empty; // work history path
         public static FileManager Instance
         {
             get
@@ -22,41 +23,31 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public FileManager()
         {
-
-        }
-
-        public List<FileContainer> SearchFileFromWorkHistory()
-        {
-            List<FileContainer> fList = new List<FileContainer>();
             var dir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                                              vgSettingConstants.VGFolder,
                                              vgSettingConstants.WorkHistoryFolder);
 
-            var path = System.IO.Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+            whPath = System.IO.Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+        }
 
-            //if (!System.IO.File.Exists(path))
-            //{
-            //    using (var stream = System.IO.File.CreateText(path))
-            //    {
-            //        /*Create new log file based on exists file*/
-            //        stream.Write(Properties.Resources.WorkHistory);
-            //    }
-            //}
+        public List<FileContainer> SearchFileFromWorkHistory()
+        {
+            List<FileContainer> fileList = new List<FileContainer>();
 
-            if (System.IO.File.Exists(path))
+            if (System.IO.File.Exists(whPath))
             {
                 XDocument doc;
-                doc = XDocument.Load(path, LoadOptions.SetBaseUri);
+                doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
                 foreach (var sNode in doc.Root.Elements())
                 {
-                    if (sNode.Attribute("id").Value == "1")
+                    if (sNode.Attribute("id").Value == vgSetting.ProjectStatus.ProjectID.ToString())
                     {
                         var fNode = sNode.Element("ChangedFile");
                         foreach (var fn in fNode.Elements())
                         {
                             if (fn.Attribute("action").Value == "mod" || fn.Attribute("action").Value == "add")
                             {
-                                fList.Add(new FileContainer { FileName = fn.Value });
+                                fileList.Add(new FileContainer { FileName = fn.Value });
                             }
                         }
 
@@ -65,7 +56,88 @@ namespace Vistaghost.VISTAGHOST.DataModel
                 }
             }
 
-            return fList;
+            return fileList;
+        }
+
+        public List<ObjectType> SearchElementFromWorkHistory(SearchType sType, ActionType acType)
+        {
+            List<ObjectType> funcList = new List<ObjectType>();
+
+            if (System.IO.File.Exists(whPath))
+            {
+                XDocument doc;
+                doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+                foreach (var sNode in doc.Root.Elements())
+                {
+                    if (sNode.Attribute("id").Value == vgSetting.ProjectStatus.ProjectID.ToString())
+                    {
+                        var fNode = sNode.Element("CodeElement");
+                        foreach (var fn in fNode.Elements())
+                        {
+                            switch (sType)
+                            {
+                                case SearchType.AllFunction:
+                                    {
+                                        if(fn.Attribute("type").Value == "function")
+                                        {
+                                            switch (acType)
+                                            {
+                                                case ActionType.MODIFY:
+                                                    {
+                                                        if(fn.Attribute("action").Value == "mod")
+                                                        {
+                                                            var f = new ObjectType();
+                                                            f.Name = fn.Element("name").Value;
+                                                            f.Path = fn.Element("path").Value;
+                                                            funcList.Add(f);
+                                                        }
+                                                    }
+                                                    break;
+                                                case ActionType.ADD:
+                                                    {
+                                                        if (fn.Attribute("action").Value == "add")
+                                                        {
+                                                            var f = new ObjectType();
+                                                            f.Name = fn.Element("name").Value;
+                                                            f.Path = fn.Element("path").Value;
+                                                            funcList.Add(f);
+                                                        }
+                                                    }
+                                                    break;
+                                                case ActionType.DELETE:
+                                                    {
+                                                        if (fn.Attribute("action").Value == "del")
+                                                        {
+                                                            var f = new ObjectType();
+                                                            f.Name = fn.Element("name").Value;
+                                                            f.Path = fn.Element("path").Value;
+                                                            funcList.Add(f);
+                                                        }
+                                                    }
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case SearchType.Class:
+                                    break;
+                                case SearchType.Enumerable:
+                                    break;
+                                case SearchType.Structure:
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            return funcList;
         }
     }
 }

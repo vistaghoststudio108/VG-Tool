@@ -1009,6 +1009,8 @@ namespace Vistaghost.VISTAGHOST.Lib
                     string curElement = String.Empty;
                     totalFileSearched++;
 
+                    dte.StatusBar.Text = "Searching " + fileList[i].FileName;
+
                     if (dte.ItemOperations.IsFileOpen(fileName, Constants.vsViewKindCode))
                     {
                         doc = dte.Documents.Item(fileName);

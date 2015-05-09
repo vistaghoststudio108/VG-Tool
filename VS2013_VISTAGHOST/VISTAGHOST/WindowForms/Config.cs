@@ -15,6 +15,7 @@ using System.Xml;
 using Vistaghost.VISTAGHOST.Helper;
 using EnvDTE80;
 using EnvDTE;
+using System.Security.AccessControl;
 
 namespace Vistaghost.VISTAGHOST
 {
@@ -78,7 +79,7 @@ namespace Vistaghost.VISTAGHOST
                     pnHistory.Visible = false;
                     pnKeyboard.Visible = false;
                 }
-                else if (e.Node.Text == "Data Management")
+                else if (e.Node.Text == "Project")
                 {
                     pnHeaderSetting.Visible = false;
                     pnDataSetting.Visible = true;
@@ -379,12 +380,6 @@ namespace Vistaghost.VISTAGHOST
             }
         }
 
-        private void storage_CheckedChanged(object sender, EventArgs e)
-        {
-            txtExternalLink.Enabled = radioButton4.Checked;
-            btnBrowseExternal.Enabled = radioButton4.Checked;
-        }
-
         private void AddComponent_CheckedChanged(object sender, EventArgs e)
         {
             var check = ((CheckBox)sender);
@@ -508,23 +503,6 @@ namespace Vistaghost.VISTAGHOST
             groupBox2.Enabled = chkLogHistory.Checked;
             AddHistoryChanged = true;
             btnSave.Enabled = true;
-        }
-
-        private void btnCustomForColor_Click(object sender, EventArgs e)
-        {
-            colorDialog1.FullOpen = true;
-            if (colorDialog1.ShowDialog(this) == DialogResult.OK)
-            {
-            }
-        }
-
-        private void btnCustomBackColor_Click(object sender, EventArgs e)
-        {
-            colorDialog1.FullOpen = true;
-            if (colorDialog1.ShowDialog(this) == DialogResult.OK)
-            {
-
-            }
         }
 
         private void listGroupCommand_SelectedIndexChanged(object sender, EventArgs e)
@@ -735,7 +713,7 @@ namespace Vistaghost.VISTAGHOST
                 pnHistory.Visible = false;
                 pnKeyboard.Visible = false;
             }
-            else if (e.Node.Text == "Data Management")
+            else if (e.Node.Text == "Project")
             {
                 pnHeaderSetting.Visible = false;
                 pnDataSetting.Visible = true;
@@ -759,6 +737,31 @@ namespace Vistaghost.VISTAGHOST
                 pnCommentSetting.Visible = false;
                 pnKeyboard.Visible = true;
             }
+        }
+
+        private void btnStartProject_Click(object sender, EventArgs e)
+        {
+            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                                    vgSettingConstants.VGFolder,
+                                    vgSettingConstants.WorkHistoryFolder);
+
+            if(!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            var path = Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+
+            if(!File.Exists(path))
+            {
+                using (var stream = File.CreateText(path))
+                {
+                    /*Create new log file based on exists file*/
+                    stream.Write(Properties.Resources.WorkHistory);
+                }
+            }
+
+            File.SetAttributes(path, FileAttributes.ReadOnly | FileAttributes.Encrypted);
         }
     }
 }

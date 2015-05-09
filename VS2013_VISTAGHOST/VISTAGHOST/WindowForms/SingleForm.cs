@@ -18,7 +18,7 @@ namespace Vistaghost.VISTAGHOST
         public AddCommentEventHandler OnSendData;
         bool ChangedContent = false;
         bool MoreOptions = false;
-        ActionType vmode = ActionType.NODE;
+        ActionType vmode = ActionType.NONE;
 
         public SingleForm()
         {
@@ -72,7 +72,7 @@ namespace Vistaghost.VISTAGHOST
                     }
                     break;
 
-                case ActionType.NODE:
+                case ActionType.NONE:
                     break;
                 default:
                     break;

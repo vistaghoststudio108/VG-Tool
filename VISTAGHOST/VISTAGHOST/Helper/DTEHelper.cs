@@ -21,6 +21,7 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         DocumentEvents docEvents;
         SolutionEvents solEvents;
+        ProjectItemsEvents proitemEvents;
         DTEEvents dteEvents;
         FindEvents findEvents;
         CommandEvents findinfilesEvent;
@@ -43,6 +44,11 @@ namespace Vistaghost.VISTAGHOST.Helper
             solEvents = DTE.Events.SolutionEvents;
             solEvents.Opened += solEvents_Opened;
 
+            proitemEvents = DTE.Events.SolutionItemsEvents;
+            proitemEvents.ItemAdded += new _dispProjectItemsEvents_ItemAddedEventHandler(proitemEvents_ItemAdded);
+            proitemEvents.ItemRemoved += new _dispProjectItemsEvents_ItemRemovedEventHandler(proitemEvents_ItemRemoved);
+            proitemEvents.ItemRenamed += new _dispProjectItemsEvents_ItemRenamedEventHandler(proitemEvents_ItemRenamed);
+
             dteEvents = DTE.Events.DTEEvents;
             dteEvents.OnStartupComplete += dteEvents_OnStartupComplete;
             dteEvents.OnBeginShutdown += dteEvents_OnBeginShutdown;
@@ -61,6 +67,21 @@ namespace Vistaghost.VISTAGHOST.Helper
             // Selection event
             selEvent = DTE.Events.SelectionEvents;
             selEvent.OnChange += new _dispSelectionEvents_OnChangeEventHandler(selEvent_OnChange);
+        }
+
+        void proitemEvents_ItemRenamed(ProjectItem ProjectItem, string OldName)
+        {
+            throw new NotImplementedException();
+        }
+
+        void proitemEvents_ItemRemoved(ProjectItem ProjectItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        void proitemEvents_ItemAdded(ProjectItem ProjectItem)
+        {
+            throw new NotImplementedException();
         }
 
         void selEvent_OnChange()

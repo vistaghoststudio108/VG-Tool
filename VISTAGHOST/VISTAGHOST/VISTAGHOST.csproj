@@ -133,6 +133,7 @@
     <Compile Include="Packages\VISTAGHOSTPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Packages\PkgCmdID.cs" />
+    <Compile Include="ToolWindows\BoolVisibilityConventer.cs" />
     <Compile Include="ToolWindows\UCVistaghostWindow.xaml.cs">
       <DependentUpon>UCVistaghostWindow.xaml</DependentUpon>
     </Compile>

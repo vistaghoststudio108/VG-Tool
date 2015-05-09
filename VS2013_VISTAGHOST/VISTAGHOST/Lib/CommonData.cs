@@ -13,7 +13,7 @@ namespace Vistaghost.VISTAGHOST.Lib
         ADD,
         DELETE,
         CHANGE_INFO,
-        NODE
+        NONE
     }
 
     public enum LogFileType
@@ -298,6 +298,7 @@ namespace Vistaghost.VISTAGHOST.Lib
     public class ObjectType
     {
         public string Name { get; set; }
+        public string Path { get; set; }
         public string Prototype { get; set; }
         public string Comment { get; set; }
         public int Line { get; set; }
@@ -320,9 +321,9 @@ namespace Vistaghost.VISTAGHOST.Lib
 
     public enum FileFilter
     {
-        ffSource = 0,
-        ffHeader,
-        ffAll
+        ffSource = 0,   // *.cpp files
+        ffHeader,       // *.h file
+        ffAll           // all files
     }
 
     public class FileContainer

@@ -60,7 +60,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             Dispatcher.Invoke(() =>
                 {
-                    SearchResultArea.AppendText(" --> " + Text + "\n");
+                    SearchResultArea.AppendText(" " + Text + "\n");
                 });
 
             numItem++;
@@ -367,6 +367,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 e.Cancel = true;
                 Logger.LogError(ex);
             }
+
+            _dte.StatusBar.Text = "";
         }
 
         private void BtnStopSearch_Click(object sender, RoutedEventArgs e)

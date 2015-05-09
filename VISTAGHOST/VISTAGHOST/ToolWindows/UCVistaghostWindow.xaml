@@ -2,7 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:gImage="clr-namespace:Vistaghost.VISTAGHOST.VGUserControl"
-    Height="300" Width="300" Margin="-1000,0,0,0">
+    Height="300" Width="300" Margin="0,0,0,0">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -10,16 +10,16 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="0,0,-700,0">
+    <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
-			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
-        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"  TextChanged="SearchResultArea_TextChanged"/>
+        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown" TextChanged="WorkingHistoryArea_TextChanged"
         	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
-        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown" TextChanged="NotesArea_TextChanged"
         	FontSize="12" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
             <StackPanel.Background>
@@ -57,7 +57,7 @@
                 <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements" Click="BtnCopyElement_Click" >
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/CopyHS.png"/>
                 </Button>
-                <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click">
+                <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click" IsEnabled="False">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/StopHS.png"/>
                 </Button>
                 
