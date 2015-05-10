@@ -38,7 +38,7 @@ namespace Vistaghost.VISTAGHOST
             this.dte = dte;
 
             /*Search all functions by default*/
-            searchType = SearchType.AllFunction;
+            searchType = SearchType.Function;
 
             InitializeComponent();
         }
@@ -54,7 +54,7 @@ namespace Vistaghost.VISTAGHOST
                         returnString = "Found " + foundNum + (foundNum > 1 ? " functions" : " function") + " without header";
                     }
                     break;
-                case SearchType.AllFunction:
+                case SearchType.Function:
                     {
                         returnString = "Found " + foundNum + (foundNum > 1 ? " functions" : " function");
                     }
@@ -97,7 +97,7 @@ namespace Vistaghost.VISTAGHOST
         {
             switch (type)
             {
-                case SearchType.AllFunction:
+                case SearchType.Function:
                 case SearchType.NoneHeaderFunction:
                     {
                         dtParamView.Columns[0].HeaderText = "Arguments";
@@ -182,7 +182,7 @@ namespace Vistaghost.VISTAGHOST
             {
                 switch (searchType)
                 {
-                    case SearchType.AllFunction:
+                    case SearchType.Function:
                     case SearchType.NoneHeaderFunction:
                         {
                             /*Get CodeFunction ojbect*/
@@ -191,7 +191,7 @@ namespace Vistaghost.VISTAGHOST
                                 var codeFunc = (CodeFunction)ce;
                                 if (!String.IsNullOrEmpty(codeFunc.Comment))
                                 {
-                                    if (searchType == SearchType.AllFunction)
+                                    if (searchType == SearchType.Function)
                                         Added = true;
                                     else
                                         continue;
@@ -337,7 +337,7 @@ namespace Vistaghost.VISTAGHOST
                 {
                     switch (searchType)
                     {
-                        case SearchType.AllFunction:
+                        case SearchType.Function:
                         case SearchType.NoneHeaderFunction:
                             {
                                 /*detail of selected function*/
@@ -513,7 +513,7 @@ namespace Vistaghost.VISTAGHOST
                 {
                     switch (searchType)
                     {
-                        case SearchType.AllFunction:
+                        case SearchType.Function:
                         case SearchType.NoneHeaderFunction:
                             {
                                 copiedText += objList[row.Index].Prototype + "\n";
@@ -555,7 +555,7 @@ namespace Vistaghost.VISTAGHOST
                 lblStatus.Text = count.ToString(new CultureInfo("en-US"));
                 switch (searchType)
                 {
-                    case SearchType.AllFunction:
+                    case SearchType.Function:
                     case SearchType.NoneHeaderFunction:
                         {
                             lblStatus.Text += " functions are selected";
@@ -604,7 +604,7 @@ namespace Vistaghost.VISTAGHOST
 
                 switch (searchType)
                 {
-                    case SearchType.AllFunction:
+                    case SearchType.Function:
                     case SearchType.NoneHeaderFunction:
                         {
                             /*detail of selected function*/

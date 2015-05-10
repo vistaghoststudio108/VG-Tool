@@ -168,25 +168,31 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             ComboBox combo = (ComboBox)sender;
             switch (combo.SelectedIndex)
             {
-                case 0:// Function search
+                case 0:
                     {
-                        searchType = SearchType.AllFunction;
+                        searchType = SearchType.All;
                     }
                     break;
 
-                case 1:// Class search
+                case 1:// Function search
+                    {
+                        searchType = SearchType.Function;
+                    }
+                    break;
+
+                case 2:// Class search
                     {
                         searchType = SearchType.Class;
                     }
                     break;
 
-                case 2:
+                case 3:
                     {
                         searchType = SearchType.Enumerable;
                     }
                     break;
 
-                case 3:
+                case 4:
                     {
                         searchType = SearchType.Structure;
                     }
@@ -224,7 +230,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             switch (searchType)
             {
-                case SearchType.AllFunction:
+                case SearchType.Function:
                     return "functions";
                 case SearchType.Class:
                     return "class";
@@ -381,7 +387,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             {
                 switch (searchType)
                 {
-                    case SearchType.AllFunction:
+                    case SearchType.Function:
                         {
                             copiedText += item.Prototype + "\n";
                         }

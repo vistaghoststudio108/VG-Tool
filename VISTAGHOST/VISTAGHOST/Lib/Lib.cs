@@ -973,7 +973,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             {
                 switch (sType)
                 {
-                    case SearchType.AllFunction:
+                    case SearchType.Function:
                         {
                             if (line <= ((CodeFunction)codeElement).EndPoint.Line && line >= ((CodeFunction)codeElement).StartPoint.Line)
                                 bValied = true;
@@ -1058,7 +1058,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                             {
                                 switch (sType)
                                 {
-                                    case SearchType.AllFunction:
+                                    case SearchType.Function:
                                         {
                                             var codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
                                             if (codeFunc != null)
@@ -1164,7 +1164,7 @@ namespace Vistaghost.VISTAGHOST.Lib
 
                         switch (sType)
                         {
-                            case SearchType.AllFunction:
+                            case SearchType.Function:
                                 {
                                     var codeFuncs = fcm.CodeElements.OfType<CodeFunction>();
                                     if (codeFuncs.Count() == 0)

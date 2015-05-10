@@ -44,7 +44,7 @@ namespace Vistaghost.VISTAGHOST.Helper
             solEvents = DTE.Events.SolutionEvents;
             solEvents.Opened += solEvents_Opened;
 
-            proitemEvents = DTE.Events.SolutionItemsEvents;
+            proitemEvents = ((EnvDTE80.Events2)DTE.Events).ProjectItemsEvents;
             proitemEvents.ItemAdded += new _dispProjectItemsEvents_ItemAddedEventHandler(proitemEvents_ItemAdded);
             proitemEvents.ItemRemoved += new _dispProjectItemsEvents_ItemRemovedEventHandler(proitemEvents_ItemRemoved);
             proitemEvents.ItemRenamed += new _dispProjectItemsEvents_ItemRenamedEventHandler(proitemEvents_ItemRenamed);
@@ -71,17 +71,17 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void proitemEvents_ItemRenamed(ProjectItem ProjectItem, string OldName)
         {
-            throw new NotImplementedException();
+
         }
 
         void proitemEvents_ItemRemoved(ProjectItem ProjectItem)
         {
-            throw new NotImplementedException();
+
         }
 
         void proitemEvents_ItemAdded(ProjectItem ProjectItem)
         {
-            throw new NotImplementedException();
+
         }
 
         void selEvent_OnChange()

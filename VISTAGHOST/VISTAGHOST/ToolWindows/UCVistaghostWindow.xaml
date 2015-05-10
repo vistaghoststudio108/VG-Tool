@@ -10,7 +10,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="0,0,0,0">
+    <Grid Margin="0,0,-700,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -38,6 +38,7 @@
                 </StackPanel.Background>
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Element type</TextBlock>
                 <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="0" SelectionChanged="Combo_ElementType_SelectionChanged">
+                    <ComboBoxItem Content="All"/>
                     <ComboBoxItem Content="Function"/>
                     <ComboBoxItem Content="Class"/>
                     <ComboBoxItem Content="Enum"/>

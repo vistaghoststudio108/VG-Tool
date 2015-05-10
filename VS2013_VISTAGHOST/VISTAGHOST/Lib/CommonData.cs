@@ -43,13 +43,14 @@ namespace Vistaghost.VISTAGHOST.Lib
     public enum SearchType
     {
         None = -1,
-        AllFunction,
+        Function,
         NoneHeaderFunction,
         Class,
         Enumerable,
         Structure,
         Union,
-        TypeDef
+        TypeDef,
+        All
     }
 
     public enum HeaderStyle
@@ -291,8 +292,9 @@ namespace Vistaghost.VISTAGHOST.Lib
 
     public class Range
     {
-        public int Start { get; set; }
-        public int End { get; set; }
+        public int BeginLine { get; set; }
+        public int EndLine { get; set; }
+        public string FullName { get; set; }
     }
 
     public class ObjectType
@@ -305,7 +307,6 @@ namespace Vistaghost.VISTAGHOST.Lib
         public string Description { get; set; }
         public List<IOType> Parameters { get; set; }
         public int Count { get; set; }
-        public Range FuncRange { get; set; }
 
         public ObjectType()
         {

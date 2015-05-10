@@ -1,7 +1,10 @@
-﻿using System;
+﻿using EnvDTE;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Vistaghost.VISTAGHOST.Lib;
@@ -12,6 +15,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
     {
         static FileManager _instance;
         private string whPath = String.Empty; // work history path
+        private static readonly object fsLock = new object();
         public static FileManager Instance
         {
             get
@@ -21,6 +25,8 @@ namespace Vistaghost.VISTAGHOST.DataModel
             }
         }
 
+        public bool SearchCanceled { get; set; }
+
         public FileManager()
         {
             var dir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -28,6 +34,8 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                              vgSettingConstants.WorkHistoryFolder);
 
             whPath = System.IO.Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+
+            SearchCanceled = false;
         }
 
         public List<FileContainer> SearchFileFromWorkHistory()
@@ -76,15 +84,15 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         {
                             switch (sType)
                             {
-                                case SearchType.AllFunction:
+                                case SearchType.Function:
                                     {
-                                        if(fn.Attribute("type").Value == "function")
+                                        if (fn.Attribute("type").Value == "function")
                                         {
                                             switch (acType)
                                             {
                                                 case ActionType.MODIFY:
                                                     {
-                                                        if(fn.Attribute("action").Value == "mod")
+                                                        if (fn.Attribute("action").Value == "mod")
                                                         {
                                                             var f = new ObjectType();
                                                             f.Name = fn.Element("name").Value;
@@ -139,5 +147,122 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
             return funcList;
         }
+
+        #region Search method
+
+        List<VGCodeElement> GetElementRange(EnvDTE.DTE dte, string path)
+        {
+            Document doc;
+            FileCodeModel fcm;
+            bool bOpen = false;
+            List<VGCodeElement> eRanges = new List<VGCodeElement>();
+
+            if (dte.ItemOperations.IsFileOpen(path, Constants.vsViewKindCode))
+            {
+                doc = dte.Documents.Item(path);
+            }
+            else
+            {
+                doc = dte.ItemOperations.OpenFile(path, Constants.vsViewKindCode).Document;
+                bOpen = true;
+            }
+
+            if (doc == null || doc.ProjectItem == null || doc.ProjectItem.FileCodeModel == null)
+            {
+                return eRanges;
+            }
+
+            fcm = doc.ProjectItem.FileCodeModel;
+            var codeFuncs = fcm.CodeElements.OfType<CodeFunction>();
+            if (codeFuncs.Count() == 0)
+            {
+                return eRanges;
+            }
+
+            foreach (var codeFunc in codeFuncs)
+            {
+                var ce = new VGCodeElement(path,
+                    codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname))),
+                    codeFunc.StartPoint.Line,
+                    codeFunc.EndPoint.Line);
+
+                eRanges.Add(ce);
+            }
+
+            if (bOpen)
+            {
+                bOpen = false;
+               // dte.Documents.Item(path).Close(vsSaveChanges.vsSaveChangesYes);
+            }
+
+            return eRanges;
+        }
+
+        public IEnumerable<VGCodeElement> SearchInFile(DTE dte, string file, string keyword, bool CaseSensitive)
+        {
+            List<VGCodeElement> codeElements = new List<VGCodeElement>();
+            file = Path.GetFullPath(file);
+
+            if (File.Exists(file))
+            {
+                var options = RegexOptions.None;
+                if (!CaseSensitive)
+                    options = RegexOptions.IgnoreCase;
+
+                Regex reg = new Regex(Regex.Escape(keyword), options);
+
+                List<string> blocks = new List<string>();
+                List<string> lines = new List<string>();
+                List<VGCodeElement> ceList = new List<VGCodeElement>();
+
+                ceList = GetElementRange(dte, file);
+                if(ceList.Count == 0)
+                {
+                    yield break;
+                }
+
+                try
+                {
+                    using (StreamReader sr = new StreamReader(file))
+                    {
+                        while (sr.Peek() > 0)
+                        {
+                            lines.Add(sr.ReadLine());
+                        }
+                    }
+                }
+                catch
+                {
+                    yield break;
+                }
+
+                foreach (var r in ceList)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = r.BeginLine - 1; i <= r.EndLine - 1; i++)
+                    {
+                        sb.AppendLine(lines[i]);
+                    }
+
+                    blocks.Add(sb.ToString());
+                }
+
+                for (int i = 0; i < blocks.Count; i++)
+                {
+                    var match = reg.Match(blocks[i]);
+                    if (match.Success)
+                    {
+                        var lm = new VGCodeElement(file, ceList[i].Name, ceList[i].BeginLine, ceList[i].EndLine);
+                        lm.Preview = blocks[i];
+                        yield return lm;
+                    }
+
+                    //if (this.SearchCanceled)
+                    //    yield break;
+                }
+            }
+        }
+
+        #endregion
     }
 }

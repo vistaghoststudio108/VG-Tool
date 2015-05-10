@@ -20,7 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown" PreviewMouseDown="SearchResultArea_PreviewMouseDown"
 			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="SearchResultArea_TextChanged"/>
         <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
         	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="WorkingHistoryArea_TextChanged"/>
@@ -36,7 +36,8 @@
             <Line Y1="2" Y2="20" Width="1" Height="22" Margin="4,0" Stroke="#FFBDBCBC" Fill="#FF4F4A4A" Stretch="Fill" X2="1"/>
             <StackPanel x:Name="ChangedElementPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Element type</TextBlock>
-                <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="0" SelectionChanged="Combo_ElementType_SelectionChanged">
+                <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="1" SelectionChanged="Combo_ElementType_SelectionChanged">
+                    <ComboBoxItem Content="All"/>
                     <ComboBoxItem Content="Function"/>
                     <ComboBoxItem Content="Class"/>
                     <ComboBoxItem Content="Enum"/>

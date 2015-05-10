@@ -51,13 +51,14 @@ namespace Vistaghost.VISTAGHOST.Lib
     public enum SearchType
     {
         None = -1,
-        AllFunction,
+        Function,
         NoneHeaderFunction,
         Class,
         Enumerable,
         Structure,
         Union,
-        TypeDef
+        TypeDef,
+        All
     }
 
     public enum DateFormat
