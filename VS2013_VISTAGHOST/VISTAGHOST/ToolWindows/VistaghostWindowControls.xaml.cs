@@ -74,15 +74,15 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             switch (sType)
             {
                 case 0:
-                    SearchResultArea.Clear();
+                    SearchResultArea.Document.Blocks.Clear();
                     break;
 
                 case 1:
-                    WorkingHistoryArea.Clear();
+                    //WorkingHistoryArea.Clear();
                     break;
 
                 case 2:
-                    NotesArea.Clear();
+                    //NotesArea.Clear();
                     break;
 
                 default:
@@ -327,7 +327,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 return;
             }
 
-            SearchResultArea.Clear();
+            //SearchResultArea.Clear();
             SearchResultArea.AppendText("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"\n");
 
             /*disable some buttons*/
@@ -449,20 +449,20 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         private void SearchResultArea_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SearchResultArea.SelectionStart = SearchResultArea.Text.Length;
-            SearchResultArea.ScrollToEnd();
+            //SearchResultArea.SelectionStart = SearchResultArea.Text.Length;
+            //SearchResultArea.ScrollToEnd();
         }
 
         private void WorkingHistoryArea_TextChanged(object sender, TextChangedEventArgs e)
         {
-            WorkingHistoryArea.SelectionStart = WorkingHistoryArea.Text.Length;
-            WorkingHistoryArea.ScrollToEnd();
+            //WorkingHistoryArea.SelectionStart = WorkingHistoryArea.Text.Length;
+            //WorkingHistoryArea.ScrollToEnd();
         }
 
         private void NotesArea_TextChanged(object sender, TextChangedEventArgs e)
         {
-            NotesArea.SelectionStart = NotesArea.Text.Length;
-            NotesArea.ScrollToEnd();
+            //NotesArea.SelectionStart = NotesArea.Text.Length;
+            //NotesArea.ScrollToEnd();
         }
 
         int GetMousePressedPos()
@@ -472,12 +472,13 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         private void SearchResultArea_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.LeftButton == MouseButtonState.Pressed)
-            {
-                int index = GetMousePressedPos();
-                EditorManager.OpenDocument(Results[index].File);
-                EditorManager.GoTo(Results[index].File, Results[index].BeginLine - 1);
-            }
+            GetMousePressedPos();
+            //if(e.LeftButton == MouseButtonState.Pressed)
+            //{
+            //    int index = GetMousePressedPos();
+            //    EditorManager.OpenDocument(Results[index].File);
+            //    EditorManager.GoTo(Results[index].File, Results[index].BeginLine - 1);
+            //}
         }
     }
 }

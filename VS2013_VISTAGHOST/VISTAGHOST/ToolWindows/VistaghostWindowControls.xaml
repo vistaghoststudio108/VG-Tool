@@ -20,12 +20,22 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown" PreviewMouseDown="SearchResultArea_PreviewMouseDown"
-			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="SearchResultArea_TextChanged"/>
-        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
-        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="WorkingHistoryArea_TextChanged"/>
-        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
-        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="NotesArea_TextChanged"/>
+        <RichTextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown" PreviewMouseDown="SearchResultArea_PreviewMouseDown"
+			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="SearchResultArea_TextChanged">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+        <RichTextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="WorkingHistoryArea_TextChanged">
+            <FlowDocument LineHeight="0.01"/>
+        </RichTextBox>
+        <RichTextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
+        	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontFamily="Consolas" TextChanged="NotesArea_TextChanged">
+            <FlowDocument LineHeight="0.01"/>
+        </RichTextBox>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Text="Show output from:"/>
             <ComboBox x:Name="Combo_SearchType" Width="130" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectionChanged="Combo_SearchType_SelectionChanged">

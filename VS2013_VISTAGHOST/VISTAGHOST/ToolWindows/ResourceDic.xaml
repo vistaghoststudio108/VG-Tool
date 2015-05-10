@@ -220,7 +220,7 @@
         <Setter Property="Background" Value="Transparent"/>
     </Style>
     
-    <Style x:Key="VGTextBoxTemplate2" TargetType="{x:Type TextBox }">
+    <Style x:Key="VGTextBoxTemplate2" TargetType="{x:Type RichTextBox }">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static cur:Controls.ControlForegroundKey}}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="1"/>
@@ -228,7 +228,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
+                <ControlTemplate TargetType="{x:Type RichTextBox}">
                     <ScrollViewer Name="PART_ContentHost"/>
                 </ControlTemplate>
             </Setter.Value>

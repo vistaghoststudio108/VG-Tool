@@ -62,15 +62,15 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             switch (wnd.Combo_SearchType.SelectedIndex)
             {
                 case 0:
-                    wnd.SearchResultArea.Clear();
+                    wnd.SearchResultArea.Document.Blocks.Clear();
                     break;
 
                 case 1:
-                    wnd.WorkingHistoryArea.Clear();
+                   // wnd.WorkingHistoryArea.Clear();
                     break;
 
                 case 2:
-                    wnd.NotesArea.Clear();
+                    //wnd.NotesArea.Clear();
                     break;
 
                 default:
