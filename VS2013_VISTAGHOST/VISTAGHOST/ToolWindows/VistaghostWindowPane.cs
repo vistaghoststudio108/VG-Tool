@@ -66,11 +66,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     break;
 
                 case 1:
-                   // wnd.WorkingHistoryArea.Clear();
+                    wnd.WorkingHistoryArea.Document.Blocks.Clear();
                     break;
 
                 case 2:
-                    //wnd.NotesArea.Clear();
+                    wnd.NotesArea.Document.Blocks.Clear();
                     break;
 
                 default:

@@ -257,8 +257,11 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         yield return lm;
                     }
 
-                    //if (this.SearchCanceled)
-                    //    yield break;
+                    if (this.SearchCanceled)
+                    {
+                        this.SearchCanceled = false;
+                        yield break;
+                    }
                 }
             }
         }

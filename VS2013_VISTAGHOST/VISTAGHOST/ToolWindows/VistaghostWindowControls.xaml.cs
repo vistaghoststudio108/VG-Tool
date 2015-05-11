@@ -39,6 +39,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         List<VGCodeElement> Results = new List<VGCodeElement>();
         List<FileContainer> FileList = new List<FileContainer>();
         int totalFileSearched = 0;
+        int preLineNumber = 0;
 
         public VistaghostWindowControls()
         {
@@ -47,6 +48,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             Combo_SearchType.SelectedIndex = 0;
             Combo_ElementType.SelectedIndex = 0;
             Combo_BaseSource.SelectedIndex = 1;
+
+            //SearchResultArea.Document.Blocks.Clear();
 
             bw = new BackgroundWorker();
             bw.WorkerSupportsCancellation = true;
@@ -62,7 +65,17 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             Dispatcher.Invoke(() =>
                 {
-                    SearchResultArea.AppendText(" " + Text + "\n");
+                    Paragraph pLine = new Paragraph();
+                    pLine.Inlines.Add(" " + Text);
+
+                    Block emptyBlock = SearchResultArea.Document.Blocks.ElementAt(SearchResultArea.Document.Blocks.Count - 1);
+                    SearchResultArea.Document.Blocks.InsertBefore(emptyBlock, pLine);
+
+                    if (GetCurrentLineNumber() == SearchResultArea.Document.Blocks.Count - 1)
+                    {
+                        SearchResultArea.ScrollToEnd();
+                    }
+
                 });
 
             numItem++;
@@ -78,11 +91,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     break;
 
                 case 1:
-                    //WorkingHistoryArea.Clear();
+                    WorkingHistoryArea.Document.Blocks.Clear();
                     break;
 
                 case 2:
-                    //NotesArea.Clear();
+                    NotesArea.Document.Blocks.Clear();
                     break;
 
                 default:
@@ -315,7 +328,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             if (!IsKeyWordValid(Combo_Keyword.Text))
             {
-                SearchResultArea.AppendText("Enter key word and try again.\n");
+                AddString("Enter key word and try again");
                 return;
             }
 
@@ -323,17 +336,19 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             if (!CheckSource(out message, out FileList, out _keyWord))
             {
-                SearchResultArea.AppendText(message + "\n");
+                AddString(message);
                 return;
             }
 
-            //SearchResultArea.Clear();
-            SearchResultArea.AppendText("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"\n");
+            SearchResultArea.Document.Blocks.Clear();
+            SearchResultArea.Document.Blocks.Add(new Paragraph(new Run("")));
+            AddString("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"");
 
             /*disable some buttons*/
             BtnSearchElement.IsEnabled = false;
             BtnCopyElement.IsEnabled = false;
             BtnStopSearch.IsEnabled = true;
+            BtnClearAll.IsEnabled = false;
 
             Results.Clear();
             totalFileSearched = 0;
@@ -346,16 +361,17 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             if (e.Cancelled)
             {
-                SearchResultArea.AppendText("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled\n");
+                AddString("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled");
             }
             else
             {
-                SearchResultArea.AppendText(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "\n");
+                AddString(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched);
             }
 
             /*Enable some buttons*/
             BtnSearchElement.IsEnabled = true;
             BtnCopyElement.IsEnabled = true;
+            BtnClearAll.IsEnabled = true;
             BtnStopSearch.IsEnabled = false;
 
             // Finish searching
@@ -382,7 +398,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     if (IsCanceled)
                         break;
                 }
-                //FileManager.Instance.SearchInFile(_dte, new VGFile(this.FileList[0].FileName), "ThuanPV3", true);
+
                 //Results = vgOperations.GetFunctionProtFromHistory(_dte, this.FileList, searchType, ref Instance, out totalFileSearched, ref IsCanceled);
 
                 if (IsCanceled && totalFileSearched != this.FileList.Count)
@@ -410,8 +426,9 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
                     BtnStopSearch.IsEnabled = false;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.LogError(ex);
                 }
 
             }
@@ -456,29 +473,69 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         private void WorkingHistoryArea_TextChanged(object sender, TextChangedEventArgs e)
         {
             //WorkingHistoryArea.SelectionStart = WorkingHistoryArea.Text.Length;
-            //WorkingHistoryArea.ScrollToEnd();
+            WorkingHistoryArea.ScrollToEnd();
         }
 
         private void NotesArea_TextChanged(object sender, TextChangedEventArgs e)
         {
             //NotesArea.SelectionStart = NotesArea.Text.Length;
-            //NotesArea.ScrollToEnd();
+            NotesArea.ScrollToEnd();
         }
 
-        int GetMousePressedPos()
+        void RefreshTextView()
         {
-            return 0;
+            if (SearchResultArea.Document == null)
+                return;
+
+            TextRange documentRange = new TextRange(SearchResultArea.Document.ContentStart, SearchResultArea.Document.ContentEnd);
+            documentRange.ClearAllProperties();
+        }
+
+        void HighlightLine()
+        {
+
+        }
+
+        int GetCurrentLineNumber()
+        {
+            int lineMoved, currentLineNumber;
+            SearchResultArea.CaretPosition.GetLineStartPosition(-int.MaxValue, out lineMoved);
+
+            currentLineNumber = -lineMoved;
+
+            return currentLineNumber;
         }
 
         private void SearchResultArea_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            GetMousePressedPos();
-            //if(e.LeftButton == MouseButtonState.Pressed)
+            //GetMousePressedPos();
+            //if (e.LeftButton == MouseButtonState.Pressed)
             //{
             //    int index = GetMousePressedPos();
             //    EditorManager.OpenDocument(Results[index].File);
             //    EditorManager.GoTo(Results[index].File, Results[index].BeginLine - 1);
             //}
+        }
+
+        private void SearchResultArea_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (IsSearching || SearchResultArea.Selection.Text.Length != 0)
+            {
+                return;
+            }
+
+            int currentLineNumber = GetCurrentLineNumber();
+
+            if (currentLineNumber != preLineNumber && currentLineNumber != 0 && currentLineNumber != SearchResultArea.Document.Blocks.Count - 2)
+            {
+                preLineNumber = currentLineNumber;
+                RefreshTextView();
+                TextRange curLineRange = new TextRange(SearchResultArea.CaretPosition.GetLineStartPosition(0), SearchResultArea.CaretPosition.GetLineStartPosition(1) ?? SearchResultArea.CaretPosition.DocumentEnd);
+                curLineRange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Color.FromRgb(48, 129, 212)));
+
+                EditorManager.OpenDocument(Results[currentLineNumber - 1].File);
+                EditorManager.GoTo(Results[currentLineNumber - 1].File, Results[currentLineNumber - 1].BeginLine - 1);
+            }
         }
     }
 }

@@ -33,8 +33,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 throw new NotSupportedException(Properties.Resources.CanNotCreateWindow);
             }
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-            if (windowFrame.IsVisible() == VSConstants.S_FALSE)
-                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }
     }
 }
