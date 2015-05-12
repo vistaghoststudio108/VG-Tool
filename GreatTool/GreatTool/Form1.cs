@@ -21,6 +21,10 @@ namespace GreatTool
         int curIndex2 = -1;
         bool IsDraw = false;
         int curComboIndex = -1;
+        int preComboIndex = -1;
+
+        int nDotSize = 2;
+
         Font newFont;
         bool Available = true;
         bool isDotDisplay = false;
@@ -151,11 +155,13 @@ namespace GreatTool
                     {
                         var line = rd.ReadLine();
                         var pos = line.IndexOf(']');
-                        string type = line.Substring(0, pos + 1);
+                        //string type = line.Substring(0, pos + 1);
                         line = line.Substring(pos + 1);
-                        cbInputPos.Items.Add(type);
-                        readList.Add(DelWhiteSpace(line));
-                        GetListPosFromString(DelWhiteSpace(line));
+                        line = DelWhiteSpace(line);
+
+                        //cbInputPos.Items.Add(type);
+                        readList.Add(line);
+                        GetListPosFromString(line);
                     }
                 }
             }
@@ -166,25 +172,30 @@ namespace GreatTool
 
         void LoadOldBmp()
         {
-            DirectoryInfo dir = new DirectoryInfo(txtOldBmpSource.Text);
-            FileInfo[] bmpFiles = dir.GetFiles("*.bmp");
-
-            foreach (var bmp in bmpFiles)
+            if (Directory.Exists(txtOldBmpSource.Text))
             {
-                dataGridView1.Rows.Add(bmp.Name);
-                fullName1.Add(bmp.FullName);
+                DirectoryInfo dir = new DirectoryInfo(txtOldBmpSource.Text);
+                FileInfo[] bmpFiles = dir.GetFiles("*.bmp");
+
+                foreach (var bmp in bmpFiles)
+                {
+                    dataGridView1.Rows.Add(bmp.Name);
+                    fullName1.Add(bmp.FullName);
+                }
             }
         }
 
         void LoadNewBmp()
         {
-            DirectoryInfo dir = new DirectoryInfo(txtNewBmpSource.Text);
-            FileInfo[] bmpFiles = dir.GetFiles("*.bmp");
-
-            foreach (var bmp in bmpFiles)
+            if (Directory.Exists(txtNewBmpSource.Text))
             {
-                dataGridView2.Rows.Add(bmp.Name);
-                fullName2.Add(bmp.FullName);
+                DirectoryInfo dir = new DirectoryInfo(txtNewBmpSource.Text);
+                FileInfo[] bmpFiles = dir.GetFiles("*.bmp");
+
+                foreach (var bmp in bmpFiles)
+                {
+                    fullName2.Add(bmp.FullName);
+                }
             }
         }
 
@@ -202,7 +213,7 @@ namespace GreatTool
             lblImageSize2.Text = "Image2 Size : ";
             fullName1.Clear();
             fullName2.Clear();
-            cbInputPos.Items.Clear();
+            //cbInputPos.Items.Clear();
             curIndex1 = curIndex2 = -1;
             txtResult.Text = String.Empty;
 
@@ -217,7 +228,7 @@ namespace GreatTool
             checkHide.CheckedChanged -= checkHide_CheckedChanged;
             checkHide.Checked = false;
             dataGridView1_SelectionChanged(sender, e);
-            dataGridView2_SelectionChanged(sender, e);
+            //dataGridView2_SelectionChanged(sender, e);
 
             checkHide.CheckedChanged += checkHide_CheckedChanged;
         }
@@ -245,7 +256,7 @@ namespace GreatTool
         /// {100,100}
         /// </summary>
         /// <returns></returns>
-        Point GetPos(int index)
+        Point GetPosFromIndex(int index)
         {
             var couple = posList[index].Split(new char[] { ',' });
 
@@ -277,7 +288,16 @@ namespace GreatTool
                 if (pointList[curComboIndex][i] != Point.Empty)
                 {
                     if (isDotDisplay)
-                        e.Graphics.FillRectangle(new SolidBrush(curColor), pointList[curComboIndex][i].X - 1, pointList[curComboIndex][i].Y - 1, 2, 2);
+                    {
+                        if (curIndex2 == i)
+                        {
+                            nDotSize = 4;
+                        }
+                        else
+                            nDotSize = 2;
+
+                        e.Graphics.FillRectangle(new SolidBrush(curColor), pointList[curComboIndex][i].X - nDotSize / 2, pointList[curComboIndex][i].Y - nDotSize / 2, nDotSize, nDotSize);
+                    }
                     else
                     {
                         int sw = (int)e.Graphics.MeasureString(segid[i], newFont).Width;
@@ -325,15 +345,26 @@ namespace GreatTool
             if (!Available)
                 return;
 
+            if(dataGridView1.SelectedRows.Count == 0)
+            {
+                pictureBox1.Image = pictureBox2.Image = null;
+                curIndex1 = -1;
+                return;
+            }
+
             int index = dataGridView1.SelectedRows[0].Index;
             if (index != curIndex1)
             {
                 curIndex1 = index;
-                dataGridView2.Rows[curIndex1].Selected = true;
-                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView2.FirstDisplayedScrollingRowIndex;
+                //dataGridView2.Rows[curIndex1].Selected = true;
+                //dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView2.FirstDisplayedScrollingRowIndex;
                 Bitmap bmp = new Bitmap(fullName1[index]);
                 lblImageSize1.Text = "Image Size : " + bmp.Size.Width + "x" + bmp.Size.Height;
                 pictureBox1.Image = bmp;
+
+                bmp = new Bitmap(fullName2[index]);
+                lblImageSize2.Text = "Image Size : " + bmp.Size.Width + "x" + bmp.Size.Height;
+                pictureBox2.Image = bmp;
                 maxNum = 0;
                 IsDraw = false;
             }
@@ -373,24 +404,29 @@ namespace GreatTool
             if (!Available)
                 return;
 
+            if(dataGridView2.SelectedRows.Count == 0)
+            {
+                curIndex2 = -1;
+                nDotSize = 2;
+                pictureBox1.Refresh();
+                return;
+            }
+
             int index = dataGridView2.SelectedRows[0].Index;
             if (index != curIndex2)
             {
                 curIndex2 = index;
-                dataGridView1.Rows[curIndex2].Selected = true;
-                dataGridView2.FirstDisplayedScrollingRowIndex = dataGridView1.FirstDisplayedScrollingRowIndex;
-                Bitmap bmp = new Bitmap(fullName2[index]);
-                lblImageSize2.Text = "Image Size : " + bmp.Size.Width + "x" + bmp.Size.Height;
-                pictureBox2.Image = bmp;
-                maxNum = 0;
-                IsDraw = false;
+                pictureBox1.Refresh();
+                //dataGridView1.Rows[curIndex2].Selected = true;
+                //dataGridView2.FirstDisplayedScrollingRowIndex = dataGridView1.FirstDisplayedScrollingRowIndex;
+
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             checkHide.CheckedChanged += checkHide_CheckedChanged;
-            //dataGridView1.Scroll += (s, ev) => dataGridView1.VerticalScrollBar.Value = dataGridView2.VerticalScrollBar.Value;
+            dataGridView2.CellValueChanged +=dataGridView2_CellValueChanged;
         }
 
         int GetIndex(string idstr)
@@ -454,7 +490,18 @@ namespace GreatTool
         private void cbInputPos_SelectedIndexChanged(object sender, EventArgs e)
         {
             curComboIndex = cbInputPos.SelectedIndex;
-            txtResult.Text = readList[curComboIndex];
+            if (curComboIndex != preComboIndex)
+            {
+                preComboIndex = curComboIndex;
+                if (pointList.Count == 0 || curComboIndex > pointList.Count - 1)
+                    return;
+
+                //txtResult.Text = readList[curComboIndex];
+                foreach (var lPos in pointList[curComboIndex])
+                {
+                    dataGridView2.Rows.Add(lPos.X.ToString(), lPos.Y.ToString());
+                }
+            }
         }
 
         private void label1_MouseClick(object sender, MouseEventArgs e)
@@ -471,6 +518,52 @@ namespace GreatTool
         {
             IsDraw = !checkHide.Checked;
             pictureBox1.Refresh();
+        }
+
+        private void checkStretch_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkStretch.Checked)
+            {
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else
+            {
+                pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+                pictureBox2.SizeMode = PictureBoxSizeMode.Normal;
+            }
+        }
+
+        private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                txtResult.Text = String.Empty;
+                try
+                {
+                    var c1 = (string)dataGridView2.Rows[e.RowIndex].Cells[0].Value;
+                    var c2 = (string)dataGridView2.Rows[e.RowIndex].Cells[1].Value;
+                    int nx = int.Parse(c1);
+                    int ny = int.Parse(c2);
+
+                    pointList[curComboIndex][e.RowIndex] = new Point(nx, ny);
+
+                    pictureBox1.Refresh();
+                }
+                catch
+                {
+                    dataGridView2.CellValueChanged -= dataGridView2_CellValueChanged;
+                    dataGridView2.Rows[e.RowIndex].Cells[0].Value = pointList[curComboIndex][e.RowIndex].X.ToString();
+                    dataGridView2.Rows[e.RowIndex].Cells[1].Value = pointList[curComboIndex][e.RowIndex].Y.ToString();
+                    dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
+                    return;
+                }
+
+                foreach (DataGridViewRow row in dataGridView2.Rows)
+                {
+                    txtResult.Text += "{" + (string)row.Cells[0].Value + "," + (string)row.Cells[1].Value + "}, ";
+                }
+            }
         }
     }
 }

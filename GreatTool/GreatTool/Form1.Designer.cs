@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtOldBmpSource = new System.Windows.Forms.TextBox();
             this.btnBrowseOldBmpSource = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -52,24 +53,23 @@
             this.lblImageNum2 = new System.Windows.Forms.Label();
             this.lblMousePos2 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colXPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colYPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtNewBmpSource = new System.Windows.Forms.TextBox();
             this.btnBrowseNewBmpSource = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnInvert = new System.Windows.Forms.Button();
             this.txtInvertResult = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Segment16 = new System.Windows.Forms.RadioButton();
-            this.Segment17 = new System.Windows.Forms.RadioButton();
             this.checkDot = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.checkHide = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.checkStretch = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtOldBmpSource
@@ -93,11 +93,12 @@
             // 
             // btnLoadBMP
             // 
-            this.btnLoadBMP.Location = new System.Drawing.Point(14, 125);
+            this.btnLoadBMP.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnLoadBMP.Location = new System.Drawing.Point(654, 21);
             this.btnLoadBMP.Name = "btnLoadBMP";
-            this.btnLoadBMP.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadBMP.Size = new System.Drawing.Size(134, 71);
             this.btnLoadBMP.TabIndex = 3;
-            this.btnLoadBMP.Text = "Load Bmp";
+            this.btnLoadBMP.Text = "Load Image";
             this.btnLoadBMP.UseVisualStyleBackColor = true;
             this.btnLoadBMP.Click += new System.EventHandler(this.btnLoadBMP_Click);
             // 
@@ -125,11 +126,12 @@
             // lblImageNum1
             // 
             this.lblImageNum1.AutoSize = true;
-            this.lblImageNum1.Location = new System.Drawing.Point(425, 147);
+            this.lblImageNum1.Location = new System.Drawing.Point(751, 107);
             this.lblImageNum1.Name = "lblImageNum1";
             this.lblImageNum1.Size = new System.Drawing.Size(76, 15);
             this.lblImageNum1.TabIndex = 8;
             this.lblImageNum1.Text = "Image Num :";
+            this.lblImageNum1.Visible = false;
             // 
             // btnDrawText
             // 
@@ -137,7 +139,7 @@
             this.btnDrawText.Name = "btnDrawText";
             this.btnDrawText.Size = new System.Drawing.Size(75, 24);
             this.btnDrawText.TabIndex = 9;
-            this.btnDrawText.Text = "Draw ID";
+            this.btnDrawText.Text = "Draw Text";
             this.btnDrawText.UseVisualStyleBackColor = true;
             this.btnDrawText.Click += new System.EventHandler(this.btnDrawText_Click);
             // 
@@ -185,7 +187,7 @@
             // lblMousePos1
             // 
             this.lblMousePos1.AutoSize = true;
-            this.lblMousePos1.Location = new System.Drawing.Point(306, 424);
+            this.lblMousePos1.Location = new System.Drawing.Point(431, 147);
             this.lblMousePos1.Name = "lblMousePos1";
             this.lblMousePos1.Size = new System.Drawing.Size(71, 15);
             this.lblMousePos1.TabIndex = 8;
@@ -203,7 +205,9 @@
             // 
             this.cbInputPos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbInputPos.FormattingEnabled = true;
-            this.cbInputPos.Location = new System.Drawing.Point(107, 125);
+            this.cbInputPos.Items.AddRange(new object[] {
+            "ALL"});
+            this.cbInputPos.Location = new System.Drawing.Point(87, 124);
             this.cbInputPos.Name = "cbInputPos";
             this.cbInputPos.Size = new System.Drawing.Size(123, 23);
             this.cbInputPos.TabIndex = 13;
@@ -263,16 +267,17 @@
             // lblImageNum2
             // 
             this.lblImageNum2.AutoSize = true;
-            this.lblImageNum2.Location = new System.Drawing.Point(687, 147);
+            this.lblImageNum2.Location = new System.Drawing.Point(751, 124);
             this.lblImageNum2.Name = "lblImageNum2";
             this.lblImageNum2.Size = new System.Drawing.Size(76, 15);
             this.lblImageNum2.TabIndex = 8;
             this.lblImageNum2.Text = "Image Num :";
+            this.lblImageNum2.Visible = false;
             // 
             // lblMousePos2
             // 
             this.lblMousePos2.AutoSize = true;
-            this.lblMousePos2.Location = new System.Drawing.Point(568, 424);
+            this.lblMousePos2.Location = new System.Drawing.Point(693, 147);
             this.lblMousePos2.Name = "lblMousePos2";
             this.lblMousePos2.Size = new System.Drawing.Size(71, 15);
             this.lblMousePos2.TabIndex = 8;
@@ -290,11 +295,19 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.ColumnHeadersVisible = false;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1});
+            this.colXPos,
+            this.colYPos});
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView2.Location = new System.Drawing.Point(162, 165);
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -302,12 +315,21 @@
             this.dataGridView2.TabIndex = 14;
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
             // 
-            // dataGridViewTextBoxColumn1
+            // colXPos
             // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Column1";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.colXPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colXPos.HeaderText = "Column1";
+            this.colXPos.Name = "colXPos";
+            this.colXPos.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colXPos.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colYPos
+            // 
+            this.colYPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colYPos.HeaderText = "Column1";
+            this.colYPos.Name = "colYPos";
+            this.colYPos.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colYPos.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // txtNewBmpSource
             // 
@@ -355,40 +377,6 @@
             this.txtInvertResult.Size = new System.Drawing.Size(811, 23);
             this.txtInvertResult.TabIndex = 12;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.Segment17);
-            this.groupBox1.Controls.Add(this.Segment16);
-            this.groupBox1.Location = new System.Drawing.Point(627, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(199, 86);
-            this.groupBox1.TabIndex = 16;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Segment Type";
-            // 
-            // Segment16
-            // 
-            this.Segment16.AutoSize = true;
-            this.Segment16.Checked = true;
-            this.Segment16.Location = new System.Drawing.Point(22, 22);
-            this.Segment16.Name = "Segment16";
-            this.Segment16.Size = new System.Drawing.Size(87, 19);
-            this.Segment16.TabIndex = 0;
-            this.Segment16.TabStop = true;
-            this.Segment16.Text = "16 Segment";
-            this.Segment16.UseVisualStyleBackColor = true;
-            this.Segment16.CheckedChanged += new System.EventHandler(this.Segment16_CheckedChanged);
-            // 
-            // Segment17
-            // 
-            this.Segment17.AutoSize = true;
-            this.Segment17.Location = new System.Drawing.Point(22, 47);
-            this.Segment17.Name = "Segment17";
-            this.Segment17.Size = new System.Drawing.Size(87, 19);
-            this.Segment17.TabIndex = 0;
-            this.Segment17.Text = "17 Segment";
-            this.Segment17.UseVisualStyleBackColor = true;
-            // 
             // checkDot
             // 
             this.checkDot.AutoSize = true;
@@ -404,7 +392,7 @@
             // 
             this.label1.BackColor = System.Drawing.Color.Red;
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.Location = new System.Drawing.Point(262, 432);
+            this.label1.Location = new System.Drawing.Point(232, 432);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 15);
             this.label1.TabIndex = 0;
@@ -413,22 +401,43 @@
             // checkHide
             // 
             this.checkHide.AutoSize = true;
-            this.checkHide.Location = new System.Drawing.Point(172, 431);
+            this.checkHide.Location = new System.Drawing.Point(173, 431);
             this.checkHide.Name = "checkHide";
             this.checkHide.Size = new System.Drawing.Size(51, 19);
             this.checkHide.TabIndex = 17;
             this.checkHide.Text = "Hide";
             this.checkHide.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 128);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(69, 15);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Image Type";
+            // 
+            // checkStretch
+            // 
+            this.checkStretch.AutoSize = true;
+            this.checkStretch.Location = new System.Drawing.Point(309, 431);
+            this.checkStretch.Name = "checkStretch";
+            this.checkStretch.Size = new System.Drawing.Size(63, 19);
+            this.checkStretch.TabIndex = 19;
+            this.checkStretch.Text = "Stretch";
+            this.checkStretch.UseVisualStyleBackColor = true;
+            this.checkStretch.CheckedChanged += new System.EventHandler(this.checkStretch_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 571);
+            this.Controls.Add(this.checkStretch);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkHide);
             this.Controls.Add(this.checkDot);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnInvert);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
@@ -463,8 +472,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -496,19 +503,19 @@
         private System.Windows.Forms.Label lblImageNum2;
         private System.Windows.Forms.Label lblMousePos2;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.TextBox txtNewBmpSource;
         private System.Windows.Forms.Button btnBrowseNewBmpSource;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnInvert;
         private System.Windows.Forms.TextBox txtInvertResult;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton Segment17;
-        private System.Windows.Forms.RadioButton Segment16;
         private System.Windows.Forms.CheckBox checkDot;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.CheckBox checkHide;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colXPos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colYPos;
+        private System.Windows.Forms.CheckBox checkStretch;
     }
 }
 
