@@ -26,7 +26,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\Desktop\Amazing Tool\</OutputPath>
+    <OutputPath>C:\Users\thuanpv3\Desktop\Amazing Tool\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

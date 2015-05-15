@@ -206,7 +206,14 @@
             this.cbInputPos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbInputPos.FormattingEnabled = true;
             this.cbInputPos.Items.AddRange(new object[] {
-            "ALL"});
+            "ALL",
+            "PLAX",
+            "PSPM",
+            "PSMV",
+            "PSAP",
+            "A4CH",
+            "A2CH",
+            "ALAX"});
             this.cbInputPos.Location = new System.Drawing.Point(87, 124);
             this.cbInputPos.Name = "cbInputPos";
             this.cbInputPos.Size = new System.Drawing.Size(123, 23);

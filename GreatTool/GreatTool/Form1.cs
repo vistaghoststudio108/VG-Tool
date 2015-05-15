@@ -213,7 +213,7 @@ namespace GreatTool
             lblImageSize2.Text = "Image2 Size : ";
             fullName1.Clear();
             fullName2.Clear();
-            //cbInputPos.Items.Clear();
+            cbInputPos.SelectedIndex = -1;
             curIndex1 = curIndex2 = -1;
             txtResult.Text = String.Empty;
 
@@ -490,11 +490,16 @@ namespace GreatTool
         private void cbInputPos_SelectedIndexChanged(object sender, EventArgs e)
         {
             curComboIndex = cbInputPos.SelectedIndex;
+            if (curComboIndex == -1)
+                return;
+
             if (curComboIndex != preComboIndex)
             {
                 preComboIndex = curComboIndex;
                 if (pointList.Count == 0 || curComboIndex > pointList.Count - 1)
                     return;
+
+                dataGridView2.Rows.Clear();
 
                 //txtResult.Text = readList[curComboIndex];
                 foreach (var lPos in pointList[curComboIndex])

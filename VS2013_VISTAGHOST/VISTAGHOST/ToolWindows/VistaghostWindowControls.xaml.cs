@@ -35,7 +35,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         public VistaghostWindowControls Instance;
         private int numItem = 1;
         bool IsSearching = false;
-        //List<ObjectType> Results = new List<ObjectType>();
         List<VGCodeElement> Results = new List<VGCodeElement>();
         List<FileContainer> FileList = new List<FileContainer>();
         int totalFileSearched = 0;
@@ -49,7 +48,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             Combo_ElementType.SelectedIndex = 0;
             Combo_BaseSource.SelectedIndex = 1;
 
-            //SearchResultArea.Document.Blocks.Clear();
+            SearchResultArea.Document.Blocks.Clear();
 
             bw = new BackgroundWorker();
             bw.WorkerSupportsCancellation = true;
@@ -180,31 +179,25 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             ComboBox combo = (ComboBox)sender;
             switch (combo.SelectedIndex)
             {
-                case 0:
-                    {
-                        searchType = SearchType.All;
-                    }
-                    break;
-
-                case 1:// Function search
+                case 0:// Function search
                     {
                         searchType = SearchType.Function;
                     }
                     break;
 
-                case 2:// Class search
+                case 1:// Class search
                     {
                         searchType = SearchType.Class;
                     }
                     break;
 
-                case 3:
+                case 2:
                     {
                         searchType = SearchType.Enumerable;
                     }
                     break;
 
-                case 4:
+                case 3:
                     {
                         searchType = SearchType.Structure;
                     }
@@ -219,16 +212,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             switch (searchType)
             {
-                case SearchType.Function:
-                    return "functions";
-                case SearchType.Class:
-                    return "class";
-                case SearchType.Enumerable:
-                    return "enums";
-                case SearchType.Structure:
-                    return "structs";
-                default:
-                    return String.Empty;
+                case SearchType.Function: return "functions";
+                case SearchType.Class: return "class";
+                case SearchType.Enumerable: return "enums";
+                case SearchType.Structure: return "structs";
+                default: return String.Empty;
             }
         }
 
@@ -388,7 +376,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 {
                     foreach (VGCodeElement ce in FileManager.Instance.SearchInFile(_dte, file.FileName, vgSetting.Instance.FindWhat, true))
                     {
-                        AddString(ce.Name);
+                        AddString(" " + ce.Name);
                         Results.Add(ce);
                     }
 
@@ -473,13 +461,13 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         private void WorkingHistoryArea_TextChanged(object sender, TextChangedEventArgs e)
         {
             //WorkingHistoryArea.SelectionStart = WorkingHistoryArea.Text.Length;
-            WorkingHistoryArea.ScrollToEnd();
+            //WorkingHistoryArea.ScrollToEnd();
         }
 
         private void NotesArea_TextChanged(object sender, TextChangedEventArgs e)
         {
             //NotesArea.SelectionStart = NotesArea.Text.Length;
-            NotesArea.ScrollToEnd();
+            //NotesArea.ScrollToEnd();
         }
 
         void RefreshTextView()
@@ -526,15 +514,25 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             int currentLineNumber = GetCurrentLineNumber();
 
-            if (currentLineNumber != preLineNumber && currentLineNumber != 0 && currentLineNumber != SearchResultArea.Document.Blocks.Count - 2)
+            if (currentLineNumber != preLineNumber && currentLineNumber != 0 &&
+                currentLineNumber != SearchResultArea.Document.Blocks.Count - 1 &&
+                currentLineNumber != SearchResultArea.Document.Blocks.Count - 2)
             {
                 preLineNumber = currentLineNumber;
-                RefreshTextView();
-                TextRange curLineRange = new TextRange(SearchResultArea.CaretPosition.GetLineStartPosition(0), SearchResultArea.CaretPosition.GetLineStartPosition(1) ?? SearchResultArea.CaretPosition.DocumentEnd);
-                curLineRange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Color.FromRgb(48, 129, 212)));
 
-                EditorManager.OpenDocument(Results[currentLineNumber - 1].File);
-                EditorManager.GoTo(Results[currentLineNumber - 1].File, Results[currentLineNumber - 1].BeginLine - 1);
+                try
+                {
+                    RefreshTextView();
+                    TextRange curLineRange = new TextRange(SearchResultArea.CaretPosition.GetLineStartPosition(0), SearchResultArea.CaretPosition.GetLineStartPosition(1) ?? SearchResultArea.CaretPosition.DocumentEnd);
+                    curLineRange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Color.FromRgb(48, 129, 212)));
+
+                    //EditorManager.OpenDocument(Results[currentLineNumber - 1].File);
+                    EditorManager.GoTo(Results[currentLineNumber - 1].File, Results[currentLineNumber - 1].BeginLine - 1);
+                }
+                catch
+                {
+
+                }
             }
         }
     }
