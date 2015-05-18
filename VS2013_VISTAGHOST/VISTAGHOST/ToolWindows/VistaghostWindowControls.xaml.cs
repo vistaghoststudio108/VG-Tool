@@ -65,7 +65,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             Dispatcher.Invoke(() =>
                 {
                     Paragraph pLine = new Paragraph();
-                    pLine.Inlines.Add(" " + Text);
+                    pLine.Inlines.Add(Text);
 
                     Block emptyBlock = SearchResultArea.Document.Blocks.ElementAt(SearchResultArea.Document.Blocks.Count - 1);
                     SearchResultArea.Document.Blocks.InsertBefore(emptyBlock, pLine);
@@ -166,40 +166,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 case 2:
                     {
                         Combo_Keyword.IsEnabled = false;
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void Combo_ElementType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox combo = (ComboBox)sender;
-            switch (combo.SelectedIndex)
-            {
-                case 0:// Function search
-                    {
-                        searchType = SearchType.Function;
-                    }
-                    break;
-
-                case 1:// Class search
-                    {
-                        searchType = SearchType.Class;
-                    }
-                    break;
-
-                case 2:
-                    {
-                        searchType = SearchType.Enumerable;
-                    }
-                    break;
-
-                case 3:
-                    {
-                        searchType = SearchType.Structure;
                     }
                     break;
 
@@ -316,15 +282,18 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             if (!IsKeyWordValid(Combo_Keyword.Text))
             {
-                AddString("Enter key word and try again");
+                //AddString("Enter key word and try again");
+                VISTAGHOSTPackage.Current.DTE.StatusBar.Text = "Enter key word and try again";
                 return;
             }
 
             string message = String.Empty;
+            this.FileList.Clear();
 
             if (!CheckSource(out message, out FileList, out _keyWord))
             {
-                AddString(message);
+                //AddString(message);
+                VISTAGHOSTPackage.Current.DTE.StatusBar.Text = message;
                 return;
             }
 
@@ -338,6 +307,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             BtnStopSearch.IsEnabled = true;
             BtnClearAll.IsEnabled = false;
 
+            searchType = (SearchType)Combo_ElementType.SelectedIndex;
+
             Results.Clear();
             totalFileSearched = 0;
             IsCanceled = false;
@@ -349,7 +320,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             if (e.Cancelled)
             {
-                AddString("Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled");
+                AddString(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled");
             }
             else
             {
@@ -418,7 +389,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 {
                     Logger.LogError(ex);
                 }
-
             }
         }
 
@@ -526,7 +496,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     TextRange curLineRange = new TextRange(SearchResultArea.CaretPosition.GetLineStartPosition(0), SearchResultArea.CaretPosition.GetLineStartPosition(1) ?? SearchResultArea.CaretPosition.DocumentEnd);
                     curLineRange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Color.FromRgb(48, 129, 212)));
 
-                    //EditorManager.OpenDocument(Results[currentLineNumber - 1].File);
+                    EditorManager.OpenDocument(Results[currentLineNumber - 1].File);
                     EditorManager.GoTo(Results[currentLineNumber - 1].File, Results[currentLineNumber - 1].BeginLine - 1);
                 }
                 catch

@@ -1291,34 +1291,5 @@ namespace Vistaghost.VISTAGHOST.Lib
             return elementList;
         }
         #endregion
-
-        public static void UpdateWorkHistory(CodeElement Element, ActionType type)
-        {
-            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), vgSettingConstants.VGFolder, vgSettingConstants.WorkHistoryFolder);
-            var path = Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
-
-            if (!File.Exists(path))
-            {
-                using (var stream = File.CreateText(path))
-                {
-                    /*Create new log file based on exists file*/
-                    stream.Write(Properties.Resources.WorkHistory);
-                }
-            }
-            else
-            {
-                switch (type)
-                {
-                    case ActionType.MODIFY:
-                        break;
-                    case ActionType.ADD:
-                        break;
-                    case ActionType.DELETE:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
     }
 }

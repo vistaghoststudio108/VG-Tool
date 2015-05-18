@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Vistaghost.VISTAGHOST.Helper;
 using Vistaghost.VISTAGHOST.Lib;
 
 namespace Vistaghost.VISTAGHOST.DataModel
@@ -192,7 +193,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
             if (bOpen)
             {
                 bOpen = false;
-               // dte.Documents.Item(path).Close(vsSaveChanges.vsSaveChangesYes);
+                // dte.Documents.Item(path).Close(vsSaveChanges.vsSaveChangesYes);
             }
 
             return eRanges;
@@ -216,7 +217,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                 List<VGCodeElement> ceList = new List<VGCodeElement>();
 
                 ceList = GetElementRange(dte, file);
-                if(ceList.Count == 0)
+                if (ceList.Count == 0)
                 {
                     yield break;
                 }
@@ -231,8 +232,9 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         }
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.LogError(ex);
                     yield break;
                 }
 
@@ -263,6 +265,100 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         yield break;
                     }
                 }
+            }
+        }
+
+        static XElement GetExistNode(string name, XElement parent)
+        {
+            if (parent == null)
+                return null;
+
+            foreach (var xnode in parent.Elements())
+            {
+                if (xnode.Element("Name").Value.Contains(name))
+                    return xnode;
+            }
+
+            return null;
+        }
+
+        public static void UpdateWorkHistory(CodeElement Element, ActionType type)
+        {
+            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), vgSettingConstants.VGFolder, vgSettingConstants.WorkHistoryFolder);
+            var path = Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            if (!File.Exists(path))
+            {
+                using (var stream = File.CreateText(path))
+                {
+                    /*Create new log file based on exists file*/
+                    stream.Write(Properties.Resources.WorkHistory);
+                }
+            }
+
+            switch (type)
+            {
+                case ActionType.MODIFY:
+                    break;
+                case ActionType.ADD:
+                    {
+                        try
+                        {
+                            var codeFunc = (CodeFunction)Element;
+                            var doc = XDocument.Load(path, LoadOptions.SetBaseUri);
+                            var groupNode = doc.Root.Element("CodeElement").Element("Function");
+                            if (groupNode != null)
+                            {
+                                var eNode = new XElement("Func");
+                                XElement nameNode = new XElement("Name");
+                                nameNode.Value = codeFunc.FullName;//codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
+
+                                XElement typeNode = new XElement("Type");
+                                typeNode.Value = "Add";
+
+                                XElement fileNode = new XElement("File");
+                                fileNode.Value = codeFunc.ProjectItem.Document.FullName;
+
+                                XElement lineNode = new XElement("Line");
+                                lineNode.Value = codeFunc.StartPoint.Line.ToString();
+
+                                eNode.Add(nameNode);
+                                eNode.Add(typeNode);
+                                eNode.Add(fileNode);
+                                eNode.Add(lineNode);
+
+                                groupNode.Add(eNode);
+                                doc.Save(path);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogError(ex);
+                        }
+                    }
+                    break;
+                case ActionType.DELETE:
+                    {
+                        var codeFunc = (CodeFunction)Element;
+                        var doc = XDocument.Load(path, LoadOptions.SetBaseUri);
+                        var groupNode = doc.Root.Element("CodeElement").Element("Function");
+
+                        XElement delNode = GetExistNode(codeFunc.Name, groupNode);
+
+                        if(delNode != null)
+                        {
+                            delNode.Remove();
+                            doc.Save(path);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 

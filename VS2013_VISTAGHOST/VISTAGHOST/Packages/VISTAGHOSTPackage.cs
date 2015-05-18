@@ -289,8 +289,8 @@ namespace Vistaghost.VISTAGHOST
             var lua = menu.Controls["Vistaghost"] as CommandBarPopup;
             lua.Controls["ShotKeys"].Visible = false;
 
-            if (show)
-                WindowManager.ShowToolWindow();
+            //if (show)
+            //    WindowManager.ShowToolWindow();
         }
 
         public void EnableButton(int cmdidButton, bool enabled)

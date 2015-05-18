@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<WorkHistory>
-  <Sesion id="0" from="20/12/2015" to="unknown" project="Review Screen Layout" author="ThuanPV3">
-    <ChangedFile>
-      <!--<File action="mod">file path</File>-->
-    </ChangedFile>
-    <CodeElement>
-      <!--<Element type="func" action="mod">
-        <name>function name</name>
-        <path>file path</path>
-      </Element>-->
-    </CodeElement>
-    <Comment>
+<WorkHistory from="20/12/2015" to="unknown" project="Review Screen Layout" author="ThuanPV3">
+  <ChangedFile>
+    <!--<File action="mod">file path</File>-->
+  </ChangedFile>
+  <CodeElement>
+    <Function>
+    </Function>
+    <Class>
+    </Class>
+    <Enum>
+    </Enum>
+    <Struct>
+    </Struct>
+  </CodeElement>
+  <Comment>
 
-    </Comment>
-  </Sesion>
+  </Comment>
 </WorkHistory>

@@ -75,8 +75,7 @@
                 <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           IsDropDownOpen="False"
-                          SelectedIndex="1"
-                          SelectionChanged="Combo_ElementType_SelectionChanged">
+                          SelectedIndex="1">
                     <ComboBoxItem Content="Function"/>
                     <ComboBoxItem Content="Class"/>
                     <ComboBoxItem Content="Enum"/>

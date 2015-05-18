@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vistaghost.VISTAGHOST.DataModel;
 using Vistaghost.VISTAGHOST.Lib;
 using Vistaghost.VISTAGHOST.Network;
 
@@ -73,22 +74,24 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void selEvent_OnChange()
         {
-            
+
         }
 
         void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
         {
-            vgOperations.UpdateWorkHistory(Element, ActionType.DELETE);
+            if (Element.Kind == vsCMElement.vsCMElementFunction)
+                FileManager.UpdateWorkHistory(Element, ActionType.DELETE);
         }
 
         void codeModelEvent_ElementChanged(CodeElement Element, vsCMChangeKind Change)
         {
-            
+
         }
 
         void codeModelEvent_ElementAdded(CodeElement Element)
         {
-            vgOperations.UpdateWorkHistory(Element, ActionType.ADD);
+            if (Element.Kind == vsCMElement.vsCMElementFunction)
+                FileManager.UpdateWorkHistory(Element, ActionType.ADD);
         }
 
         void docEvents_DocumentSaved(Document Document)
@@ -99,7 +102,7 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void docEvents_DocumentOpened(Document Document)
         {
-            
+
         }
 
         void findinfilesEvent_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
