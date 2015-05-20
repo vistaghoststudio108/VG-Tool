@@ -70,7 +70,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     break;
 
                 case 2:
-                    wnd.NotesArea.Document.Blocks.Clear();
+                    wnd.NotesArea.Clear();
                     break;
 
                 default:

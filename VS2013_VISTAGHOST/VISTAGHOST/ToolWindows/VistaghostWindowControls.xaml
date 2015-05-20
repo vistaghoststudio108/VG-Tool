@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="0,0,0,0">
+    <Grid Margin="0,0,-700,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -45,15 +45,8 @@
             </RichTextBox.Resources>
         </RichTextBox>
         
-        <RichTextBox Style="{DynamicResource VGRichTextBoxTemplate}" x:Name="NotesArea" Grid.Row="1"
-                     KeyDown="TextViewArea_KeyDown"
-                     TextChanged="NotesArea_TextChanged">
-            <RichTextBox.Resources>
-                <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0"/>
-                </Style>
-            </RichTextBox.Resources>
-        </RichTextBox>
+        <TextBox Style="{DynamicResource VGTextBoxTemplate}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown">
+        </TextBox>
         
         <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible" Background="#cfd6e5">          
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Text="Show output from:"/>

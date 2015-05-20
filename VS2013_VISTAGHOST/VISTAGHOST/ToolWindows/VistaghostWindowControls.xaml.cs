@@ -94,7 +94,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     break;
 
                 case 2:
-                    NotesArea.Document.Blocks.Clear();
+                    NotesArea.Clear();
                     break;
 
                 default:

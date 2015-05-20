@@ -220,6 +220,23 @@
         <Setter Property="Background" Value="Transparent"/>
     </Style>
     
+    <Style x:Key="VGTextBoxTemplate" TargetType="{x:Type TextBox}">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="CaretBrush" Value="Red"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <ScrollViewer Name="PART_ContentHost"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="VGRichTextBoxTemplate" TargetType="{x:Type RichTextBox }">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static cur:Controls.ControlForegroundKey}}"/>
         <Setter Property="BorderThickness" Value="1"/>
