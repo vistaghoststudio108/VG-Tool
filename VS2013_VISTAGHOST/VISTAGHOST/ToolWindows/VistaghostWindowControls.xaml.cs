@@ -27,7 +27,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
     /// <summary>
     /// Interaction logic for VistaghostWindowControls.xaml
     /// </summary>
-    public partial class VistaghostWindowControls : UserControl
+    public partial class VistaghostWindowControls : UserControl, IDisposable
     {
         BackgroundWorker bw;
         bool IsCanceled = false;
@@ -60,6 +60,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         #region Custom methods
 
+        /// <summary>
+        /// Add string to text view, line by line
+        /// </summary>
+        /// <param name="Text">input text</param>
         public void AddString(string Text)
         {
             Dispatcher.Invoke(() =>
@@ -252,6 +256,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             return bValid;
         }
 
+        /// <summary>
+        /// Check keyword
+        /// </summary>
+        /// <param name="keyword">input keyword</param>
+        /// <returns>true - keyword valid, false - other else</returns>
         bool IsKeyWordValid(string keyword)
         {
             bool bValid = true;
@@ -440,6 +449,9 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             //NotesArea.ScrollToEnd();
         }
 
+        /// <summary>
+        /// Refresh text view, clear all it's properties
+        /// </summary>
         void RefreshTextView()
         {
             if (SearchResultArea.Document == null)
@@ -454,6 +466,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         }
 
+        /// <summary>
+        /// Get current line number at pointer position
+        /// </summary>
+        /// <returns>Current line</returns>
         int GetCurrentLineNumber()
         {
             int lineMoved, currentLineNumber;
@@ -499,10 +515,25 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     EditorManager.OpenDocument(Results[currentLineNumber - 1].File);
                     EditorManager.GoTo(Results[currentLineNumber - 1].File, Results[currentLineNumber - 1].BeginLine - 1);
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    Logger.LogError(ex);
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (bw != null)
+                    bw.Dispose();
             }
         }
     }
