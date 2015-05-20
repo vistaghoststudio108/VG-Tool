@@ -15,7 +15,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
     public class FileManager
     {
         static FileManager _instance;
-        private string whPath = String.Empty; // work history path
+        private static string whPath = String.Empty; // work history path
         private static readonly object fsLock = new object();
         public static FileManager Instance
         {
@@ -34,7 +34,20 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                              vgSettingConstants.VGFolder,
                                              vgSettingConstants.WorkHistoryFolder);
 
+            if(!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
             whPath = System.IO.Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+            if(!File.Exists(whPath))
+            {
+                using (var stream = File.CreateText(whPath))
+                {
+                    /*Create new log file based on exists file*/
+                    stream.Write(Properties.Resources.WorkHistory);
+                }
+            }
 
             SearchCanceled = false;
         }
@@ -284,23 +297,6 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public static void UpdateWorkHistory(CodeElement Element, ActionType type)
         {
-            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), vgSettingConstants.VGFolder, vgSettingConstants.WorkHistoryFolder);
-            var path = Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
-
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            if (!File.Exists(path))
-            {
-                using (var stream = File.CreateText(path))
-                {
-                    /*Create new log file based on exists file*/
-                    stream.Write(Properties.Resources.WorkHistory);
-                }
-            }
-
             switch (type)
             {
                 case ActionType.MODIFY:
@@ -310,7 +306,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         try
                         {
                             var codeFunc = (CodeFunction)Element;
-                            var doc = XDocument.Load(path, LoadOptions.SetBaseUri);
+                            var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
                             var groupNode = doc.Root.Element("CodeElement").Element("Function");
                             if (groupNode != null)
                             {
@@ -333,7 +329,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                 eNode.Add(lineNode);
 
                                 groupNode.Add(eNode);
-                                doc.Save(path);
+                                doc.Save(whPath);
                             }
                         }
                         catch (Exception ex)
@@ -345,7 +341,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                 case ActionType.DELETE:
                     {
                         var codeFunc = (CodeFunction)Element;
-                        var doc = XDocument.Load(path, LoadOptions.SetBaseUri);
+                        var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
                         var groupNode = doc.Root.Element("CodeElement").Element("Function");
 
                         XElement delNode = GetExistNode(codeFunc.Name, groupNode);
@@ -353,7 +349,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         if(delNode != null)
                         {
                             delNode.Remove();
-                            doc.Save(path);
+                            doc.Save(whPath);
                         }
                     }
                     break;
