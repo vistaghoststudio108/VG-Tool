@@ -32,6 +32,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             {
                 throw new NotSupportedException(Properties.Resources.CanNotCreateWindow);
             }
+
+            window.ClearSearch();
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }

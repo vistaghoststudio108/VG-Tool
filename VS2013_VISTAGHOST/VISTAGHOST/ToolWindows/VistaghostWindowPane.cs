@@ -57,7 +57,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         /// <summary>
         /// Clear content of window
         /// </summary>
-        public void Clear()
+        public override void ClearSearch()
         {
             switch (wnd.Combo_SearchType.SelectedIndex)
             {
@@ -70,12 +70,14 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     break;
 
                 case 2:
-                    wnd.NotesArea.Clear();
+                    wnd.Clear();
                     break;
 
                 default:
                     break;
             }
+
+            base.ClearSearch();
         }
 
         #endregion

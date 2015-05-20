@@ -194,7 +194,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             bool bValid = true;
             message = String.Empty;
-            fileList = null;
+            fileList = new List<FileContainer>();
             keyword = String.Empty;
 
             switch (Combo_BaseSource.SelectedIndex)
@@ -514,6 +514,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
                     EditorManager.OpenDocument(Results[currentLineNumber - 1].File);
                     EditorManager.GoTo(Results[currentLineNumber - 1].File, Results[currentLineNumber - 1].BeginLine - 1);
+                    this.Focus();
                 }
                 catch (Exception ex)
                 {
