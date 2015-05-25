@@ -39,6 +39,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         List<FileContainer> FileList = new List<FileContainer>();
         int totalFileSearched = 0;
         int preLineNumber = 0;
+        int curComboIndex = 0;
 
         public VistaghostWindowControls()
         {
@@ -80,8 +81,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     }
 
                 });
-
-            numItem++;
         }
 
         public void Clear()
@@ -104,8 +103,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 default:
                     break;
             }
-
-            numItem = 1;
         }
 
         #endregion
@@ -358,6 +355,9 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     {
                         AddString(" " + ce.Name);
                         Results.Add(ce);
+
+                        if (IsCanceled)
+                            break;
                     }
 
                     totalFileSearched++;
@@ -408,7 +408,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         private void BtnCopyElement_Click(object sender, RoutedEventArgs e)
         {
-            if (IsSearching)
+            if (IsSearching || this.Results.Count == 0)
                 return;
 
             string copiedText = String.Empty;
@@ -459,11 +459,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             TextRange documentRange = new TextRange(SearchResultArea.Document.ContentStart, SearchResultArea.Document.ContentEnd);
             documentRange.ClearAllProperties();
-        }
-
-        void HighlightLine()
-        {
-
         }
 
         /// <summary>
