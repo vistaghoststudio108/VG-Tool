@@ -332,9 +332,8 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                 doc.Save(whPath);
                             }
                         }
-                        catch (Exception ex)
+                        catch
                         {
-                            Logger.LogError(ex);
                         }
                     }
                     break;
@@ -359,5 +358,43 @@ namespace Vistaghost.VISTAGHOST.DataModel
         }
 
         #endregion
+
+        public void SaveNewElements(List<VGCodeElement> codeElements)
+        {
+            try
+            {
+                var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+                var groupNode = doc.Root.Element("CodeElement").Element("Function");
+                if (groupNode != null)
+                {
+                    foreach (var ce in codeElements)
+                    {
+                        var eNode = new XElement("Func");
+                        XAttribute dateAttr = new XAttribute("date", DateTime.Now.ToShortDateString());
+                        eNode.Add(dateAttr);
+
+                        XElement nameNode = new XElement("Name");
+                        nameNode.Value = ce.Name;
+
+                        XElement typeNode = new XElement("Type");
+                        typeNode.Value = "Add";
+
+                        XElement fileNode = new XElement("File");
+                        fileNode.Value = ce.File;
+
+                        eNode.Add(nameNode);
+                        eNode.Add(typeNode);
+                        eNode.Add(fileNode);
+
+                        groupNode.Add(eNode);
+                    }
+
+                    doc.Save(whPath);
+                }
+            }
+            catch
+            {
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vistaghost.VISTAGHOST.WindowForms;
 
 namespace Vistaghost.VISTAGHOST.Lib
 {
@@ -28,4 +29,6 @@ namespace Vistaghost.VISTAGHOST.Lib
     public delegate void HistoryViewerEventHandler(string file);
 
     public delegate void ToolWindowPaneEventHandler(int swCode);
+
+    public delegate void ListElementEventHandler(ListElementForm owner, VGDialogResult dlgResult);
 }

@@ -24,6 +24,13 @@ namespace Vistaghost.VISTAGHOST.DataModel
             this.EndLine = endline;
         }
 
+        public VGCodeElement(string file, string name)
+        {
+            this.File = file;
+            this.Name = name;
+            this.BeginLine = this.EndLine = -1;
+        }
+
         public bool Equals(VGCodeElement other)
         {
             return other.Name.Equals(this.Name);

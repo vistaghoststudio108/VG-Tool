@@ -33,13 +33,13 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         bool IsCanceled = false;
         SearchType searchType = SearchType.None;
         public VistaghostWindowControls Instance;
-        private int numItem = 1;
+//        private int numItem = 1;
         bool IsSearching = false;
         List<VGCodeElement> Results = new List<VGCodeElement>();
         List<FileContainer> FileList = new List<FileContainer>();
         int totalFileSearched = 0;
         int preLineNumber = 0;
-        int curComboIndex = 0;
+//        int curComboIndex = 0;
 
         public VistaghostWindowControls()
         {

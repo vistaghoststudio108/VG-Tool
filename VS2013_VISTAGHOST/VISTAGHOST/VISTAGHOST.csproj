@@ -216,6 +216,12 @@
     <Compile Include="WindowForms\HeaderForm.Designer.cs">
       <DependentUpon>HeaderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WindowForms\ListElementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowForms\ListElementForm.Designer.cs">
+      <DependentUpon>ListElementForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WindowForms\SingleHeader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -282,6 +288,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WindowForms\HeaderForm.resx">
       <DependentUpon>HeaderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowForms\ListElementForm.resx">
+      <DependentUpon>ListElementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowForms\SingleHeader.resx">
       <DependentUpon>SingleHeader.cs</DependentUpon>

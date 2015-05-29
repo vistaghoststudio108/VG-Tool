@@ -43,10 +43,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             if (String.IsNullOrEmpty(Text))
                 return;
 
-            wnd.Dispatcher.Invoke(() =>
-                {
-                    wnd.SearchResultArea.AppendText(Text);
-                });
+            wnd.AddString(Text);
         }
 
         public void Activate()

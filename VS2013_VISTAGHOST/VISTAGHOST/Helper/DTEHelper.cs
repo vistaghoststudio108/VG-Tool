@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Vistaghost.VISTAGHOST.DataModel;
 using Vistaghost.VISTAGHOST.Lib;
 using Vistaghost.VISTAGHOST.Network;
+using Vistaghost.VISTAGHOST.WindowForms;
 
 namespace Vistaghost.VISTAGHOST.Helper
 {
@@ -18,6 +19,8 @@ namespace Vistaghost.VISTAGHOST.Helper
     {
         public DTE DTE { get; private set; }
         public DTE2 DTE2 { get; set; }
+
+        private List<VGCodeElement> newElementList = new List<VGCodeElement>();
 
         DocumentEvents docEvents;
         SolutionEvents solEvents;
@@ -27,6 +30,7 @@ namespace Vistaghost.VISTAGHOST.Helper
         CommandEvents findinfilesEvent;
         SelectionEvents selEvent;
         CodeModelEvents codeModelEvent;
+        BuildEvents buildEvents;
 
         public DTEHelper(DTE dte, DTE2 dte2)
         {
@@ -70,6 +74,21 @@ namespace Vistaghost.VISTAGHOST.Helper
             // Selection events
             selEvent = DTE.Events.SelectionEvents;
             selEvent.OnChange += selEvent_OnChange;
+
+            // Build events
+            buildEvents = DTE.Events.BuildEvents;
+            buildEvents.OnBuildBegin += buildEvents_OnBuildBegin;
+            buildEvents.OnBuildDone += buildEvents_OnBuildDone;
+        }
+
+        void buildEvents_OnBuildDone(vsBuildScope Scope, vsBuildAction Action)
+        {
+            
+        }
+
+        void buildEvents_OnBuildBegin(vsBuildScope Scope, vsBuildAction Action)
+        {
+            
         }
 
         void selEvent_OnChange()
@@ -77,27 +96,96 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         }
 
+        /// <summary>
+        /// delete element events
+        /// </summary>
+        /// <param name="Parent"></param>
+        /// <param name="Element"></param>
         void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
         {
-            if (Element.Kind == vsCMElement.vsCMElementFunction)
-                FileManager.UpdateWorkHistory(Element, ActionType.DELETE);
+            switch (Element.Kind)
+            {
+                //delete function
+                case vsCMElement.vsCMElementFunction:
+                    {
+                        //FileManager.UpdateWorkHistory(Element, ActionType.DELETE);
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
+        /// <summary>
+        /// change an element events
+        /// </summary>
+        /// <param name="Element"></param>
+        /// <param name="Change"></param>
         void codeModelEvent_ElementChanged(CodeElement Element, vsCMChangeKind Change)
         {
 
         }
 
+        /// <summary>
+        /// add an element events
+        /// </summary>
+        /// <param name="Element"></param>
         void codeModelEvent_ElementAdded(CodeElement Element)
         {
-            if (Element.Kind == vsCMElement.vsCMElementFunction)
-                FileManager.UpdateWorkHistory(Element, ActionType.ADD);
+            switch (Element.Kind)
+            {
+                //add function
+                case vsCMElement.vsCMElementFunction:
+                    {
+                        if (Element.ProjectItem.Document.Name.Contains(".h"))
+                            return;
+
+                        var codeFunc = (CodeFunction)Element;
+                        string prot = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
+                        var element = new VGCodeElement(codeFunc.ProjectItem.Document.FullName, prot);
+                        newElementList.Add(element);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         void docEvents_DocumentSaved(Document Document)
         {
-            var fcm = Document.ProjectItem.FileCodeModel;
-            var cf = fcm.CodeElements.OfType<CodeFunction>();
+            if (newElementList.Count != 0)
+            {
+                ListElementForm lef = new ListElementForm();
+                lef.SetData(newElementList);
+                lef.OnResult += new ListElementEventHandler(lef_OnResult);
+                lef.ShowDialog();
+            }
+        }
+
+        private void lef_OnResult(ListElementForm owner ,VGDialogResult dlgResult)
+        {
+            switch (dlgResult)
+            {
+                case VGDialogResult.VG_OK:
+                    {
+                        FileManager.Instance.SaveNewElements(newElementList);
+                    }
+                    break;
+                case VGDialogResult.VG_CANCEL:
+                    break;
+                default:
+                    break;
+            }
+
+            if(owner != null)
+            {
+                owner.OnResult -= new ListElementEventHandler(lef_OnResult);
+            }
+
+            newElementList.Clear();
         }
 
         void docEvents_DocumentOpened(Document Document)
