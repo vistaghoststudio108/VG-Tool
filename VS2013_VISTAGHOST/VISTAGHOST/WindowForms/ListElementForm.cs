@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Vistaghost.VISTAGHOST.Lib;
+using Vistaghost.VISTAGHOST.DataModel;
 
 namespace Vistaghost.VISTAGHOST.WindowForms
 {
@@ -19,7 +20,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             InitializeComponent();
         }
 
-        public void SetData(List<VISTAGHOST.DataModel.VGCodeElement> data)
+        public void SetData(List<VGCodeElement> data)
         {
             foreach (var func in data)
             {
@@ -34,10 +35,18 @@ namespace Vistaghost.VISTAGHOST.WindowForms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-
+            List<VGCodeElement> finalList = new List<VGCodeElement>();
+            foreach (DataGridViewRow row in dtElements.Rows)
+            {
+                var chk = (bool)row.Cells[0].Value;
+                if(chk)
+                {
+                    //finalList.Add()
+                }
+            }
             if (OnResult != null)
             {
-                OnResult(this, VGDialogResult.VG_OK);
+                OnResult(null, VGDialogResult.VG_OK);
             }
 
             this.Close();
@@ -47,7 +56,7 @@ namespace Vistaghost.VISTAGHOST.WindowForms
         {
             if (OnResult != null)
             {
-                OnResult(this, VGDialogResult.VG_CANCEL);
+                OnResult(null, VGDialogResult.VG_CANCEL);
             }
 
             this.Close();

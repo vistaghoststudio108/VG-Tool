@@ -32,12 +32,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtElements = new System.Windows.Forms.DataGridView();
-            this.chkAdded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnOK = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.chkAdded = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dtElements)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,25 +68,6 @@
             this.dtElements.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtElements.Size = new System.Drawing.Size(503, 164);
             this.dtElements.TabIndex = 5;
-            // 
-            // chkAdded
-            // 
-            this.chkAdded.FillWeight = 10F;
-            this.chkAdded.HeaderText = "Added";
-            this.chkAdded.Name = "chkAdded";
-            this.chkAdded.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn1.FillWeight = 100.736F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "List of parameters";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // btnOK
             // 
@@ -127,6 +108,24 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Are you sure all functions above are newest?";
             // 
+            // chkAdded
+            // 
+            this.chkAdded.FillWeight = 10F;
+            this.chkAdded.HeaderText = "Added";
+            this.chkAdded.Name = "chkAdded";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewTextBoxColumn1.FillWeight = 100.736F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "List of parameters";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // ListElementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -156,11 +155,11 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dtElements;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn chkAdded;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chkAdded;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
     }
 }

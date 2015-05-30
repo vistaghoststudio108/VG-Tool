@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vistaghost.VISTAGHOST.WindowForms;
+using Vistaghost.VISTAGHOST.DataModel;
 
 namespace Vistaghost.VISTAGHOST.Lib
 {
@@ -30,5 +31,5 @@ namespace Vistaghost.VISTAGHOST.Lib
 
     public delegate void ToolWindowPaneEventHandler(int swCode);
 
-    public delegate void ListElementEventHandler(ListElementForm owner, VGDialogResult dlgResult);
+    public delegate void ListElementEventHandler(List<VGCodeElement> finalList, VGDialogResult dlgResult);
 }

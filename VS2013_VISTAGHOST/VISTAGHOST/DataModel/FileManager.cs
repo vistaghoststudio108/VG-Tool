@@ -47,7 +47,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                     /*Create new log file based on exists file*/
                     stream.Write(Properties.Resources.WorkHistory);
 
-                    File.SetAttributes(whPath, FileAttributes.ReadOnly | FileAttributes.System | FileAttributes.Encrypted);
+                    //File.SetAttributes(whPath, FileAttributes.ReadOnly | FileAttributes.Encrypted | FileAttributes.System);
                 }
             }
 
@@ -372,20 +372,16 @@ namespace Vistaghost.VISTAGHOST.DataModel
                     foreach (var ce in codeElements)
                     {
                         var eNode = new XElement("Func");
-                        XAttribute dateAttr = new XAttribute("date", DateTime.Now.ToShortDateString());
+                        XAttribute dateAttr = new XAttribute("date", DateTime.Now.ToLongDateString());
                         eNode.Add(dateAttr);
 
                         XElement nameNode = new XElement("Name");
                         nameNode.Value = ce.Name;
 
-                        XElement typeNode = new XElement("Type");
-                        typeNode.Value = "Add";
-
                         XElement fileNode = new XElement("File");
                         fileNode.Value = ce.File;
 
                         eNode.Add(nameNode);
-                        eNode.Add(typeNode);
                         eNode.Add(fileNode);
 
                         groupNode.Add(eNode);

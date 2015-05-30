@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <WorkHistory from="unknown" to="unknown" project="unknown" author="unknown">
-  <ChangedFile/>
+  <ChangedFile></ChangedFile>
   <CodeElement>
-    <Function/>
-    <Class/>
-    <Enum/>
-    <Struct/>
+    <Function></Function>
+    <Class></Class>
+    <Enum></Enum>
+    <Struct></Struct>
   </CodeElement>
-  <Comment/>
+  <Comment></Comment>
 </WorkHistory>

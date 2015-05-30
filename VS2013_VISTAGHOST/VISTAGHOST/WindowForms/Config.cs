@@ -756,12 +756,12 @@ namespace Vistaghost.VISTAGHOST
             {
                 using (var stream = File.CreateText(path))
                 {
-                    /*Create new log file based on exists file*/
+                    /*Create new history file*/
                     stream.Write(Properties.Resources.WorkHistory);
                 }
             }
 
-            File.SetAttributes(path, FileAttributes.ReadOnly | FileAttributes.Encrypted);
+            File.SetAttributes(path, FileAttributes.ReadOnly | FileAttributes.Encrypted | FileAttributes.System);
         }
     }
 }

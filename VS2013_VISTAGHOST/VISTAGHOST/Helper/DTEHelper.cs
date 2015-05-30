@@ -20,7 +20,6 @@ namespace Vistaghost.VISTAGHOST.Helper
         public DTE DTE { get; private set; }
         public DTE2 DTE2 { get; private set; }
 
-        private List<VGCodeElement> newElementList = new List<VGCodeElement>();
         private bool SavedAll = false;
         private ListElementForm lef;
 
@@ -195,8 +194,6 @@ namespace Vistaghost.VISTAGHOST.Helper
                         {
                             lef.AddItem(prot);
                         }
-
-                        newElementList.Add(element);
                     }
                     break;
 
@@ -213,13 +210,13 @@ namespace Vistaghost.VISTAGHOST.Helper
             }
         }
 
-        private void lef_OnResult(ListElementForm owner, VGDialogResult dlgResult)
+        private void lef_OnResult(List<VGCodeElement> finalElementList, VGDialogResult dlgResult)
         {
             switch (dlgResult)
             {
                 case VGDialogResult.VG_OK:
                     {
-                        FileManager.Instance.SaveNewElements(newElementList);
+                        FileManager.Instance.SaveNewElements(finalElementList);
                     }
                     break;
                 case VGDialogResult.VG_CANCEL:
@@ -233,8 +230,6 @@ namespace Vistaghost.VISTAGHOST.Helper
                 lef.OnResult -= new ListElementEventHandler(lef_OnResult);
                 lef = null;
             }
-
-            newElementList.Clear();
         }
 
         void docEvents_DocumentOpened(Document Document)
