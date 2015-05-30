@@ -27,6 +27,11 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             }
         }
 
+        public void AddItem(string item)
+        {
+            dtElements.Rows.Add(true, item);
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
 

@@ -1,19 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<WorkHistory from="20/12/2015" to="unknown" project="Review Screen Layout" author="ThuanPV3">
-  <ChangedFile>
-    <!--<File action="mod">file path</File>-->
-  </ChangedFile>
+<WorkHistory from="unknown" to="unknown" project="unknown" author="unknown">
+  <ChangedFile/>
   <CodeElement>
-    <Function>
-    </Function>
-    <Class>
-    </Class>
-    <Enum>
-    </Enum>
-    <Struct>
-    </Struct>
+    <Function/>
+    <Class/>
+    <Enum/>
+    <Struct/>
   </CodeElement>
-  <Comment>
-
-  </Comment>
+  <Comment/>
 </WorkHistory>

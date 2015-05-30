@@ -18,19 +18,23 @@ namespace Vistaghost.VISTAGHOST.Helper
     class DTEHelper
     {
         public DTE DTE { get; private set; }
-        public DTE2 DTE2 { get; set; }
+        public DTE2 DTE2 { get; private set; }
 
         private List<VGCodeElement> newElementList = new List<VGCodeElement>();
+        private bool SavedAll = false;
+        private ListElementForm lef;
 
         DocumentEvents docEvents;
         SolutionEvents solEvents;
         WindowEvents wndEvents;
         DTEEvents dteEvents;
         FindEvents findEvents;
-        CommandEvents findinfilesEvent;
+        CommandEvents commandEvents;
         SelectionEvents selEvent;
         CodeModelEvents codeModelEvent;
         BuildEvents buildEvents;
+        //TextEditorEvents textEditorEvents;
+        //ProjectItemsEvents projectItemEvents;
 
         public DTEHelper(DTE dte, DTE2 dte2)
         {
@@ -61,9 +65,9 @@ namespace Vistaghost.VISTAGHOST.Helper
             findEvents = DTE.Events.FindEvents;
             findEvents.FindDone += findEvents_FindDone;
 
-            findinfilesEvent = DTE2.Events.get_CommandEvents("{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 277);
-            findinfilesEvent.BeforeExecute += new _dispCommandEvents_BeforeExecuteEventHandler(findinfilesEvent_BeforeExecute);
-            findinfilesEvent.AfterExecute += new _dispCommandEvents_AfterExecuteEventHandler(findinfilesEvent_AfterExecute);
+            commandEvents = DTE2.Events.CommandEvents;//get_CommandEvents("{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 277);
+            commandEvents.BeforeExecute += new _dispCommandEvents_BeforeExecuteEventHandler(commandEvents_BeforeExecute);
+            commandEvents.AfterExecute += new _dispCommandEvents_AfterExecuteEventHandler(commandEvents_AfterExecute);
 
             // Code model events
             codeModelEvent = ((EnvDTE80.Events2)DTE.Events).get_CodeModelEvents();
@@ -79,17 +83,53 @@ namespace Vistaghost.VISTAGHOST.Helper
             buildEvents = DTE.Events.BuildEvents;
             buildEvents.OnBuildBegin += buildEvents_OnBuildBegin;
             buildEvents.OnBuildDone += buildEvents_OnBuildDone;
+
+            // Text Editor events
+            //textEditorEvents = DTE.Events.TextEditorEvents;
+            //textEditorEvents.LineChanged += textEditorEvents_LineChanged;
+
+            // Project item events
+            //projectItemEvents = ((EnvDTE80.Events2)DTE.Events).ProjectItemsEvents;
+            //projectItemEvents.ItemAdded += projectItemEvents_ItemAdded;
+            //projectItemEvents.ItemRemoved += projectItemEvents_ItemRemoved;
+            //projectItemEvents.ItemRenamed += projectItemEvents_ItemRenamed;
         }
 
+        #region Project Items Events
+        void projectItemEvents_ItemRenamed(ProjectItem ProjectItem, string OldName)
+        {
+
+        }
+
+        void projectItemEvents_ItemRemoved(ProjectItem ProjectItem)
+        {
+
+        }
+
+        void projectItemEvents_ItemAdded(ProjectItem ProjectItem)
+        {
+
+        }
+        #endregion
+
+        #region Text Editor Events
+        void textEditorEvents_LineChanged(TextPoint StartPoint, TextPoint EndPoint, int Hint)
+        {
+
+        }
+        #endregion
+
+        #region Build Events
         void buildEvents_OnBuildDone(vsBuildScope Scope, vsBuildAction Action)
         {
-            
+
         }
 
         void buildEvents_OnBuildBegin(vsBuildScope Scope, vsBuildAction Action)
         {
-            
+
         }
+        #endregion
 
         void selEvent_OnChange()
         {
@@ -108,8 +148,9 @@ namespace Vistaghost.VISTAGHOST.Helper
                 //delete function
                 case vsCMElement.vsCMElementFunction:
                     {
-                        //FileManager.UpdateWorkHistory(Element, ActionType.DELETE);
+                        var codeFunc = (CodeFunction)Element;
 
+                        FileManager.Instance.RemoveElement(codeFunc.Name);
                     }
                     break;
 
@@ -139,12 +180,22 @@ namespace Vistaghost.VISTAGHOST.Helper
                 //add function
                 case vsCMElement.vsCMElementFunction:
                     {
-                        if (Element.ProjectItem.Document.Name.Contains(".h"))
-                            return;
-
                         var codeFunc = (CodeFunction)Element;
                         string prot = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
                         var element = new VGCodeElement(codeFunc.ProjectItem.Document.FullName, prot);
+
+                        if (lef == null)
+                        {
+                            lef = new ListElementForm();
+                            lef.OnResult += new ListElementEventHandler(lef_OnResult);
+                            lef.AddItem(prot);
+                            lef.Show();
+                        }
+                        else
+                        {
+                            lef.AddItem(prot);
+                        }
+
                         newElementList.Add(element);
                     }
                     break;
@@ -156,16 +207,13 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void docEvents_DocumentSaved(Document Document)
         {
-            if (newElementList.Count != 0)
+            if(SavedAll)
             {
-                ListElementForm lef = new ListElementForm();
-                lef.SetData(newElementList);
-                lef.OnResult += new ListElementEventHandler(lef_OnResult);
-                lef.ShowDialog();
+                FileManager.Instance.SaveFileChanged(Document.FullName);
             }
         }
 
-        private void lef_OnResult(ListElementForm owner ,VGDialogResult dlgResult)
+        private void lef_OnResult(ListElementForm owner, VGDialogResult dlgResult)
         {
             switch (dlgResult)
             {
@@ -180,9 +228,10 @@ namespace Vistaghost.VISTAGHOST.Helper
                     break;
             }
 
-            if(owner != null)
+            if (lef != null)
             {
-                owner.OnResult -= new ListElementEventHandler(lef_OnResult);
+                lef.OnResult -= new ListElementEventHandler(lef_OnResult);
+                lef = null;
             }
 
             newElementList.Clear();
@@ -193,14 +242,26 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         }
 
-        void findinfilesEvent_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
+        void commandEvents_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
         {
+            if (SavedAll)
+                SavedAll = false;
         }
 
-        void findinfilesEvent_BeforeExecute(string Guid, int ID, object CustomIn, object CustomOut, ref bool CancelDefault)
+        void commandEvents_BeforeExecute(string Guid, int ID, object CustomIn, object CustomOut, ref bool CancelDefault)
         {
-            // Cancel Find in Files event by setting CancelDefault = true
-            //CancelDefault = true;
+            if (ID == 331)
+            {
+                // "Save" invoked
+                var activeDoc = this.DTE.ActiveDocument;
+                if (!activeDoc.Saved)
+                    FileManager.Instance.SaveFileChanged(activeDoc.FullName);
+            }
+            else if (ID == 224)
+            {
+                // "Save all" invoked
+                SavedAll = true;
+            }
         }
 
         void findEvents_FindDone(vsFindResult Result, bool Cancelled)

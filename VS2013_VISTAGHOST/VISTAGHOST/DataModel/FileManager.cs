@@ -34,18 +34,20 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                              vgSettingConstants.VGFolder,
                                              vgSettingConstants.WorkHistoryFolder);
 
-            if(!Directory.Exists(dir))
+            if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
 
             whPath = System.IO.Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
-            if(!File.Exists(whPath))
+            if (!File.Exists(whPath))
             {
                 using (var stream = File.CreateText(whPath))
                 {
                     /*Create new log file based on exists file*/
                     stream.Write(Properties.Resources.WorkHistory);
+
+                    File.SetAttributes(whPath, FileAttributes.ReadOnly | FileAttributes.System | FileAttributes.Encrypted);
                 }
             }
 
@@ -345,7 +347,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
                         XElement delNode = GetExistNode(codeFunc.Name, groupNode);
 
-                        if(delNode != null)
+                        if (delNode != null)
                         {
                             delNode.Remove();
                             doc.Save(whPath);
@@ -390,6 +392,62 @@ namespace Vistaghost.VISTAGHOST.DataModel
                     }
 
                     doc.Save(whPath);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        bool ExistNode(string value, XElement parent)
+        {
+            if (parent == null)
+                return false;
+
+            foreach (var node in parent.Elements())
+            {
+                if (node.Value == value)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void SaveFileChanged(string filename)
+        {
+            try
+            {
+                var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+                var groupNode = doc.Root.Element("ChangedFile");
+                if (groupNode != null && !ExistNode(filename, groupNode))
+                {
+                    var eNode = new XElement("File");
+                    eNode.Value = filename;
+
+                    groupNode.Add(eNode);
+                    doc.Save(whPath);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        public void RemoveElement(string eName)
+        {
+            try
+            {
+                 var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+                var groupNode = doc.Root.Element("CodeElement").Element("Function");
+                if (groupNode != null)
+                {
+                    XElement delNode = GetExistNode(eName, groupNode);
+
+                    if (delNode != null)
+                    {
+                        delNode.Remove();
+                        doc.Save(whPath);
+                    }
                 }
             }
             catch
