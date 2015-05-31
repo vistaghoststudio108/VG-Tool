@@ -74,7 +74,7 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
     <!--====================================================================================================-->
-    <!--<Style TargetType="ComboBox">
+    <Style TargetType="ComboBox">
         <Setter Property="Background" Value="{DynamicResource {x:Static cur:Controls.ControlBackgroundKey}}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static cur:Controls.ControlForegroundKey}}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static cur:Controls.ControlBorderKey}}"/>
@@ -87,7 +87,7 @@
                 <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
             </Grid.ColumnDefinitions>
             <Popup x:Name="PART_Popup" AllowsTransparency="True" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
-                --><!--<Themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=templateRoot}">--><!--
+                <!--<Themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=templateRoot}">-->
                 <Border x:Name="DropDownBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" Background="{TemplateBinding Background}" Width="{TemplateBinding ActualWidth}">
                     <ScrollViewer x:Name="DropDownScrollViewer">
                         <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
@@ -98,7 +98,7 @@
                         </Grid>
                     </ScrollViewer>
                 </Border>
-                --><!--</Themes:SystemDropShadowChrome>--><!--
+                <!--</Themes:SystemDropShadowChrome>-->
             </Popup>
             <ToggleButton x:Name="toggleButton" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                 <ToggleButton.Style>
@@ -190,10 +190,10 @@
             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="False" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
         </Grid>
         <ControlTemplate.Triggers>
-            --><!--<Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="True">
+            <!--<Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="True">
                 <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
                 <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
-            </Trigger>--><!--
+            </Trigger>-->
             <Trigger Property="HasItems" Value="False">
                 <Setter Property="Height" TargetName="DropDownBorder" Value="95"/>
             </Trigger>
@@ -209,15 +209,19 @@
                 <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
             </Trigger>
         </ControlTemplate.Triggers>
-    </ControlTemplate>-->
+    </ControlTemplate>
 
     <Style TargetType="{x:Type TextElement }">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static cur:Controls.ForegroundKey}}"/>
     </Style>
     
     <Style TargetType="{x:Type TextBlock }">
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static cur:Controls.ControlBackgroundKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static cur:Controls.ControlForegroundKey}}"/>
+    </Style>
+    
+    <Style TargetType="{x:Type StackPanel}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static cur:Controls.ControlBackgroundKey}}"/>
     </Style>
     
     <Style x:Key="VGTextBoxTemplate" TargetType="{x:Type TextBox}">
@@ -260,20 +264,16 @@
     </Style>
     
     <Style x:Key="VGTextBoxTemplate1" TargetType="{x:Type TextBox}">
-        <Setter Property="SnapsToDevicePixels"
-          Value="True" />
-        <Setter Property="OverridesDefaultStyle"
-          Value="True" />
-        <Setter Property="KeyboardNavigation.TabNavigation"
-          Value="None" />
-        <Setter Property="FocusVisualStyle"
-          Value="{x:Null}" />
-        <Setter Property="MinWidth"
-          Value="120" />
-        <Setter Property="MinHeight"
-          Value="20" />
-        <Setter Property="AllowDrop"
-          Value="true" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static cur:Controls.ControlBackgroundKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static cur:Controls.ControlForegroundKey}}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static cur:Controls.ControlBorderHoverKey}}"/>
+        <!--<Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="MinWidth" Value="120" />
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="AllowDrop" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -308,7 +308,7 @@
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
     
     <Style TargetType="{x:Type Button}">
@@ -340,8 +340,8 @@
                 <!--<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBorderPressedKey}}"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" TargetName="border" Value="#cfd6e5"/>
-                <Setter Property="BorderBrush" TargetName="border" Value="#cfd6e5"/>
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBackgroundKey}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static cur:Controls.ControlBackgroundKey}}"/>
                 <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource {x:Static cur:Controls.ControlForegroundDisabledKey}}"/>
             </Trigger>
         </ControlTemplate.Triggers>
@@ -355,7 +355,7 @@
         </Style.Triggers>
     </Style>
     <!--=====================================================================================================-->
-    <ControlTemplate x:Key="ComboBoxToggleButton"
+    <!--<ControlTemplate x:Key="ComboBoxToggleButton"
                  TargetType="{x:Type ToggleButton}">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -605,5 +605,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 </ResourceDictionary>

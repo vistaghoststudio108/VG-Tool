@@ -50,6 +50,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             Combo_BaseSource.SelectedIndex = 1;
 
             SearchResultArea.Document.Blocks.Clear();
+            SearchResultArea.Document.PageWidth = 3000;
 
             bw = new BackgroundWorker();
             bw.WorkerSupportsCancellation = true;
@@ -198,18 +199,17 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             {
                 case 0:
                     {
-                        if (vgSetting.ProjectStatus.NotStarted)
+                        if (!vgSetting.ProjectStatus.Started)
                         {
                             message = "Project is not started";
                             bValid = false;
                         }
                         else
                         {
-                            fileList = FileManager.Instance.SearchFileFromWorkHistory();
+                            fileList = FileManager.Instance.SearchFileFromWorkHistory(out message);
                             if (fileList.Count == 0)
                             {
                                 bValid = false;
-                                message = "There is no changed items in work history";
                             }
                             else
                             {

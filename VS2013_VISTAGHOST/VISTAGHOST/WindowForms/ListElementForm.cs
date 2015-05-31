@@ -15,38 +15,35 @@ namespace Vistaghost.VISTAGHOST.WindowForms
     public partial class ListElementForm : Form
     {
         public ListElementEventHandler OnResult;
+        private List<VGCodeElement> ceList = new List<VGCodeElement>();
+
         public ListElementForm()
         {
             InitializeComponent();
         }
 
-        public void SetData(List<VGCodeElement> data)
+        public void AddItem(VGCodeElement element)
         {
-            foreach (var func in data)
-            {
-                dtElements.Rows.Add(true, func.Name);
-            }
-        }
-
-        public void AddItem(string item)
-        {
-            dtElements.Rows.Add(true, item);
+            dtElements.Rows.Add(true, element.Name);
+            ceList.Add(element);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             List<VGCodeElement> finalList = new List<VGCodeElement>();
-            foreach (DataGridViewRow row in dtElements.Rows)
+
+            for (int i = 0; i < dtElements.Rows.Count; i++)
             {
-                var chk = (bool)row.Cells[0].Value;
-                if(chk)
+                var chk = (bool)dtElements.Rows[i].Cells[0].Value;
+                if (chk)
                 {
-                    //finalList.Add()
+                    finalList.Add(ceList[i]);
                 }
             }
+
             if (OnResult != null)
             {
-                OnResult(null, VGDialogResult.VG_OK);
+                OnResult(finalList, VGDialogResult.VG_OK);
             }
 
             this.Close();
@@ -60,6 +57,19 @@ namespace Vistaghost.VISTAGHOST.WindowForms
             }
 
             this.Close();
+        }
+
+        private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dtElements.Rows)
+            {
+                row.Cells[0].Value = chkSelectAll.Checked;
+            }
+        }
+
+        private void ListElementForm_Load(object sender, EventArgs e)
+        {
+            chkSelectAll.Checked = true;
         }
     }
 }

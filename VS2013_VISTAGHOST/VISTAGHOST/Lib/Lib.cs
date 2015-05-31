@@ -199,6 +199,17 @@ namespace Vistaghost.VISTAGHOST.Lib
             return ("//" + tlist[(int)mode - 1] + t[1]);
         }
 
+        static string get_FinalString(string str1, string str2)
+        {
+            string lineBreakStr = "\n";
+            for (int i = 0; i < vgSetting.SettingData.CommentInfo.EmptyLineNum; i++)
+            {
+                lineBreakStr += "\n";
+            }
+
+            return lineBreakStr + str1 + (String.IsNullOrEmpty(str2) ? lineBreakStr : "\n" + str2 + lineBreakStr);
+        }
+
         /// <summary>
         /// Processing text for add single comments
         /// </summary>
@@ -251,9 +262,9 @@ namespace Vistaghost.VISTAGHOST.Lib
                     case ActionType.ADD:
                         info.SetInfo(dte.ActiveDocument.FullName, selected.TopPoint.Line);
                         selected.Insert(opentag);
-                        selected.NewLine(2);
+                        selected.NewLine(vgSetting.SettingData.CommentInfo.EmptyLineNum * 2 + 2);
                         selected.Insert(closetag);
-                        selected.LineUp();
+                        selected.LineUp(false, vgSetting.SettingData.CommentInfo.EmptyLineNum + 1);
 
                         result = true;
                         break;
@@ -311,11 +322,11 @@ namespace Vistaghost.VISTAGHOST.Lib
                 switch (mode)
                 {
                     case ActionType.MODIFY:
-                        result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + strSelected + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, null);
+                        result = selected.ReplacePattern(selected.Text, blank + opentag + get_FinalString(selected.Text, strSelected) + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, null);
                         if (result)
                         {
                             selected.EndOfLine();
-                            selected.LineUp();
+                            selected.LineUp(false, vgSetting.SettingData.CommentInfo.EmptyLineNum + 1);
                             selected.EndOfLine();
                             selected.LineUp(true, numLines - 1);
                             selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, true);
@@ -341,10 +352,10 @@ namespace Vistaghost.VISTAGHOST.Lib
                                 //Add new comments tag here without content
                                 selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
                                 selected.Insert(opentag);
-                                selected.NewLine();
+                                selected.NewLine(vgSetting.SettingData.CommentInfo.EmptyLineNum + 1);
                                 selected.LineDown(false, numLines - 1);
                                 selected.EndOfLine();
-                                selected.NewLine();
+                                selected.NewLine(vgSetting.SettingData.CommentInfo.EmptyLineNum + 1);
                                 selected.Insert(closetag);
                             }
                             result = true;
@@ -359,7 +370,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                                 result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text, (int)vsFindOptions.vsFindOptionsNone, null);
                             }
                             else
-                                result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, null);
+                                result = selected.ReplacePattern(selected.Text, blank + opentag + get_FinalString(selected.Text, String.Empty) + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, null);
                         }
                         break;
 

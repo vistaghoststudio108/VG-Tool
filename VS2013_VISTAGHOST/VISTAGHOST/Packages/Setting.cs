@@ -154,8 +154,9 @@ namespace Vistaghost.VISTAGHOST
             return settings;
         }
 
-        public static void SaveProjectStatus()
+        public static bool SaveProjectStatus()
         {
+            bool _result = false;
             try
             {
                 var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
@@ -166,16 +167,21 @@ namespace Vistaghost.VISTAGHOST
 
                 isoStream.Close();
                 isoStore.Close();
+
+                _result = true;
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex);
+                _result = false;
             }
+
+            return _result;
         }
 
         public static ProjectStatus LoadProjectStatus()
         {
-            Lib.ProjectStatus projStatus = new ProjectStatus { NotStarted = true, ProjectID = 0 };
+            Lib.ProjectStatus projStatus = new ProjectStatus { Started = false, ProjectID = "", ProjectName = "" };
 
             try
             {

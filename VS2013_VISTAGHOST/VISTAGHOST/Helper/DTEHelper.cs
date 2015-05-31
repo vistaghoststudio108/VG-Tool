@@ -15,7 +15,7 @@ using Vistaghost.VISTAGHOST.WindowForms;
 
 namespace Vistaghost.VISTAGHOST.Helper
 {
-    class DTEHelper
+    class DTEHelper : IDisposable
     {
         public DTE DTE { get; private set; }
         public DTE2 DTE2 { get; private set; }
@@ -142,13 +142,15 @@ namespace Vistaghost.VISTAGHOST.Helper
         /// <param name="Element"></param>
         void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
         {
+            if (!vgSetting.ProjectStatus.Started)
+                return;
+
             switch (Element.Kind)
             {
                 //delete function
                 case vsCMElement.vsCMElementFunction:
                     {
                         var codeFunc = (CodeFunction)Element;
-
                         FileManager.Instance.RemoveElement(codeFunc.Name);
                     }
                     break;
@@ -165,7 +167,8 @@ namespace Vistaghost.VISTAGHOST.Helper
         /// <param name="Change"></param>
         void codeModelEvent_ElementChanged(CodeElement Element, vsCMChangeKind Change)
         {
-
+            if (!vgSetting.ProjectStatus.Started)
+                return;
         }
 
         /// <summary>
@@ -174,6 +177,9 @@ namespace Vistaghost.VISTAGHOST.Helper
         /// <param name="Element"></param>
         void codeModelEvent_ElementAdded(CodeElement Element)
         {
+            if (!vgSetting.ProjectStatus.Started)
+                return;
+
             switch (Element.Kind)
             {
                 //add function
@@ -187,12 +193,12 @@ namespace Vistaghost.VISTAGHOST.Helper
                         {
                             lef = new ListElementForm();
                             lef.OnResult += new ListElementEventHandler(lef_OnResult);
-                            lef.AddItem(prot);
+                            lef.AddItem(element);
                             lef.Show();
                         }
                         else
                         {
-                            lef.AddItem(prot);
+                            lef.AddItem(element);
                         }
                     }
                     break;
@@ -245,14 +251,14 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void commandEvents_BeforeExecute(string Guid, int ID, object CustomIn, object CustomOut, ref bool CancelDefault)
         {
-            if (ID == 331)
+            if (ID == 331 && vgSetting.ProjectStatus.Started)
             {
                 // "Save" invoked
                 var activeDoc = this.DTE.ActiveDocument;
                 if (!activeDoc.Saved)
                     FileManager.Instance.SaveFileChanged(activeDoc.FullName);
             }
-            else if (ID == 224)
+            else if (ID == 224 && vgSetting.ProjectStatus.Started)
             {
                 // "Save all" invoked
                 SavedAll = true;
@@ -355,6 +361,21 @@ namespace Vistaghost.VISTAGHOST.Helper
         {
             if (DTE == null) return;
             DTE.ExecuteCommand(cmd, args);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (lef != null)
+                    lef.Dispose();
+            }
         }
     }
 }

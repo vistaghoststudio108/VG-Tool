@@ -16,6 +16,7 @@ using Vistaghost.VISTAGHOST.Helper;
 using EnvDTE80;
 using EnvDTE;
 using System.Security.AccessControl;
+using Vistaghost.VISTAGHOST.DataModel;
 
 namespace Vistaghost.VISTAGHOST
 {
@@ -27,9 +28,14 @@ namespace Vistaghost.VISTAGHOST
 
         Settings settings;
         public ConfigEventHandler OnSendData;
-
         private HeaderStyle headerStyle = HeaderStyle.Aloka1;
         DTE2 dte2;
+
+        private string[] savedfile = {
+                                           vgSettingConstants.SettingFile,
+                                           //vgSettingConstants.RegisterFile,
+                                           vgSettingConstants.ProjectStatusFile
+                                     };
 
         private int parentIndex = -1;
         private int curIndex = -1;
@@ -220,12 +226,32 @@ namespace Vistaghost.VISTAGHOST
             treeView1.ExpandAll();
             btnSave.Enabled = false;
 
-            if(String.IsNullOrEmpty(settings.HistoryInfo.LogPath))
+            if (String.IsNullOrEmpty(settings.HistoryInfo.LogPath))
             {
                 string logpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), vgSettingConstants.VGFolder);
                 logpath = Path.Combine(logpath, vgSettingConstants.LogFolder);
 
                 txtLogPath.Text = logpath;
+            }
+
+            // update project status
+            if (vgSetting.ProjectStatus.Started)
+            {
+                txtProjectName.Enabled = false;
+                txtProjectName.Text = vgSetting.ProjectStatus.ProjectName;
+                txtProjectID.Enabled = false;
+                txtProjectID.Text = vgSetting.ProjectStatus.ProjectID;
+                btnStartProject.Text = "Stop";
+                lblProjectStatus.Text = "Project '" + txtProjectName.Text + "' is now starting...";
+            }
+            else
+            {
+                txtProjectName.Enabled = true;
+                txtProjectName.Text = String.Empty;
+                txtProjectID.Enabled = true;
+                txtProjectID.Text = String.Empty;
+                btnStartProject.Text = "Start";
+                lblProjectStatus.Text = "No projects";
             }
         }
 
@@ -308,82 +334,94 @@ namespace Vistaghost.VISTAGHOST
             {
                 IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
 
-                if (isoStore.FileExists(vgSettingConstants.SettingFile))
+                foreach (var file in savedfile)
                 {
-                    try
+                    if (isoStore.FileExists(file))
                     {
-                        isoStore.DeleteFile(vgSettingConstants.SettingFile);
-                        isoStore.Close();
-
-                        vgSetting.SettingData = new Settings();
-
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents = new List<ComponentInfo>();
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Module Name:" });
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Calling Sequence:" });
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Function:" });
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Arguments:" });
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Return Value:" });
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Note:" });
-                        vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "History:" });
-
-                        vgSetting.SaveSettings();
+                        isoStore.DeleteFile(file);
                     }
-                    catch (Exception ex)
+                }
+
+                isoStore.Close();
+                try
+                {
+                    vgSetting.SettingData = new Settings();
+
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents = new List<ComponentInfo>();
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Module Name:" });
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Calling Sequence:" });
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Function:" });
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Arguments:" });
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Return Value:" });
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "Note:" });
+                    vgSetting.SettingData.HeaderInfo.HeaderComponents.Add(new ComponentInfo { Checked = false, Name = "History:" });
+
+                    vgSetting.SaveSettings();
+
+                    if (vgSetting.ProjectStatus.Started)
                     {
-                        Logger.LogError(ex);
-                        return;
+                        vgSetting.ProjectStatus = new ProjectStatus { Started = false, ProjectName = "", ProjectID = "" };
+                        vgSetting.SaveProjectStatus();
+
+                        /*Clear project status*/
+                        txtProjectName.Enabled = true;
+                        txtProjectID.Enabled = true;
+                        txtProjectName.Text = txtProjectID.Text = String.Empty;
+                        btnStartProject.Text = "Start";
                     }
-
-                    // reset to original status
-                    txtOpenBeginTag.Text = txtCloseBeginTag.Text = "//<Not set>";
-                    txtOpenEndTag.Text = txtCloseEndTag.Text = "/";
-
-                    cbDateFormat.SelectedIndex = 0;
-                    chAutoAddWithoutDialog.Checked = true;
-
-                    richTextBox3.Text = "Module Name:";
-                    richTextBox4.Text = "Calling Sequence:";
-                    richTextBox5.Text = "Function:";
-                    richTextBox6.Text = "Arguments:";
-                    richTextBox7.Text = "Return Value:";
-                    richTextBox8.Text = "Note:";
-                    richTextBox9.Text = "History:";
-
-                    txtHistory.Text = "";
-                    cbXAModel.SelectedIndex = 4;
-                    cbHeaderStyle.SelectedIndex = 0;
-
-                    richTextBox1.Text = "/*=============================================================Aloka===========";
-                    richTextBox2.Text = "==============================================================Aloka==========*/";
-
-                    richTextBox3.Enabled = richTextBox4.Enabled = richTextBox5.Enabled = false;
-                    richTextBox6.Enabled = richTextBox7.Enabled = richTextBox8.Enabled = richTextBox9.Enabled = false;
-
-                    checkBox4.Checked = checkBox5.Checked = checkBox6.Checked = checkBox7.Checked = checkBox8.Checked = false;
-                    checkBox9.Checked = checkBox10.Checked = checkBox11.Checked = false;
-
-                    /*Reset history*/
-                    chDisHistory.Checked = false;
-                    chkLogHistory.Checked = false;
-                    txtLogPath.Text = String.Empty;
-
-                    txtHistory.Enabled = false;
-                    btnSave.Enabled = false;
-
-                    MessageBox.Show("All data have been deleted.", "Clear data result", MessageBoxButtons.OK, MessageBoxIcon.None);
-
-                    btnClearData.Enabled = false;
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex);
                     return;
                 }
 
-                btnClearData.Enabled = true;
+                // reset to original status
+                txtOpenBeginTag.Text = txtCloseBeginTag.Text = "//<Not set>";
+                txtOpenEndTag.Text = txtCloseEndTag.Text = "/";
+
+                cbDateFormat.SelectedIndex = 0;
+                chAutoAddWithoutDialog.Checked = true;
+
+                richTextBox3.Text = "Module Name:";
+                richTextBox4.Text = "Calling Sequence:";
+                richTextBox5.Text = "Function:";
+                richTextBox6.Text = "Arguments:";
+                richTextBox7.Text = "Return Value:";
+                richTextBox8.Text = "Note:";
+                richTextBox9.Text = "History:";
+
+                txtHistory.Text = "";
+                cbXAModel.SelectedIndex = 4;
+                cbHeaderStyle.SelectedIndex = 0;
+
+                richTextBox1.Text = "/*=============================================================Aloka===========";
+                richTextBox2.Text = "==============================================================Aloka==========*/";
+
+                richTextBox3.Enabled = richTextBox4.Enabled = richTextBox5.Enabled = false;
+                richTextBox6.Enabled = richTextBox7.Enabled = richTextBox8.Enabled = richTextBox9.Enabled = false;
+
+                checkBox4.Checked = checkBox5.Checked = checkBox6.Checked = checkBox7.Checked = checkBox8.Checked = false;
+                checkBox9.Checked = checkBox10.Checked = checkBox11.Checked = false;
+
+                /*Reset history*/
+                chDisHistory.Checked = false;
+                chkLogHistory.Checked = false;
+                txtLogPath.Text = String.Empty;
+
+                txtHistory.Enabled = false;
+                btnSave.Enabled = false;
+
+                MessageBox.Show("All data have been deleted.", "Clear data result", MessageBoxButtons.OK, MessageBoxIcon.None);
+
+                btnClearData.Enabled = false;
             }
         }
 
         private void AddComponent_CheckedChanged(object sender, EventArgs e)
         {
             var check = ((CheckBox)sender);
-            var tag = int.Parse(((CheckBox)sender).Tag.ToString());
+            var tag = int.Parse(check.Tag.ToString());
 
             if (tag == 0)
             {
@@ -459,7 +497,7 @@ namespace Vistaghost.VISTAGHOST
 
         private void Config_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
             }
@@ -467,16 +505,16 @@ namespace Vistaghost.VISTAGHOST
 
         private void HeaderInput_TextChanged(object sender, EventArgs e)
         {
-            if(!btnSave.Enabled)
+            if (!btnSave.Enabled)
                 btnSave.Enabled = true;
 
-            if(!AddHeaderChanged)
+            if (!AddHeaderChanged)
                 AddHeaderChanged = true;
         }
 
         private void CommentInput_TextChanged(object sender, EventArgs e)
         {
-            if(!AddCommentChanged)
+            if (!AddCommentChanged)
                 AddCommentChanged = true;
 
             if (!btnSave.Enabled)
@@ -653,6 +691,12 @@ namespace Vistaghost.VISTAGHOST
             btnSave.Enabled = true;
         }
 
+        private void numerEmptyLine_KeyDown(object sender, KeyEventArgs e)
+        {
+            AddCommentChanged = true;
+            btnSave.Enabled = true;
+        }
+
         private void cmCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             AddCommentChanged = true;
@@ -692,7 +736,7 @@ namespace Vistaghost.VISTAGHOST
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if(e.Action == TreeViewAction.ByMouse)
+            if (e.Action == TreeViewAction.ByMouse)
             {
                 return;
             }
@@ -741,27 +785,66 @@ namespace Vistaghost.VISTAGHOST
 
         private void btnStartProject_Click(object sender, EventArgs e)
         {
-            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                                    vgSettingConstants.VGFolder,
-                                    vgSettingConstants.WorkHistoryFolder);
-
-            if(!Directory.Exists(dir))
+            if (vgSetting.ProjectStatus.Started)
             {
-                Directory.CreateDirectory(dir);
-            }
-
-            var path = Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
-
-            if(!File.Exists(path))
-            {
-                using (var stream = File.CreateText(path))
+                if (MessageBox.Show("Are you sure you want to stop current project?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    /*Create new history file*/
-                    stream.Write(Properties.Resources.WorkHistory);
+                    vgSetting.ProjectStatus.Started = false;
+                    vgSetting.ProjectStatus.ProjectID = String.Empty;
+                    if (vgSetting.SaveProjectStatus())
+                    {
+                        btnStartProject.Text = "Start";
+                        txtProjectName.Enabled = true;
+                        txtProjectName.Text = String.Empty;
+                        txtProjectID.Enabled = true;
+                        txtProjectID.Text = String.Empty;
+                        lblProjectStatus.Text = "No projects";
+                    }
+                    else
+                        MessageBox.Show("Can not stop the current project. Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                return;
             }
 
-            File.SetAttributes(path, FileAttributes.ReadOnly | FileAttributes.Encrypted | FileAttributes.System);
+            if (String.IsNullOrEmpty(txtProjectName.Text))
+            {
+                MessageBox.Show("Project name must not be empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (String.IsNullOrEmpty(txtProjectID.Text))
+            {
+                MessageBox.Show("Project ID must not be empty!", " Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            vgSetting.ProjectStatus.Started = true;
+            vgSetting.ProjectStatus.ProjectID = txtProjectID.Text;
+            vgSetting.ProjectStatus.ProjectName = txtProjectName.Text;
+
+            if (vgSetting.SaveProjectStatus())
+            {
+                btnStartProject.Text = "Stop";
+                txtProjectName.Enabled = false;
+                txtProjectID.Enabled = false;
+                lblProjectStatus.Text = "Project '" + txtProjectName.Text + "' is now starting...";
+
+                // Update history file
+                Vistaghost.VISTAGHOST.DataModel.FileManager.Instance.UpdateStatus();
+            }
+            else
+                MessageBox.Show("Can not start project. Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnRestoreData_Click(object sender, EventArgs e)
+        {
+            FileManager.Instance.FixCorruptedFiles();
+        }
+
+        private void txtHotKey_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -93,8 +93,15 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pnDataSetting = new System.Windows.Forms.Panel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnClearData = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lblProjectStatus = new System.Windows.Forms.Label();
+            this.txtProjectID = new System.Windows.Forms.TextBox();
+            this.txtProjectName = new System.Windows.Forms.TextBox();
+            this.btnStartProject = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnHistory = new System.Windows.Forms.Panel();
             this.pnKeyboard = new System.Windows.Forms.Panel();
@@ -108,11 +115,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnStartProject = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnRestoreData = new System.Windows.Forms.Button();
             this.txtHotKey = new Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).BeginInit();
@@ -121,6 +124,7 @@
             this.pnHeaderSetting.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.pnDataSetting.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.pnHistory.SuspendLayout();
             this.pnKeyboard.SuspendLayout();
@@ -211,6 +215,7 @@
             this.numerEmptyLine.Size = new System.Drawing.Size(41, 23);
             this.numerEmptyLine.TabIndex = 14;
             this.numerEmptyLine.ValueChanged += new System.EventHandler(this.numerEmptyLine_ValueChanged);
+            this.numerEmptyLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numerEmptyLine_KeyDown);
             // 
             // label11
             // 
@@ -484,6 +489,7 @@
             this.checkBox10.Tag = "7";
             this.checkBox10.Text = "Add break line between components";
             this.checkBox10.UseVisualStyleBackColor = true;
+            this.checkBox10.Visible = false;
             this.checkBox10.CheckedChanged += new System.EventHandler(this.AddComponent_CheckedChanged);
             // 
             // cbHeaderStyle
@@ -724,7 +730,7 @@
             // 
             // pnDataSetting
             // 
-            this.pnDataSetting.Controls.Add(this.btnClearData);
+            this.pnDataSetting.Controls.Add(this.groupBox5);
             this.pnDataSetting.Controls.Add(this.groupBox4);
             this.pnDataSetting.Location = new System.Drawing.Point(319, 431);
             this.pnDataSetting.Name = "pnDataSetting";
@@ -732,9 +738,20 @@
             this.pnDataSetting.TabIndex = 5;
             this.pnDataSetting.Visible = false;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnRestoreData);
+            this.groupBox5.Controls.Add(this.btnClearData);
+            this.groupBox5.Location = new System.Drawing.Point(7, 163);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(441, 87);
+            this.groupBox5.TabIndex = 40;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Data Management";
+            // 
             // btnClearData
             // 
-            this.btnClearData.Location = new System.Drawing.Point(304, 315);
+            this.btnClearData.Location = new System.Drawing.Point(16, 35);
             this.btnClearData.Name = "btnClearData";
             this.btnClearData.Size = new System.Drawing.Size(111, 26);
             this.btnClearData.TabIndex = 39;
@@ -744,8 +761,9 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.textBox2);
-            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Controls.Add(this.lblProjectStatus);
+            this.groupBox4.Controls.Add(this.txtProjectID);
+            this.groupBox4.Controls.Add(this.txtProjectName);
             this.groupBox4.Controls.Add(this.btnStartProject);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.label9);
@@ -755,6 +773,58 @@
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Project tracking";
+            // 
+            // lblProjectStatus
+            // 
+            this.lblProjectStatus.AutoSize = true;
+            this.lblProjectStatus.Location = new System.Drawing.Point(128, 103);
+            this.lblProjectStatus.Name = "lblProjectStatus";
+            this.lblProjectStatus.Size = new System.Drawing.Size(182, 15);
+            this.lblProjectStatus.TabIndex = 3;
+            this.lblProjectStatus.Text = "Project IDScreen is now starting...";
+            // 
+            // txtProjectID
+            // 
+            this.txtProjectID.Location = new System.Drawing.Point(102, 53);
+            this.txtProjectID.Name = "txtProjectID";
+            this.txtProjectID.Size = new System.Drawing.Size(148, 23);
+            this.txtProjectID.TabIndex = 2;
+            // 
+            // txtProjectName
+            // 
+            this.txtProjectName.Location = new System.Drawing.Point(102, 20);
+            this.txtProjectName.Name = "txtProjectName";
+            this.txtProjectName.Size = new System.Drawing.Size(326, 23);
+            this.txtProjectName.TabIndex = 2;
+            // 
+            // btnStartProject
+            // 
+            this.btnStartProject.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnStartProject.Location = new System.Drawing.Point(16, 95);
+            this.btnStartProject.Name = "btnStartProject";
+            this.btnStartProject.Size = new System.Drawing.Size(79, 28);
+            this.btnStartProject.TabIndex = 1;
+            this.btnStartProject.Text = "Start";
+            this.btnStartProject.UseVisualStyleBackColor = true;
+            this.btnStartProject.Click += new System.EventHandler(this.btnStartProject_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(38, 61);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(58, 15);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Project ID";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(19, 27);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 15);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Project name";
             // 
             // pnHistory
             // 
@@ -895,48 +965,15 @@
             this.label13.TabIndex = 5;
             this.label13.Text = "Hotkeyable Items";
             // 
-            // label9
+            // btnRestoreData
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(19, 27);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 15);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Project name";
-            // 
-            // btnStartProject
-            // 
-            this.btnStartProject.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnStartProject.Location = new System.Drawing.Point(16, 95);
-            this.btnStartProject.Name = "btnStartProject";
-            this.btnStartProject.Size = new System.Drawing.Size(79, 28);
-            this.btnStartProject.TabIndex = 1;
-            this.btnStartProject.Text = "Start";
-            this.btnStartProject.UseVisualStyleBackColor = true;
-            this.btnStartProject.Click += new System.EventHandler(this.btnStartProject_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(102, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(326, 23);
-            this.textBox1.TabIndex = 2;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(38, 61);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 15);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "Project ID";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(102, 53);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(148, 23);
-            this.textBox2.TabIndex = 2;
+            this.btnRestoreData.Location = new System.Drawing.Point(133, 35);
+            this.btnRestoreData.Name = "btnRestoreData";
+            this.btnRestoreData.Size = new System.Drawing.Size(154, 26);
+            this.btnRestoreData.TabIndex = 39;
+            this.btnRestoreData.Text = "Restore corrupted data";
+            this.btnRestoreData.UseVisualStyleBackColor = true;
+            this.btnRestoreData.Click += new System.EventHandler(this.btnRestoreData_Click);
             // 
             // txtHotKey
             // 
@@ -946,6 +983,7 @@
             this.txtHotKey.Name = "txtHotKey";
             this.txtHotKey.Size = new System.Drawing.Size(173, 23);
             this.txtHotKey.TabIndex = 7;
+            this.txtHotKey.TextChanged += new System.EventHandler(this.txtHotKey_TextChanged);
             // 
             // Config
             // 
@@ -984,6 +1022,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.pnDataSetting.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.pnHistory.ResumeLayout(false);
@@ -1069,9 +1108,12 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown numerEmptyLine;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtProjectID;
+        private System.Windows.Forms.TextBox txtProjectName;
         private System.Windows.Forms.Button btnStartProject;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblProjectStatus;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btnRestoreData;
     }
 }

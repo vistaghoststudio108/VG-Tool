@@ -30,6 +30,18 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public FileManager()
         {
+            CheckFile();
+            SearchCanceled = false;
+        }
+
+        /// <summary>
+        /// Check the exist of the hisory file
+        /// </summary>
+        bool CheckFile()
+        {
+            if (!vgSetting.ProjectStatus.Started)
+                return false;
+
             var dir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                                              vgSettingConstants.VGFolder,
                                              vgSettingConstants.WorkHistoryFolder);
@@ -44,41 +56,65 @@ namespace Vistaghost.VISTAGHOST.DataModel
             {
                 using (var stream = File.CreateText(whPath))
                 {
-                    /*Create new log file based on exists file*/
                     stream.Write(Properties.Resources.WorkHistory);
-
                     //File.SetAttributes(whPath, FileAttributes.ReadOnly | FileAttributes.Encrypted | FileAttributes.System);
                 }
             }
 
-            SearchCanceled = false;
+            return true;
         }
 
-        public List<FileContainer> SearchFileFromWorkHistory()
+        public void FixCorruptedFiles()
+        {
+
+        }
+
+        public void UpdateStatus()
+        {
+            CheckFile();
+
+            XDocument doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+            if (doc != null)
+            {
+                doc.Root.Attribute("id").Value = vgSetting.ProjectStatus.ProjectID;
+                doc.Root.Attribute("from").Value = DateTime.Now.ToShortDateString();
+                doc.Root.Attribute("project").Value = vgSetting.ProjectStatus.ProjectName;
+                doc.Root.Attribute("author").Value = Environment.MachineName;
+
+                doc.Save(whPath);
+            }
+        }
+
+        public List<FileContainer> SearchFileFromWorkHistory(out string message)
         {
             List<FileContainer> fileList = new List<FileContainer>();
+            message = String.Empty;
 
-            if (System.IO.File.Exists(whPath))
+            if (File.Exists(whPath))
             {
                 XDocument doc;
-                doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
-                foreach (var sNode in doc.Root.Elements())
+                try
                 {
-                    if (sNode.Attribute("id").Value == vgSetting.ProjectStatus.ProjectID.ToString())
+                    doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+                    if (doc.Root.Attribute("id").Value == vgSetting.ProjectStatus.ProjectID)
                     {
-                        var fNode = sNode.Element("ChangedFile");
+                        var fNode = doc.Root.Element("ChangedFile");
                         foreach (var fn in fNode.Elements())
                         {
-                            if (fn.Attribute("action").Value == "mod" || fn.Attribute("action").Value == "add")
-                            {
-                                fileList.Add(new FileContainer { FileName = fn.Value });
-                            }
+                            fileList.Add(new FileContainer { FileName = fn.Value });
                         }
-
-                        break;
                     }
                 }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex);
+                }
+
+                if (fileList.Count == 0)
+                    message = "There is no changed items in work history";
             }
+            else
+                message = "File not found";
 
             return fileList;
         }
@@ -93,7 +129,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                 doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
                 foreach (var sNode in doc.Root.Elements())
                 {
-                    if (sNode.Attribute("id").Value == vgSetting.ProjectStatus.ProjectID.ToString())
+                    if (sNode.Attribute("id").Value == vgSetting.ProjectStatus.ProjectID)
                     {
                         var fNode = sNode.Element("CodeElement");
                         foreach (var fn in fNode.Elements())
@@ -363,6 +399,9 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void SaveNewElements(List<VGCodeElement> codeElements)
         {
+            if (!CheckFile())
+                return;
+
             try
             {
                 var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
@@ -390,8 +429,9 @@ namespace Vistaghost.VISTAGHOST.DataModel
                     doc.Save(whPath);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.LogError(ex);
             }
         }
 
@@ -411,6 +451,9 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void SaveFileChanged(string filename)
         {
+            if (!CheckFile())
+                return;
+
             try
             {
                 var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
@@ -420,20 +463,27 @@ namespace Vistaghost.VISTAGHOST.DataModel
                     var eNode = new XElement("File");
                     eNode.Value = filename;
 
+                    XAttribute dateAttr = new XAttribute("date", DateTime.Now.ToShortDateString());
+                    eNode.Add(dateAttr);
+
                     groupNode.Add(eNode);
                     doc.Save(whPath);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.LogError(ex);
             }
         }
 
         public void RemoveElement(string eName)
         {
+            if (!CheckFile())
+                return;
+
             try
             {
-                 var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+                var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
                 var groupNode = doc.Root.Element("CodeElement").Element("Function");
                 if (groupNode != null)
                 {
@@ -446,8 +496,9 @@ namespace Vistaghost.VISTAGHOST.DataModel
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.LogError(ex);
             }
         }
     }

@@ -54,14 +54,14 @@
             this.txtAccount = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
-            this.lblAccount = new System.Windows.Forms.Label();
-            this.lblRank = new System.Windows.Forms.Label();
             this.lblWorkAt = new System.Windows.Forms.Label();
+            this.lblRank = new System.Windows.Forms.Label();
+            this.lblAccount = new System.Windows.Forms.Label();
+            this.lblName = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -322,32 +322,37 @@
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             // 
-            // label12
+            // lblWorkAt
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(68, 80);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(67, 15);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Your Name";
+            this.lblWorkAt.Location = new System.Drawing.Point(171, 146);
+            this.lblWorkAt.Name = "lblWorkAt";
+            this.lblWorkAt.Size = new System.Drawing.Size(265, 15);
+            this.lblWorkAt.TabIndex = 0;
+            this.lblWorkAt.Text = "Unknown";
             // 
-            // label13
+            // lblRank
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(83, 102);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(52, 15);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "Account";
+            this.lblRank.Location = new System.Drawing.Point(171, 122);
+            this.lblRank.Name = "lblRank";
+            this.lblRank.Size = new System.Drawing.Size(265, 15);
+            this.lblRank.TabIndex = 0;
+            this.lblRank.Text = "Unknown";
             // 
-            // label14
+            // lblAccount
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(102, 124);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(33, 15);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Rank";
+            this.lblAccount.Location = new System.Drawing.Point(171, 102);
+            this.lblAccount.Name = "lblAccount";
+            this.lblAccount.Size = new System.Drawing.Size(284, 15);
+            this.lblAccount.TabIndex = 0;
+            this.lblAccount.Text = "Unknown";
+            // 
+            // lblName
+            // 
+            this.lblName.Location = new System.Drawing.Point(171, 80);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(284, 15);
+            this.lblName.TabIndex = 0;
+            this.lblName.Text = "Unknown";
             // 
             // label15
             // 
@@ -358,37 +363,32 @@
             this.label15.TabIndex = 0;
             this.label15.Text = "Work At";
             // 
-            // lblName
+            // label14
             // 
-            this.lblName.Location = new System.Drawing.Point(171, 80);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(63, 15);
-            this.lblName.TabIndex = 0;
-            this.lblName.Text = "Unknown";
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(102, 124);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(33, 15);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Rank";
             // 
-            // lblAccount
+            // label13
             // 
-            this.lblAccount.Location = new System.Drawing.Point(171, 102);
-            this.lblAccount.Name = "lblAccount";
-            this.lblAccount.Size = new System.Drawing.Size(63, 15);
-            this.lblAccount.TabIndex = 0;
-            this.lblAccount.Text = "Unknown";
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(83, 102);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(52, 15);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Account";
             // 
-            // lblRank
+            // label12
             // 
-            this.lblRank.Location = new System.Drawing.Point(171, 122);
-            this.lblRank.Name = "lblRank";
-            this.lblRank.Size = new System.Drawing.Size(63, 15);
-            this.lblRank.TabIndex = 0;
-            this.lblRank.Text = "Unknown";
-            // 
-            // lblWorkAt
-            // 
-            this.lblWorkAt.Location = new System.Drawing.Point(171, 146);
-            this.lblWorkAt.Name = "lblWorkAt";
-            this.lblWorkAt.Size = new System.Drawing.Size(63, 15);
-            this.lblWorkAt.TabIndex = 0;
-            this.lblWorkAt.Text = "Unknown";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(68, 80);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(67, 15);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Your Name";
             // 
             // RegisterForm
             // 
