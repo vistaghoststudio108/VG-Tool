@@ -103,11 +103,21 @@ namespace Vistaghost.VISTAGHOST.Lib
             return false;
         }
 
-        public static string GetFuncPrototype(DTE2 dte2, PrototypeType proType)
+        public static bool GetFuncPrototype(DTE2 dte2, PrototypeType proType, out string _prototype)
         {
             TextSelection selected = (TextSelection)dte2.ActiveDocument.Selection;
-            CodeFunction codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
-            string _prototype = String.Empty;
+            CodeFunction codeFunc;
+            _prototype = String.Empty;
+
+            try
+            {
+                codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex);
+                return false;
+            }
 
             if (codeFunc != null)
             {
@@ -122,9 +132,11 @@ namespace Vistaghost.VISTAGHOST.Lib
                     default:
                         break;
                 }
-            }
 
-            return _prototype;
+                return true;
+            }
+            else
+                return false;
         }
 
         /// <summary>
