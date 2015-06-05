@@ -27,4 +27,6 @@ namespace Vistaghost.VISTAGHOST.Lib
     public delegate void HistoryViewerEventHandler(string file);
 
     public delegate void ToolWindowPaneEventHandler(int swCode);
+
+    public delegate void ListElementEventHandler(List<VGCodeElement> finalList, VGDialogResult dlgResult);
 }

@@ -345,7 +345,18 @@ namespace Vistaghost.VISTAGHOST.Lib
     [Serializable]
     public class ProjectStatus
     {
-        public bool NotStarted { get; set; }
+        public bool Started { get; set; }
         public int ProjectID { get; set; }
+        public string ProjectName { get; set; }
+    }
+
+    public enum VGDialogResult
+    {
+        VG_OK = 0,
+        VG_CANCEL,
+        VG_YES,
+        VG_NO,
+        VG_RETRY,
+        VG_NONE
     }
 }

@@ -254,7 +254,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             {
                 case 0:
                     {
-                        if (VGSetting.ProjectStatus.NotStarted)
+                        if (VGSetting.ProjectStatus.Started)
                         {
                             message = "Project is not started";
                             bValid = false;
