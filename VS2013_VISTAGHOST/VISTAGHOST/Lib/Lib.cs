@@ -210,6 +210,28 @@ namespace Vistaghost.VISTAGHOST.Lib
             return lineBreakStr + str1 + (String.IsNullOrEmpty(str2) ? lineBreakStr : "\n" + str2 + lineBreakStr);
         }
 
+        static bool FixWarning(DTE dte)
+        {
+            string newfunc = "_tcsncpy_s";
+            var selected = dte.ActiveDocument.Selection as TextSelection;
+            if(selected.IsEmpty)
+            {
+                return false;
+            }
+
+            selected.SmartFormat();
+
+            string funcstr = selected.Text;
+            if(funcstr.Contains("wcscpy_s"))
+            {
+                funcstr = funcstr.Replace("wcscpy_s", newfunc);
+                funcstr = funcstr.Insert(funcstr.Length - 2, ", _TRUNCATE");
+                selected.ReplacePattern(selected.Text, funcstr);
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Processing text for add single comments
         /// </summary>
@@ -333,7 +355,8 @@ namespace Vistaghost.VISTAGHOST.Lib
 
                             if (keep_comments)
                             {
-                                result = ClearCommentWithSelectedText(dte, vgDelCommentsType.vgDeleteBoth, vgDelCommentsOptions.vgDeleteAllBreakLine | vgDelCommentsOptions.vgSmartFormat);
+                                //result = ClearCommentWithSelectedText(dte, vgDelCommentsType.vgDeleteBoth, vgDelCommentsOptions.vgDeleteAllBreakLine | vgDelCommentsOptions.vgSmartFormat);
+                                result = FixWarning(dte);
                             }
                         }
                         break;

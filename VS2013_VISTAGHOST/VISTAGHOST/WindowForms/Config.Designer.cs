@@ -94,6 +94,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pnDataSetting = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnRestoreData = new System.Windows.Forms.Button();
             this.btnClearData = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lblProjectStatus = new System.Windows.Forms.Label();
@@ -115,7 +116,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.btnRestoreData = new System.Windows.Forms.Button();
             this.txtHotKey = new Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).BeginInit();
@@ -749,6 +749,16 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Data Management";
             // 
+            // btnRestoreData
+            // 
+            this.btnRestoreData.Location = new System.Drawing.Point(133, 35);
+            this.btnRestoreData.Name = "btnRestoreData";
+            this.btnRestoreData.Size = new System.Drawing.Size(154, 26);
+            this.btnRestoreData.TabIndex = 39;
+            this.btnRestoreData.Text = "Restore corrupted data";
+            this.btnRestoreData.UseVisualStyleBackColor = true;
+            this.btnRestoreData.Click += new System.EventHandler(this.btnRestoreData_Click);
+            // 
             // btnClearData
             // 
             this.btnClearData.Location = new System.Drawing.Point(16, 35);
@@ -965,16 +975,6 @@
             this.label13.TabIndex = 5;
             this.label13.Text = "Hotkeyable Items";
             // 
-            // btnRestoreData
-            // 
-            this.btnRestoreData.Location = new System.Drawing.Point(133, 35);
-            this.btnRestoreData.Name = "btnRestoreData";
-            this.btnRestoreData.Size = new System.Drawing.Size(154, 26);
-            this.btnRestoreData.TabIndex = 39;
-            this.btnRestoreData.Text = "Restore corrupted data";
-            this.btnRestoreData.UseVisualStyleBackColor = true;
-            this.btnRestoreData.Click += new System.EventHandler(this.btnRestoreData_Click);
-            // 
             // txtHotKey
             // 
             this.txtHotKey.DTE2Object = null;
@@ -989,7 +989,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1131, 827);
+            this.ClientSize = new System.Drawing.Size(1131, 741);
             this.Controls.Add(this.pnKeyboard);
             this.Controls.Add(this.pnHistory);
             this.Controls.Add(this.pnCommentSetting);
