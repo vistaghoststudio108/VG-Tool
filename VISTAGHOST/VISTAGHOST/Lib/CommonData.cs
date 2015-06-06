@@ -299,6 +299,7 @@ namespace Vistaghost.VISTAGHOST.Lib
     public class ObjectType
     {
         public string Name { get; set; }
+        public string Path { get; set; }
         public string Prototype { get; set; }
         public string Comment { get; set; }
         public int Line { get; set; }
@@ -346,7 +347,7 @@ namespace Vistaghost.VISTAGHOST.Lib
     public class ProjectStatus
     {
         public bool Started { get; set; }
-        public int ProjectID { get; set; }
+        public string ProjectID { get; set; }
         public string ProjectName { get; set; }
     }
 

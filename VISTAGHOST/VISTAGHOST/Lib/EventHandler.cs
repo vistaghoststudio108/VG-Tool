@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Vistaghost.VISTAGHOST.DataModel;
 
 namespace Vistaghost.VISTAGHOST.Lib
 {

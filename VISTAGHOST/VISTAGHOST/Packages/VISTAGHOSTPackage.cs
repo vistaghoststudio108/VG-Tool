@@ -87,6 +87,7 @@ namespace Vistaghost.VISTAGHOST
 
         internal static VGSetting Setting = VGSetting.Instance;
         internal static DTEHelper DteHelper { get; private set; }
+        internal static WindowManager WindowManager { get; private set; }
 
         SingleForm sf = new SingleForm();
         Config cff = new Config();
@@ -171,6 +172,7 @@ namespace Vistaghost.VISTAGHOST
                     DteHelper = new DTEHelper(GetService(typeof(SDTE)) as DTE, (DTE2)GetService(typeof(DTE)));
                     dte2 = (DTE2)GetService(typeof(DTE));
 
+                    WindowManager = new WindowManager();
                     RegisterOleComponent();
 
                     ShowToolBar(false);
@@ -291,25 +293,6 @@ namespace Vistaghost.VISTAGHOST
 
             var lua = menu.Controls["Vistaghost"] as CommandBarPopup;
             lua.Controls["ShotKeys"].Visible = false;
-
-            if (show)
-                ShowToolWindow();
-        }
-
-        public void ShowToolWindow()
-        {
-            // Get the instance number 0 of this tool window. This window is single instance so this instance
-            // is actually the only one.
-            // The last flag is set to true so that if the tool window does not exists it will be created.
-            ToolWindowPane window = this.FindToolWindow(typeof(VistaghostWindowPane), 0, true);
-            if ((null == window) || (null == window.Frame))
-            {
-                throw new NotSupportedException(Properties.Resources.CanNotCreateWindow);
-            }
-
-            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-            if (windowFrame.IsVisible() == VSConstants.S_FALSE)
-                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.ShowNoActivate());
         }
 
         public void EnableButton(int cmdidButton, bool enabled)
@@ -330,7 +313,7 @@ namespace Vistaghost.VISTAGHOST
 
         private void ShowToolWindowCallback(object sender, EventArgs e)
         {
-            ShowToolWindow();
+            WindowManager.ShowToolWindow();
         }
 
         private void CopyPrototypeCallback(object sender, EventArgs e)

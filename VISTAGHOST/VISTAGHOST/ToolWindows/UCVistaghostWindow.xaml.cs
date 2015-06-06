@@ -27,9 +27,8 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         SearchType searchType = SearchType.None;
         public UCVistaghostWindow Instance;
         bool IsCanceled = false;
-        private int numItem = 1;
         bool IsSearching = false;
-        List<ObjectType> Results = new List<ObjectType>();
+        List<VGCodeElement> Results = new List<VGCodeElement>();
         List<FileContainer> FileList = new List<FileContainer>();
         int totalFileSearched = 0;
 
@@ -102,9 +101,28 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             var _dte = Vistaghost.VISTAGHOST.VISTAGHOSTPackage.Current.DTE;
+
             try
             {
-                Results = VGOperations.GetFunctionProtFromHistory(_dte, this.FileList, searchType, ref Instance, out totalFileSearched, ref IsCanceled);
+                foreach (var file in this.FileList)
+                {
+                    foreach (VGCodeElement ce in FileManager.Instance.SearchInFile(_dte, file.FileName, VGSetting.Instance.FindWhat, true))
+                    {
+                        AddString(" " + ce.Name);
+                        Results.Add(ce);
+
+                        if (IsCanceled)
+                            break;
+                    }
+
+                    totalFileSearched++;
+                    _dte.StatusBar.Text = "Searching " + file.FileName;
+
+                    if (IsCanceled)
+                        break;
+                }
+
+                //Results = vgOperations.GetFunctionProtFromHistory(_dte, this.FileList, searchType, ref Instance, out totalFileSearched, ref IsCanceled);
 
                 if (IsCanceled && totalFileSearched != this.FileList.Count)
                     e.Cancel = true;
@@ -168,31 +186,25 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             ComboBox combo = (ComboBox)sender;
             switch (combo.SelectedIndex)
             {
-                case 0:
-                    {
-                        searchType = SearchType.All;
-                    }
-                    break;
-
-                case 1:// Function search
+                case 0:// Function search
                     {
                         searchType = SearchType.Function;
                     }
                     break;
 
-                case 2:// Class search
+                case 1:// Class search
                     {
                         searchType = SearchType.Class;
                     }
                     break;
 
-                case 3:
+                case 2:
                     {
                         searchType = SearchType.Enumerable;
                     }
                     break;
 
-                case 4:
+                case 3:
                     {
                         searchType = SearchType.Structure;
                     }
@@ -230,16 +242,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             switch (searchType)
             {
-                case SearchType.Function:
-                    return "functions";
-                case SearchType.Class:
-                    return "class";
-                case SearchType.Enumerable:
-                    return "enums";
-                case SearchType.Structure:
-                    return "structs";
-                default:
-                    return String.Empty;
+                case SearchType.Function:       return "functions";
+                case SearchType.Class:          return "class";
+                case SearchType.Enumerable:     return "enums";
+                case SearchType.Structure:      return "structs";
+                default:                        return String.Empty;
             }
         }
 
@@ -261,11 +268,10 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                         }
                         else
                         {
-                            fileList = FileManager.Instance.SearchFileFromWorkHistory();
+                            fileList = FileManager.Instance.SearchFileFromWorkHistory(out message);
                             if (fileList.Count == 0)
                             {
                                 bValid = false;
-                                message = "There is no changed items in work history";
                             }
                             else
                             {
@@ -352,13 +358,19 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             }
 
             SearchResultArea.Clear();
-            SearchResultArea.AppendText("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"\n");
+            SearchResultArea.Document.Blocks.Add(new Paragraph(new Run("")));
+            AddString("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"");
 
             /*disable some buttons*/
             BtnSearchElement.IsEnabled = false;
             BtnCopyElement.IsEnabled = false;
             BtnStopSearch.IsEnabled = true;
+            BtnClearAll.IsEnabled = false;
 
+            searchType = (SearchType)Combo_ElementType.SelectedIndex;
+
+            Results.Clear();
+            totalFileSearched = 0;
             IsCanceled = false;
             IsSearching = true;
             bw.RunWorkerAsync();
@@ -389,7 +401,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                 {
                     case SearchType.Function:
                         {
-                            copiedText += item.Prototype + "\n";
+                            copiedText += item.Name + "\n";
                         }
                         break;
                     case SearchType.Class:

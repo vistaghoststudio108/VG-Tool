@@ -116,6 +116,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.chkFixWarning = new System.Windows.Forms.CheckBox();
             this.txtHotKey = new Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).BeginInit();
@@ -341,6 +342,7 @@
             // 
             // pnCommentSetting
             // 
+            this.pnCommentSetting.Controls.Add(this.chkFixWarning);
             this.pnCommentSetting.Controls.Add(this.txtOpenEndTag);
             this.pnCommentSetting.Controls.Add(this.groupBox1);
             this.pnCommentSetting.Controls.Add(this.chkJustOneLine);
@@ -975,6 +977,17 @@
             this.label13.TabIndex = 5;
             this.label13.Text = "Hotkeyable Items";
             // 
+            // chkFixWarning
+            // 
+            this.chkFixWarning.AutoSize = true;
+            this.chkFixWarning.Location = new System.Drawing.Point(14, 225);
+            this.chkFixWarning.Name = "chkFixWarning";
+            this.chkFixWarning.Size = new System.Drawing.Size(86, 19);
+            this.chkFixWarning.TabIndex = 13;
+            this.chkFixWarning.Text = "Fix warning";
+            this.chkFixWarning.UseVisualStyleBackColor = true;
+            this.chkFixWarning.CheckedChanged += new System.EventHandler(this.cmCheckbox_CheckedChanged);
+            // 
             // txtHotKey
             // 
             this.txtHotKey.DTE2Object = null;
@@ -1115,5 +1128,6 @@
         private System.Windows.Forms.Label lblProjectStatus;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btnRestoreData;
+        private System.Windows.Forms.CheckBox chkFixWarning;
     }
 }

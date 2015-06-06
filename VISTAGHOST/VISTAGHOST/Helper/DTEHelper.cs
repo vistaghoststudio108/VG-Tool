@@ -11,6 +11,7 @@ using Vistaghost.VISTAGHOST.Lib;
 using Vistaghost.VISTAGHOST.Network;
 using System.ComponentModel;
 using Vistaghost.VISTAGHOST.DataModel;
+using Vistaghost.VISTAGHOST.WindowForms;
 
 namespace Vistaghost.VISTAGHOST.Helper
 {

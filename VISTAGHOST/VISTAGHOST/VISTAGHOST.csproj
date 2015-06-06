@@ -145,6 +145,7 @@
       <DependentUpon>VistaghostWindowControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\VistaghostWindowPane.cs" />
+    <Compile Include="ToolWindows\WindowManager.cs" />
     <Compile Include="VGUserControl\AutoGreyableImage.cs" />
     <Compile Include="VGUserControl\ColorComboBox.cs">
       <SubType>Component</SubType>
@@ -216,6 +217,12 @@
     </Compile>
     <Compile Include="WindowForms\HistoryViewer.Designer.cs">
       <DependentUpon>HistoryViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowForms\ListElementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowForms\ListElementForm.Designer.cs">
+      <DependentUpon>ListElementForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowForms\RegisterForm.cs">
       <SubType>Form</SubType>
@@ -305,7 +312,6 @@
     <Resource Include="Resources\PrintPreviewHS.png" />
     <Resource Include="Resources\search.png" />
     <Resource Include="Resources\search2.png" />
-    <Resource Include="Resources\WorkHistory.xml" />
     <Resource Include="Resources\SearchFunc.png" />
   </ItemGroup>
   <ItemGroup>
@@ -372,6 +378,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\StopHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WorkHistory.xml" />
   </ItemGroup>
   <PropertyGroup>
     <!--

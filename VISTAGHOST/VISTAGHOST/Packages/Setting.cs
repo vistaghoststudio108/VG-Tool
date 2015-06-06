@@ -138,7 +138,7 @@ namespace Vistaghost.VISTAGHOST
 
         public static ProjectStatus LoadProjectStatus()
         {
-            Lib.ProjectStatus projStatus = new ProjectStatus { Started = true, ProjectID = 0 };
+            Lib.ProjectStatus projStatus = new ProjectStatus { Started = true, ProjectID = "", ProjectName = "" };
 
             try
             {

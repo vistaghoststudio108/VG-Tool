@@ -14,7 +14,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
     public class FileManager
     {
         static FileManager _instance;
-        private string whPath = String.Empty; // work history path
+        private static string whPath = String.Empty; // work history path
         public static FileManager Instance
         {
             get
@@ -102,7 +102,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex);
+                    Logger.LogError(ex, false);
                 }
 
                 if (fileList.Count == 0)
@@ -137,7 +137,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                         {
                                             switch (acType)
                                             {
-                                                case ActionType.MODIFY:
+                                                case ActionType.Modify:
                                                     {
                                                         if (fn.Attribute("action").Value == "mod")
                                                         {
@@ -148,7 +148,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                                         }
                                                     }
                                                     break;
-                                                case ActionType.ADD:
+                                                case ActionType.Add:
                                                     {
                                                         if (fn.Attribute("action").Value == "add")
                                                         {
@@ -159,7 +159,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                                                         }
                                                     }
                                                     break;
-                                                case ActionType.DELETE:
+                                                case ActionType.Delete:
                                                     {
                                                         if (fn.Attribute("action").Value == "del")
                                                         {
@@ -280,7 +280,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex);
+                    Logger.LogError(ex, false);
                     yield break;
                 }
 
@@ -332,9 +332,9 @@ namespace Vistaghost.VISTAGHOST.DataModel
         {
             switch (type)
             {
-                case ActionType.MODIFY:
+                case ActionType.Modify:
                     break;
-                case ActionType.ADD:
+                case ActionType.Add:
                     {
                         try
                         {
@@ -370,7 +370,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         }
                     }
                     break;
-                case ActionType.DELETE:
+                case ActionType.Delete:
                     {
                         var codeFunc = (CodeFunction)Element;
                         var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
@@ -426,7 +426,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
         }
 
@@ -467,7 +467,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
         }
 
@@ -493,7 +493,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex);
+                Logger.LogError(ex, false);
             }
         }
     }

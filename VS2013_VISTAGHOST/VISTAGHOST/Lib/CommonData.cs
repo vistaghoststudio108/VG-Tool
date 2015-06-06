@@ -147,6 +147,7 @@ namespace Vistaghost.VISTAGHOST.Lib
         public int EmptyLineNum { get; set; }
         public bool AutoShowInputDialog { get; set; }
         public bool JustOneLine { get; set; }
+        public bool FixWarning { get; set; }
 
         public CommentInfo()
         {
@@ -163,6 +164,7 @@ namespace Vistaghost.VISTAGHOST.Lib
             EmptyLineNum = 0;
             AutoShowInputDialog = true;
             JustOneLine = false;
+            FixWarning = false;
         }
     }
 
@@ -359,5 +361,12 @@ namespace Vistaghost.VISTAGHOST.Lib
         VG_NO,
         VG_RETRY,
         VG_NONE
+    }
+
+    public enum CopyFuncType
+    {
+        WCSCPY_S = 0,
+        WCSNCPY_S,
+        _TCSCPY
     }
 }

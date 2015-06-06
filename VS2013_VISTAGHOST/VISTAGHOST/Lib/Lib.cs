@@ -222,9 +222,18 @@ namespace Vistaghost.VISTAGHOST.Lib
             return lineBreakStr + str1 + (String.IsNullOrEmpty(str2) ? lineBreakStr : "\n" + str2 + lineBreakStr);
         }
 
+        static string CreateSizeOfString(string funcstr)
+        {
+            string tempStr = funcstr;
+            tempStr = tempStr.Substring(10);
+            var listparam = tempStr.Split(new char[] { ',' });
+            var sizeofString = "sizeof(" + listparam[0] + ") / sizeof(" + listparam[0] + "[0])";
+
+            return ", " + sizeofString;
+        }
+
         static bool FixWarning(DTE dte)
         {
-            string newfunc = "_tcsncpy_s";
             var selected = dte.ActiveDocument.Selection as TextSelection;
             if(selected.IsEmpty)
             {
@@ -233,15 +242,34 @@ namespace Vistaghost.VISTAGHOST.Lib
 
             selected.SmartFormat();
 
-            string funcstr = selected.Text;
-            if(funcstr.Contains("wcscpy_s"))
+            try
             {
-                funcstr = funcstr.Replace("wcscpy_s", newfunc);
-                funcstr = funcstr.Insert(funcstr.Length - 2, ", _TRUNCATE");
-                selected.ReplacePattern(selected.Text, funcstr);
-            }
+                string funcstr = selected.Text;
+                if (funcstr.Contains("wcscpy_s"))
+                {
+                    funcstr = funcstr.Replace("wcscpy_s", "_tcscpy_s");
+                    selected.ReplacePattern(selected.Text, funcstr);
+                }
+                else if(funcstr.Contains("_tcscpy"))
+                {
+                    funcstr = funcstr.Replace("_tcscpy", "_tcscpy_s");
+                    var sfstr = CreateSizeOfString(funcstr);
+                    int index = funcstr.IndexOf(',');
+                    funcstr = funcstr.Insert(index, sfstr);
+                    selected.ReplacePattern(selected.Text, funcstr);
+                }
+                else if(funcstr.Contains("wcsncpy_s"))
+                {
+                    funcstr = funcstr.Replace("wcsncpy_s", "_tcsncpy_s");
+                    selected.ReplacePattern(selected.Text, funcstr);
+                }
 
-            return false;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -367,8 +395,12 @@ namespace Vistaghost.VISTAGHOST.Lib
 
                             if (keep_comments)
                             {
-                                //result = ClearCommentWithSelectedText(dte, vgDelCommentsType.vgDeleteBoth, vgDelCommentsOptions.vgDeleteAllBreakLine | vgDelCommentsOptions.vgSmartFormat);
-                                result = FixWarning(dte);
+                                result = ClearCommentWithSelectedText(dte, vgDelCommentsType.vgDeleteBoth, vgDelCommentsOptions.vgDeleteAllBreakLine | vgDelCommentsOptions.vgSmartFormat);
+                            }
+
+                            if(vgSetting.SettingData.CommentInfo.FixWarning)
+                            {
+                                FixWarning(dte);
                             }
                         }
                         break;

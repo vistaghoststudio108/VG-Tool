@@ -336,5 +336,24 @@ namespace Vistaghost.VISTAGHOST.Properties {
                 return ResourceManager.GetString("VistaghostWindowTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;WorkHistory id=&quot;unknown&quot; from=&quot;unknown&quot; to=&quot;unknown&quot; project=&quot;unknown&quot; author=&quot;unknown&quot;&gt;
+        ///  &lt;ChangedFile&gt;&lt;/ChangedFile&gt;
+        ///  &lt;CodeElement&gt;
+        ///    &lt;Function&gt;&lt;/Function&gt;
+        ///    &lt;Class&gt;&lt;/Class&gt;
+        ///    &lt;Enum&gt;&lt;/Enum&gt;
+        ///    &lt;Struct&gt;&lt;/Struct&gt;
+        ///  &lt;/CodeElement&gt;
+        ///  &lt;Comment&gt;&lt;/Comment&gt;
+        ///&lt;/WorkHistory&gt;.
+        /// </summary>
+        internal static string WorkHistory {
+            get {
+                return ResourceManager.GetString("WorkHistory", resourceCulture);
+            }
+        }
     }
 }
