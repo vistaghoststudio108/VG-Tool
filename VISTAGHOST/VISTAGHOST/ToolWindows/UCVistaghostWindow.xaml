@@ -15,12 +15,25 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="SearchResultArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown"
-			FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"  TextChanged="SearchResultArea_TextChanged"/>
+        <!--============================================================================================================================================-->
+        <RichTextBox Style="{DynamicResource VGRichTextBoxTemplate}" x:Name="SearchResultArea" Grid.Row="1" 
+                  KeyDown="TextViewArea_KeyDown" 
+                  PreviewMouseUp="SearchResultArea_PreviewMouseUp"
+                  TextChanged="SearchResultArea_TextChanged"
+                  IsReadOnly="True">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+        <!--============================================================================================================================================-->
         <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="WorkingHistoryArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown" TextChanged="WorkingHistoryArea_TextChanged"
         	FontSize="12" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
+        <!--============================================================================================================================================-->
         <TextBox Style="{DynamicResource VGTextBoxTemplate2}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown" TextChanged="NotesArea_TextChanged"
         	FontSize="12" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" FontFamily="Consolas"/>
+        <!--============================================================================================================================================-->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
             <StackPanel.Background>
                 <ImageBrush ImageSource="/VISTAGHOST;component/Resources/bg.png"/>
@@ -38,7 +51,6 @@
                 </StackPanel.Background>
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Element type</TextBlock>
                 <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsDropDownOpen="False" SelectedIndex="0" SelectionChanged="Combo_ElementType_SelectionChanged">
-                    <ComboBoxItem Content="All"/>
                     <ComboBoxItem Content="Function"/>
                     <ComboBoxItem Content="Class"/>
                     <ComboBoxItem Content="Enum"/>
@@ -52,13 +64,34 @@
                     <ComboBoxItem Content="Find Results 1"/>
                     <ComboBoxItem Content="Find Results 2"/>
                 </ComboBox>
-                <Button x:Name="BtnSearchElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Search changed functions" Click="BtnSearchElement_Click">
+                <Button x:Name="BtnSearchElement" 
+                        Width="20" 
+                        Height="20"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        ToolTip="Search changed functions"
+                        Click="BtnSearchElement_Click">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/ActualSizeHS.png"/>
                 </Button>
-                <Button x:Name="BtnCopyElement" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Copy changed elements" Click="BtnCopyElement_Click" >
+                <!--============================================================================================================================================-->
+                <Button x:Name="BtnCopyElement"
+                        Width="20"
+                        Height="20" 
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        ToolTip="Copy changed elements"
+                        Click="BtnCopyElement_Click" >
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/CopyHS.png"/>
                 </Button>
-                <Button x:Name="BtnStopSearch" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Stop a background search" Click="BtnStopSearch_Click" IsEnabled="False">
+                <!--============================================================================================================================================-->
+                <Button x:Name="BtnStopSearch"
+                        Width="20"
+                        Height="20" 
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        ToolTip="Stop a background search"
+                        Click="BtnStopSearch_Click" 
+                        IsEnabled="False">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/StopHS.png"/>
                 </Button>
                 
@@ -67,8 +100,8 @@
                 <StackPanel.Background>
                     <ImageBrush ImageSource="/VISTAGHOST;component/Resources/bg.png"/>
                 </StackPanel.Background>
-                <Button Width="20" Height="20" BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="abc">
-                    <!--<Image Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>-->
+                <Button x:Name="BtnClearAll" Width="20" Height="20" BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Clear All" Click="BtnClearAll_Click">
+                    <!--<gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>-->
                 </Button>
                 <Button Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="ghi">
                     <!--<Image Source="/VISTAGHOST;component/Resources/action_Cancel_16xLG.png"/>-->

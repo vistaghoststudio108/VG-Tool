@@ -475,17 +475,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             return currentLineNumber;
         }
 
-        private void SearchResultArea_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            //GetMousePressedPos();
-            //if (e.LeftButton == MouseButtonState.Pressed)
-            //{
-            //    int index = GetMousePressedPos();
-            //    EditorManager.OpenDocument(Results[index].File);
-            //    EditorManager.GoTo(Results[index].File, Results[index].BeginLine - 1);
-            //}
-        }
-
         private void SearchResultArea_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (IsSearching || SearchResultArea.Selection.Text.Length != 0)

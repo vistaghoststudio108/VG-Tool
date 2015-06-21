@@ -119,21 +119,11 @@ namespace Vistaghost.VISTAGHOST.Lib
             return false;
         }
 
-        public static bool GetFuncPrototype(DTE2 dte2, PrototypeType proType, out string _prototype)
+        public static string GetFuncPrototype(DTE2 dte2, PrototypeType proType)
         {
             TextSelection selected = (TextSelection)dte2.ActiveDocument.Selection;
-            CodeFunction codeFunc;
-            _prototype = String.Empty;
-
-            try
-            {
-                codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, false);
-                return false;
-            }
+            CodeFunction codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
+            string _prototype = String.Empty;
 
             if (codeFunc != null)
             {
@@ -148,11 +138,9 @@ namespace Vistaghost.VISTAGHOST.Lib
                     default:
                         break;
                 }
-
-                return true;
             }
-            else
-                return false;
+
+            return _prototype;
         }
 
         /// <summary>
@@ -227,17 +215,6 @@ namespace Vistaghost.VISTAGHOST.Lib
             return ("//" + tlist[(int)mode - 1] + t[1]);
         }
 
-        static string get_FinalString(string str1, string str2)
-        {
-            string lineBreakStr = "\n";
-            for (int i = 0; i < VGSetting.SettingData.CommentInfo.EmptyLineNum; i++)
-            {
-                lineBreakStr += "\n";
-            }
-
-            return lineBreakStr + str1 + (String.IsNullOrEmpty(str2) ? lineBreakStr : "\n" + str2 + lineBreakStr);
-        }
-
         /// <summary>
         /// Processing text for add single comments
         /// </summary>
@@ -291,9 +268,9 @@ namespace Vistaghost.VISTAGHOST.Lib
                     case ActionType.Add:
                         info.SetInfo(dte.ActiveDocument.FullName, selected.TopPoint.Line);
                         selected.Insert(opentag, 1);
-                        selected.NewLine(VGSetting.SettingData.CommentInfo.EmptyLineNum * 2 + 2);
+                        selected.NewLine(2);
                         selected.Insert(closetag, 1);
-                        selected.LineUp(false, VGSetting.SettingData.CommentInfo.EmptyLineNum + 1);
+                        selected.LineUp(false, 1);
 
                         result = true;
                         break;
@@ -351,11 +328,11 @@ namespace Vistaghost.VISTAGHOST.Lib
                 switch (mode)
                 {
                     case ActionType.Modify:
-                        result = selected.ReplacePattern(selected.Text, blank + opentag + get_FinalString(selected.Text, strSelected) + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                        result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + strSelected + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
                         if (result)
                         {
                             selected.EndOfLine(false);
-                            selected.LineUp(false, VGSetting.SettingData.CommentInfo.EmptyLineNum + 1);
+                            selected.LineUp(false, 1);
                             selected.EndOfLine(false);
                             selected.LineUp(true, numLines - 1);
                             selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, true);
@@ -381,10 +358,10 @@ namespace Vistaghost.VISTAGHOST.Lib
                                 //Add new comments tag here without content
                                 selected.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText, false);
                                 selected.Insert(opentag, 1);
-                                selected.NewLine(VGSetting.SettingData.CommentInfo.EmptyLineNum + 1);
+                                selected.NewLine(1);
                                 selected.LineDown(false, numLines - 1);
                                 selected.EndOfLine(false);
-                                selected.NewLine(VGSetting.SettingData.CommentInfo.EmptyLineNum + 1);
+                                selected.NewLine(1);
                                 selected.Insert(closetag, 1);
                             }
                             result = true;
@@ -399,7 +376,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                                 result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
                             }
                             else
-                                result = selected.ReplacePattern(selected.Text, blank + opentag + get_FinalString(selected.Text, String.Empty) + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                                result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
                         }
                         break;
 
@@ -871,7 +848,7 @@ namespace Vistaghost.VISTAGHOST.Lib
         {
             var parts = input.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
             var pos = parts[1].LastIndexOf("(");
-            return parts[0] + ":" + parts[1].Remove(pos);
+            return parts[0] + ":" +parts[1].Remove(pos);
         }
 
         static int GetLine(string input)
@@ -986,354 +963,6 @@ namespace Vistaghost.VISTAGHOST.Lib
             selected.Cancel();
 
             return fContainer;
-        }
-
-        static bool InSideFunc(object codeElement, List<int> lines, SearchType sType)
-        {
-            bool bValied = false;
-
-            foreach (var line in lines)
-            {
-                switch (sType)
-                {
-                    case SearchType.Function:
-                        {
-                            if (line <= ((CodeFunction)codeElement).EndPoint.Line && line >= ((CodeFunction)codeElement).StartPoint.Line)
-                                bValied = true;
-                        }
-                        break;
-
-                    case SearchType.Class:
-                        {
-                            if (line <= ((CodeClass)codeElement).EndPoint.Line && line >= ((CodeClass)codeElement).StartPoint.Line)
-                                bValied = true;
-                        }
-                        break;
-
-                    case SearchType.Enumerable:
-                        {
-                            if (line <= ((CodeEnum)codeElement).EndPoint.Line && line >= ((CodeEnum)codeElement).StartPoint.Line)
-                                bValied = true;
-                        }
-                        break;
-
-                    case SearchType.Structure:
-                        {
-                            if (line <= ((CodeStruct)codeElement).EndPoint.Line && line >= ((CodeStruct)codeElement).StartPoint.Line)
-                                bValied = true;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            return bValied;
-        }
-
-        public static List<ObjectType> GetFunctionProtFromHistory(DTE dte, List<FileContainer> fileList,
-                                                                  SearchType sType,
-                                                                  ref UCVistaghostWindow owPane,
-                                                                  out int totalFileSearched,
-                                                                  ref bool Canceled)
-        {
-            List<ObjectType> elementList = new List<ObjectType>();
-            Document doc;
-            bool bOpen = false;
-            string fileName = String.Empty;
-            List<int> lines;
-            FileCodeModel fcm;
-            totalFileSearched = 0;
-
-            try
-            {
-                for (int i = 0; i < fileList.Count; i++)
-                {
-                    fileName = Path.GetFullPath(fileList[i].FileName);
-                    lines = fileList[i].Lines;
-                    string curElement = String.Empty;
-                    totalFileSearched++;
-
-                    dte.StatusBar.Text = "Searching " + fileList[i].FileName;
-
-                    if (dte.ItemOperations.IsFileOpen(fileName, Constants.vsViewKindCode))
-                    {
-                        doc = dte.Documents.Item(fileName);
-                        //doc.Activate();
-                    }
-                    else
-                    {
-                        doc = dte.ItemOperations.OpenFile(fileName, Constants.vsViewKindCode).Document;
-                        bOpen = true;
-                    }
-
-                    if (doc == null || doc.ProjectItem == null || doc.ProjectItem.FileCodeModel == null)
-                        continue;
-
-                    var selected = doc.Selection as TextSelection;
-                    selected.StartOfDocument(false);
-
-                    if (VGSetting.Instance.FileNameOnly)
-                    {
-                        while (selected.FindText(VGSetting.Instance.FindWhat, (int)(vsFindOptions.vsFindOptionsMatchCase | vsFindOptions.vsFindOptionsMatchWholeWord)))
-                        {
-                            try
-                            {
-                                switch (sType)
-                                {
-                                    case SearchType.Function:
-                                        {
-                                            var codeFunc = (CodeFunction)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementFunction);
-                                            if (codeFunc != null)
-                                            {
-                                                var func = new ObjectType();
-                                                func.Name = codeFunc.FullName;
-                                                func.Prototype = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
-
-                                                if (func.Prototype != curElement)
-                                                {
-                                                    curElement = func.Prototype;
-                                                }
-                                                else
-                                                    continue;
-
-                                                func.Line = codeFunc.StartPoint.Line;
-                                                func.Description = codeFunc.Comment;
-
-                                                elementList.Add(func);
-                                                owPane.AddString(func.Prototype);
-                                            }
-                                        }
-                                        break;
-                                    case SearchType.Class:
-                                        {
-                                            var codeClass = (CodeClass)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementClass);
-                                            if (codeClass != null)
-                                            {
-                                                var _class = new ObjectType();
-                                                _class.Name = codeClass.FullName;
-                                                if (_class.Name != curElement)
-                                                {
-                                                    curElement = _class.Name;
-                                                }
-                                                else
-                                                    continue;
-
-                                                _class.Line = codeClass.StartPoint.Line;
-                                                elementList.Add(_class);
-
-                                                owPane.AddString(_class.Name);
-                                            }
-                                        }
-                                        break;
-                                    case SearchType.Enumerable:
-                                        {
-                                            var codeEnum = (CodeEnum)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementEnum);
-                                            if (codeEnum != null)
-                                            {
-                                                var _enum = new ObjectType();
-                                                _enum.Name = codeEnum.FullName;
-                                                if (_enum.Name != curElement)
-                                                {
-                                                    curElement = _enum.Name;
-                                                }
-                                                else
-                                                    continue;
-
-                                                _enum.Line = codeEnum.StartPoint.Line;
-                                                elementList.Add(_enum);
-
-                                                owPane.AddString(_enum.Name);
-                                            }
-                                        }
-                                        break;
-                                    case SearchType.Structure:
-                                        {
-                                            var codeStruct = (CodeStruct)selected.ActivePoint.get_CodeElement(vsCMElement.vsCMElementStruct);
-                                            if (codeStruct != null)
-                                            {
-                                                var _struct = new ObjectType();
-                                                _struct.Name = codeStruct.FullName;
-                                                if (_struct.Name != curElement)
-                                                {
-                                                    curElement = _struct.Name;
-                                                }
-                                                else
-                                                    continue;
-
-                                                _struct.Line = codeStruct.StartPoint.Line;
-                                                elementList.Add(_struct);
-
-                                                owPane.AddString(_struct.Name);
-                                            }
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            catch
-                            {
-                            }
-
-                            if (Canceled)
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        fcm = doc.ProjectItem.FileCodeModel;
-                        lines = fileList[i].Lines;
-
-                        switch (sType)
-                        {
-                            case SearchType.Function:
-                                {
-                                    var codeFuncs = fcm.CodeElements.OfType<CodeFunction>();
-                                    if (codeFuncs.Count() == 0)
-                                        continue;
-
-                                    foreach (var codeFunc in codeFuncs)
-                                    {
-                                        if (InSideFunc(codeFunc, lines, sType))
-                                        {
-                                            var func = new ObjectType();
-                                            func.Name = codeFunc.Name;
-                                            func.Prototype = codeFunc.get_Prototype((int)((vsCMPrototype.vsCMPrototypeParamNames | vsCMPrototype.vsCMPrototypeParamTypes | vsCMPrototype.vsCMPrototypeType | vsCMPrototype.vsCMPrototypeFullname)));
-
-                                            if (func.Prototype != curElement)
-                                            {
-                                                curElement = func.Prototype;
-                                            }
-                                            else
-                                                continue;
-
-                                            func.Line = codeFunc.StartPoint.Line;
-                                            elementList.Add(func);
-
-                                            owPane.AddString(func.Prototype);
-                                        }
-
-                                        if (Canceled)
-                                            break;
-                                    }
-                                }
-                                break;
-                            case SearchType.Class:
-                                {
-                                    var codeClasses = fcm.CodeElements.OfType<CodeClass>();
-                                    if (codeClasses.Count() == 0)
-                                        continue;
-
-                                    foreach (var codeClass in codeClasses)
-                                    {
-                                        if (InSideFunc(codeClass, lines, sType))
-                                        {
-                                            var _class = new ObjectType();
-                                            _class.Name = codeClass.FullName;
-
-                                            if (_class.Name != curElement)
-                                            {
-                                                curElement = _class.Name;
-                                            }
-                                            else
-                                                continue;
-
-                                            _class.Line = codeClass.StartPoint.Line;
-                                            elementList.Add(_class);
-
-                                            owPane.AddString(_class.Name);
-                                        }
-                                        if (Canceled)
-                                            break;
-                                    }
-                                }
-                                break;
-                            case SearchType.Enumerable:
-                                {
-                                    var codeEnums = fcm.CodeElements.OfType<CodeEnum>();
-                                    if (codeEnums.Count() == 0)
-                                        continue;
-
-                                    foreach (var codeEnum in codeEnums)
-                                    {
-                                        if (InSideFunc(codeEnum, lines, sType))
-                                        {
-                                            var _enum = new ObjectType();
-                                            _enum.Name = codeEnum.FullName;
-
-                                            if (_enum.Name != curElement)
-                                            {
-                                                curElement = _enum.Name;
-                                            }
-                                            else
-                                                continue;
-
-                                            _enum.Line = codeEnum.StartPoint.Line;
-                                            elementList.Add(_enum);
-
-                                            owPane.AddString(_enum.Name);
-                                        }
-
-                                        if (Canceled)
-                                            break;
-                                    }
-                                }
-                                break;
-                            case SearchType.Structure:
-                                {
-                                    var codeStructs = fcm.CodeElements.OfType<CodeStruct>();
-                                    if (codeStructs.Count() == 0)
-                                        continue;
-
-                                    foreach (var codeStruct in codeStructs)
-                                    {
-                                        if (InSideFunc(codeStruct, lines, sType))
-                                        {
-                                            var _struct = new ObjectType();
-                                            _struct.Name = codeStruct.FullName;
-
-                                            if (_struct.Name != curElement)
-                                            {
-                                                curElement = _struct.Name;
-                                            }
-                                            else
-                                                continue;
-
-                                            _struct.Line = codeStruct.StartPoint.Line;
-                                            elementList.Add(_struct);
-
-                                            owPane.AddString(_struct.Name);
-                                        }
-
-                                        if (Canceled)
-                                            break;
-                                    }
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    if (bOpen)
-                    {
-                        bOpen = false;
-                        //dte.Documents.Item(fileName).Close(vsSaveChanges.vsSaveChangesYes);
-                    }
-
-                    if (Canceled)
-                    {
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, false);
-            }
-
-            return elementList;
         }
         #endregion
     }

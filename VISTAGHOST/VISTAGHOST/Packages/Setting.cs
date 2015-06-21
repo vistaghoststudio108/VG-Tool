@@ -66,10 +66,17 @@ namespace Vistaghost.VISTAGHOST
 
         public string Title { get; set; }
 
+        static string DefaultLogPath
+        {
+            get
+            {
+                var p1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), VGSettingConstants.VGFolder);
+                return Path.Combine(p1, VGSettingConstants.LogFolder);
+            }
+        }
+
         public List<FileContainer> FileList { get; set; }
-
         public string FindWhat { get; set; }
-
         public bool FileNameOnly { get; set; }
 
         public VGSetting()
@@ -111,9 +118,8 @@ namespace Vistaghost.VISTAGHOST
         public static ProjectStatus ProjectStatus { get; set; }
 
         #region Data methods
-        public static bool SaveProjectStatus()
+        public static void SaveProjectStatus()
         {
-            bool _result = false;
             try
             {
                 var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
@@ -124,16 +130,11 @@ namespace Vistaghost.VISTAGHOST
 
                 isoStream.Close();
                 isoStore.Close();
-
-                _result = true;
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex, false);
-                _result = false;
             }
-
-            return _result;
         }
 
         public static ProjectStatus LoadProjectStatus()

@@ -147,7 +147,6 @@ namespace Vistaghost.VISTAGHOST.Lib
         public int EmptyLineNum { get; set; }
         public bool AutoShowInputDialog { get; set; }
         public bool JustOneLine { get; set; }
-        public bool FixWarning { get; set; }
 
         public CommentInfo()
         {
@@ -164,7 +163,6 @@ namespace Vistaghost.VISTAGHOST.Lib
             EmptyLineNum = 0;
             AutoShowInputDialog = true;
             JustOneLine = false;
-            FixWarning = false;
         }
     }
 

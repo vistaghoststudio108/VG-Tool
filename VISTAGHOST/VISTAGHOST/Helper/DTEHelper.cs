@@ -26,15 +26,12 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         DocumentEvents docEvents;
         SolutionEvents solEvents;
-        WindowEvents wndEvents;
+        ProjectItemsEvents proitemEvents;
         DTEEvents dteEvents;
         FindEvents findEvents;
         CommandEvents commandEvents;
-        SelectionEvents selEvent;
         CodeModelEvents codeModelEvent;
-        BuildEvents buildEvents;
-        //TextEditorEvents textEditorEvents;
-        //ProjectItemsEvents projectItemEvents;
+        SelectionEvents selEvent;
 
         public DTEHelper(DTE dte, DTE2 dte2)
         {
@@ -45,6 +42,7 @@ namespace Vistaghost.VISTAGHOST.Helper
             docEvents.DocumentOpening += docEvents_DocumentOpening;
             docEvents.DocumentClosing += docEvents_DocumentClosing;
             docEvents.DocumentOpened += docEvents_DocumentOpened;
+            docEvents.DocumentSaved += docEvents_DocumentSaved;
 
             findEvents = DTE.Events.FindEvents;
             findEvents.FindDone += new _dispFindEvents_FindDoneEventHandler(findEvents_FindDone);
@@ -52,95 +50,51 @@ namespace Vistaghost.VISTAGHOST.Helper
             solEvents = DTE.Events.SolutionEvents;
             solEvents.Opened += solEvents_Opened;
 
-            // Window events
-            wndEvents = DTE.Events.get_WindowEvents(null);
-            wndEvents.WindowActivated += wndEvents_WindowActivated;
+            proitemEvents = ((EnvDTE80.Events2)DTE.Events).ProjectItemsEvents;
+            proitemEvents.ItemAdded += new _dispProjectItemsEvents_ItemAddedEventHandler(proitemEvents_ItemAdded);
+            proitemEvents.ItemRemoved += new _dispProjectItemsEvents_ItemRemovedEventHandler(proitemEvents_ItemRemoved);
+            proitemEvents.ItemRenamed += new _dispProjectItemsEvents_ItemRenamedEventHandler(proitemEvents_ItemRenamed);
 
-            // DTE events
             dteEvents = DTE.Events.DTEEvents;
             dteEvents.OnStartupComplete += dteEvents_OnStartupComplete;
             dteEvents.OnBeginShutdown += dteEvents_OnBeginShutdown;
 
-            // Find events
-            findEvents = DTE.Events.FindEvents;
-            findEvents.FindDone += findEvents_FindDone;
-
             commandEvents = DTE2.Events.get_CommandEvents("{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 277);
+
             commandEvents.BeforeExecute += new _dispCommandEvents_BeforeExecuteEventHandler(commandEvents_BeforeExecute);
             commandEvents.AfterExecute += new _dispCommandEvents_AfterExecuteEventHandler(commandEvents_AfterExecute);
 
-            // Code model events
+            //Code model event
             codeModelEvent = ((EnvDTE80.Events2)DTE.Events).get_CodeModelEvents(null);
-            codeModelEvent.ElementAdded += codeModelEvent_ElementAdded;
-            codeModelEvent.ElementChanged += codeModelEvent_ElementChanged;
-            codeModelEvent.ElementDeleted += codeModelEvent_ElementDeleted;
+            codeModelEvent.ElementAdded += new _dispCodeModelEvents_ElementAddedEventHandler(codeModelEvent_ElementAdded);
+            codeModelEvent.ElementChanged += new _dispCodeModelEvents_ElementChangedEventHandler(codeModelEvent_ElementChanged);
+            codeModelEvent.ElementDeleted += new _dispCodeModelEvents_ElementDeletedEventHandler(codeModelEvent_ElementDeleted);
 
-            // Selection events
+            // Selection event
             selEvent = DTE.Events.SelectionEvents;
-            selEvent.OnChange += selEvent_OnChange;
-
-            // Build events
-            buildEvents = DTE.Events.BuildEvents;
-            buildEvents.OnBuildBegin += buildEvents_OnBuildBegin;
-            buildEvents.OnBuildDone += buildEvents_OnBuildDone;
-
-            // Text Editor events
-            //textEditorEvents = DTE.Events.TextEditorEvents;
-            //textEditorEvents.LineChanged += textEditorEvents_LineChanged;
-
-            // Project item events
-            //projectItemEvents = ((EnvDTE80.Events2)DTE.Events).ProjectItemsEvents;
-            //projectItemEvents.ItemAdded += projectItemEvents_ItemAdded;
-            //projectItemEvents.ItemRemoved += projectItemEvents_ItemRemoved;
-            //projectItemEvents.ItemRenamed += projectItemEvents_ItemRenamed;
+            selEvent.OnChange += new _dispSelectionEvents_OnChangeEventHandler(selEvent_OnChange);
         }
 
-        #region Project Items Events
-        void projectItemEvents_ItemRenamed(ProjectItem ProjectItem, string OldName)
+        void proitemEvents_ItemRenamed(ProjectItem ProjectItem, string OldName)
         {
 
         }
 
-        void projectItemEvents_ItemRemoved(ProjectItem ProjectItem)
+        void proitemEvents_ItemRemoved(ProjectItem ProjectItem)
         {
 
         }
 
-        void projectItemEvents_ItemAdded(ProjectItem ProjectItem)
+        void proitemEvents_ItemAdded(ProjectItem ProjectItem)
         {
 
         }
-        #endregion
-
-        #region Text Editor Events
-        void textEditorEvents_LineChanged(TextPoint StartPoint, TextPoint EndPoint, int Hint)
-        {
-
-        }
-        #endregion
-
-        #region Build Events
-        void buildEvents_OnBuildDone(vsBuildScope Scope, vsBuildAction Action)
-        {
-
-        }
-
-        void buildEvents_OnBuildBegin(vsBuildScope Scope, vsBuildAction Action)
-        {
-
-        }
-        #endregion
 
         void selEvent_OnChange()
         {
-
+            
         }
 
-        /// <summary>
-        /// delete element events
-        /// </summary>
-        /// <param name="Parent"></param>
-        /// <param name="Element"></param>
         void codeModelEvent_ElementDeleted(object Parent, CodeElement Element)
         {
             if (!VGSetting.ProjectStatus.Started)
@@ -161,21 +115,10 @@ namespace Vistaghost.VISTAGHOST.Helper
             }
         }
 
-        /// <summary>
-        /// change an element events
-        /// </summary>
-        /// <param name="Element"></param>
-        /// <param name="Change"></param>
         void codeModelEvent_ElementChanged(CodeElement Element, vsCMChangeKind Change)
         {
-            if (!VGSetting.ProjectStatus.Started)
-                return;
         }
 
-        /// <summary>
-        /// add an element events
-        /// </summary>
-        /// <param name="Element"></param>
         void codeModelEvent_ElementAdded(CodeElement Element)
         {
             if (!VGSetting.ProjectStatus.Started)
@@ -209,14 +152,6 @@ namespace Vistaghost.VISTAGHOST.Helper
             }
         }
 
-        void docEvents_DocumentSaved(Document Document)
-        {
-            if(SavedAll)
-            {
-                FileManager.Instance.SaveFileChanged(Document.FullName);
-            }
-        }
-
         private void lef_OnResult(List<VGCodeElement> finalElementList, VGDialogResult dlgResult)
         {
             switch (dlgResult)
@@ -239,9 +174,12 @@ namespace Vistaghost.VISTAGHOST.Helper
             }
         }
 
-        void docEvents_DocumentOpened(Document Document)
+        void docEvents_DocumentSaved(Document Document)
         {
-
+            if (SavedAll)
+            {
+                FileManager.Instance.SaveFileChanged(Document.FullName);
+            }
         }
 
         void commandEvents_AfterExecute(string Guid, int ID, object CustomIn, object CustomOut)
@@ -291,6 +229,11 @@ namespace Vistaghost.VISTAGHOST.Helper
 
         void docEvents_DocumentOpening(string DocumentPath, bool ReadOnly)
         {
+        }
+
+        void docEvents_DocumentOpened(Document Document)
+        {
+            
         }
 
         void dteEvents_OnBeginShutdown()

@@ -339,15 +339,21 @@ namespace Vistaghost.VISTAGHOST.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;WorkHistory id=&quot;unknown&quot; from=&quot;unknown&quot; to=&quot;unknown&quot; project=&quot;unknown&quot; author=&quot;unknown&quot;&gt;
-        ///  &lt;ChangedFile&gt;&lt;/ChangedFile&gt;
-        ///  &lt;CodeElement&gt;
-        ///    &lt;Function&gt;&lt;/Function&gt;
-        ///    &lt;Class&gt;&lt;/Class&gt;
-        ///    &lt;Enum&gt;&lt;/Enum&gt;
-        ///    &lt;Struct&gt;&lt;/Struct&gt;
-        ///  &lt;/CodeElement&gt;
-        ///  &lt;Comment&gt;&lt;/Comment&gt;
+        ///&lt;WorkHistory from=&quot;20/12/2015&quot; to=&quot;unknown&quot; project=&quot;Review Screen Layout&quot; author=&quot;ThuanPV3&quot;&gt;
+        ///  &lt;Logic&gt;
+        ///    &lt;ChangedFile&gt;
+        ///      &lt;!--&lt;File action=&quot;mod&quot;&gt;file path&lt;/File&gt;--&gt;
+        ///    &lt;/ChangedFile&gt;
+        ///    &lt;CodeElement&gt;
+        ///      &lt;!--&lt;Element type=&quot;func&quot; action=&quot;mod&quot;&gt;
+        ///        &lt;name&gt;function name&lt;/name&gt;
+        ///        &lt;file&gt;file path&lt;/file&gt;
+        ///      &lt;/Element&gt;--&gt;
+        ///    &lt;/CodeElement&gt;
+        ///  &lt;/Logic&gt;
+        ///  &lt;Comment&gt;
+        ///
+        ///  &lt;/Comment&gt;
         ///&lt;/WorkHistory&gt;.
         /// </summary>
         internal static string WorkHistory {

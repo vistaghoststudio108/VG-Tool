@@ -15,6 +15,7 @@ using System.ComponentModel;
 using Vistaghost.VISTAGHOST.Helper;
 using Vistaghost.VISTAGHOST.Lib;
 using Vistaghost.VISTAGHOST.DataModel;
+using Vistaghost.VISTAGHOST.Editor;
 
 namespace Vistaghost.VISTAGHOST.ToolWindows
 {
@@ -31,6 +32,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         List<VGCodeElement> Results = new List<VGCodeElement>();
         List<FileContainer> FileList = new List<FileContainer>();
         int totalFileSearched = 0;
+        int preLineNumber = 0;
 
         public UCVistaghostWindow()
         {
@@ -52,7 +54,16 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                SearchResultArea.AppendText(" " + Text + "\n");
+                Paragraph pLine = new Paragraph();
+                pLine.Inlines.Add(Text);
+
+                Block emptyBlock = SearchResultArea.Document.Blocks.ElementAt(SearchResultArea.Document.Blocks.Count - 1);
+                SearchResultArea.Document.Blocks.InsertBefore(emptyBlock, pLine);
+
+                if (GetCurrentLineNumber() == SearchResultArea.Document.Blocks.Count - 1)
+                {
+                    SearchResultArea.ScrollToEnd();
+                }
             }), null);
         }
 
@@ -62,7 +73,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             switch (sType)
             {
                 case 0:
-                    SearchResultArea.Clear();
+                    //SearchResultArea.Clear();
                     break;
 
                 case 1:
@@ -82,16 +93,17 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             if (e.Cancelled)
             {
-                SearchResultArea.AppendText(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled\n");
+                AddString(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "    Canceled");
             }
             else
             {
-                SearchResultArea.AppendText(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched + "\n");
+                AddString(" Results found: " + Results.Count + "    Total files searched: " + totalFileSearched);
             }
 
             /*Enable some buttons*/
             BtnSearchElement.IsEnabled = true;
             BtnCopyElement.IsEnabled = true;
+            //BtnClearAll.IsEnabled = true;
             BtnStopSearch.IsEnabled = false;
 
             // Finish searching
@@ -101,7 +113,6 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             var _dte = Vistaghost.VISTAGHOST.VISTAGHOSTPackage.Current.DTE;
-
             try
             {
                 foreach (var file in this.FileList)
@@ -242,11 +253,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             switch (searchType)
             {
-                case SearchType.Function:       return "functions";
-                case SearchType.Class:          return "class";
-                case SearchType.Enumerable:     return "enums";
-                case SearchType.Structure:      return "structs";
-                default:                        return String.Empty;
+                case SearchType.Function: return "functions";
+                case SearchType.Class: return "class";
+                case SearchType.Enumerable: return "enums";
+                case SearchType.Structure: return "structs";
+                default: return String.Empty;
             }
         }
 
@@ -345,19 +356,20 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
             if (!IsKeyWordValid(Combo_Keyword.Text))
             {
-                SearchResultArea.AppendText("Enter key word and try again.\n");
+                VISTAGHOSTPackage.Current.DTE.StatusBar.Text = "Enter key word and try again";
                 return;
             }
 
             string message = String.Empty;
+            this.FileList.Clear();
 
             if (!CheckSource(out message, out FileList, out _keyWord))
             {
-                SearchResultArea.AppendText(message + "\n");
+                VISTAGHOSTPackage.Current.DTE.StatusBar.Text = message;
                 return;
             }
 
-            SearchResultArea.Clear();
+            SearchResultArea.Document.Blocks.Clear();
             SearchResultArea.Document.Blocks.Add(new Paragraph(new Run("")));
             AddString("Find all \"" + get_ElementType() + "\", Source: \"" + Combo_BaseSource.Text + "\", Key word: \"" + _keyWord + "\"");
 
@@ -365,7 +377,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             BtnSearchElement.IsEnabled = false;
             BtnCopyElement.IsEnabled = false;
             BtnStopSearch.IsEnabled = true;
-            BtnClearAll.IsEnabled = false;
+            //BtnClearAll.IsEnabled = false;
 
             searchType = (SearchType)Combo_ElementType.SelectedIndex;
 
@@ -378,42 +390,33 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         private void BtnStopSearch_Click(object sender, RoutedEventArgs e)
         {
-            bw.CancelAsync();
-            IsCanceled = true;
+            if (bw.IsBusy)
+            {
+                try
+                {
+                    bw.CancelAsync();
+                    IsCanceled = true;
+                    FileManager.Instance.SearchCanceled = true;
+                    IsSearching = false;
 
-            //enable some controls
-            BtnSearchElement.IsEnabled = true;
-            Combo_SearchType.IsEnabled = true;
-            Combo_ElementType.IsEnabled = true;
-            Combo_BaseSource.IsEnabled = true;
-            BtnCopyElement.IsEnabled = true;
+                    BtnStopSearch.IsEnabled = false;
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, false);
+                }
+            }
         }
 
         private void BtnCopyElement_Click(object sender, RoutedEventArgs e)
         {
-            if (IsSearching)
+            if (IsSearching || this.Results.Count == 0)
                 return;
 
             string copiedText = String.Empty;
-            foreach (var item in Results)
+            foreach (var ce in Results)
             {
-                switch (searchType)
-                {
-                    case SearchType.Function:
-                        {
-                            copiedText += item.Name + "\n";
-                        }
-                        break;
-                    case SearchType.Class:
-                    case SearchType.Enumerable:
-                    case SearchType.Structure:
-                        {
-                            copiedText += item.Name + "\n";
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                copiedText += ce.Name + "\n";
             }
 
             if (copiedText.Length != 0)
@@ -432,11 +435,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
 
         private void SearchResultArea_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (SearchResultArea.CaretIndex == SearchResultArea.Text.Length)
-            {
-                SearchResultArea.SelectionStart = SearchResultArea.Text.Length;
-                SearchResultArea.ScrollToEnd();
-            }
+            //if (SearchResultArea.CaretIndex == SearchResultArea.Text.Length)
+            //{
+            //    SearchResultArea.SelectionStart = SearchResultArea.Text.Length;
+            //    SearchResultArea.ScrollToEnd();
+            //}
         }
 
         private void WorkingHistoryArea_TextChanged(object sender, TextChangedEventArgs e)
@@ -449,6 +452,79 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         {
             NotesArea.SelectionStart = NotesArea.Text.Length;
             NotesArea.ScrollToEnd();
+        }
+
+        /// <summary>
+        /// Refresh text view, clear all it's properties
+        /// </summary>
+        void RefreshTextView()
+        {
+            if (SearchResultArea.Document == null)
+                return;
+
+            TextRange documentRange = new TextRange(SearchResultArea.Document.ContentStart, SearchResultArea.Document.ContentEnd);
+            documentRange.ClearAllProperties();
+        }
+
+        /// <summary>
+        /// Get current line number at pointer position
+        /// </summary>
+        /// <returns>Current line</returns>
+        int GetCurrentLineNumber()
+        {
+            int lineMoved, currentLineNumber;
+            SearchResultArea.CaretPosition.GetLineStartPosition(-int.MaxValue, out lineMoved);
+
+            currentLineNumber = -lineMoved;
+
+            return currentLineNumber;
+        }
+
+        private void SearchResultArea_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (IsSearching || SearchResultArea.Selection.Text.Length != 0)
+            {
+                return;
+            }
+
+            int currentLineNumber = GetCurrentLineNumber();
+
+            if (currentLineNumber != preLineNumber && currentLineNumber != 0 &&
+                currentLineNumber != SearchResultArea.Document.Blocks.Count - 1 &&
+                currentLineNumber != SearchResultArea.Document.Blocks.Count - 2)
+            {
+                preLineNumber = currentLineNumber;
+
+                try
+                {
+                    RefreshTextView();
+                    TextRange curLineRange = new TextRange(SearchResultArea.CaretPosition.GetLineStartPosition(0), SearchResultArea.CaretPosition.GetLineStartPosition(1) ?? SearchResultArea.CaretPosition.DocumentEnd);
+                    curLineRange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Color.FromRgb(48, 129, 212)));
+
+                    EditorManager.OpenDocument(Results[currentLineNumber - 1].File, true, true);
+                    EditorManager.GoTo(Results[currentLineNumber - 1].File, Results[currentLineNumber - 1].BeginLine - 1, 0, 0, false);
+                    this.Focus();
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, false);
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (bw != null)
+                    bw.Dispose();
+            }
         }
     }
 }

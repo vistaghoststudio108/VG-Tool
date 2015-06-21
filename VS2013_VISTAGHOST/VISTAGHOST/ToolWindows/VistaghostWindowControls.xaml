@@ -23,7 +23,6 @@
         
         <RichTextBox Style="{DynamicResource VGRichTextBoxTemplate}" x:Name="SearchResultArea" Grid.Row="1" 
                      KeyDown="TextViewArea_KeyDown" 
-                     PreviewMouseDown="SearchResultArea_PreviewMouseDown"
                      PreviewMouseUp="SearchResultArea_PreviewMouseUp"
                      TextChanged="SearchResultArea_TextChanged"
                      IsReadOnly="True"

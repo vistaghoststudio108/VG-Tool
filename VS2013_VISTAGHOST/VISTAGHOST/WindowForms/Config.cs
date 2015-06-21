@@ -126,7 +126,6 @@ namespace Vistaghost.VISTAGHOST
             numerEmptyLine.Value = data.CommentInfo.EmptyLineNum;
             chAutoAddWithoutDialog.Checked = data.CommentInfo.AutoShowInputDialog;
             chkJustOneLine.Checked = data.CommentInfo.JustOneLine;
-            chkFixWarning.Checked = data.CommentInfo.FixWarning;
 
             // update header config
             richTextBox1.Text = data.HeaderInfo.BeginHeader;
@@ -272,7 +271,6 @@ namespace Vistaghost.VISTAGHOST
                 settings.CommentInfo.EmptyLineNum = (int)numerEmptyLine.Value;
                 settings.CommentInfo.AutoShowInputDialog = chAutoAddWithoutDialog.Checked;
                 settings.CommentInfo.JustOneLine = chkJustOneLine.Checked;
-                settings.CommentInfo.FixWarning = chkFixWarning.Checked;
             }
 
             if (AddHeaderChanged)

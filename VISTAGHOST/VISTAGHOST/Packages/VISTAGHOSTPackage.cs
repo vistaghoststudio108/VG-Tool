@@ -173,6 +173,7 @@ namespace Vistaghost.VISTAGHOST
                     dte2 = (DTE2)GetService(typeof(DTE));
 
                     WindowManager = new WindowManager();
+
                     RegisterOleComponent();
 
                     ShowToolBar(false);
@@ -293,6 +294,25 @@ namespace Vistaghost.VISTAGHOST
 
             var lua = menu.Controls["Vistaghost"] as CommandBarPopup;
             lua.Controls["ShotKeys"].Visible = false;
+
+            if (show)
+                ShowToolWindow();
+        }
+
+        public void ShowToolWindow()
+        {
+            // Get the instance number 0 of this tool window. This window is single instance so this instance
+            // is actually the only one.
+            // The last flag is set to true so that if the tool window does not exists it will be created.
+            ToolWindowPane window = this.FindToolWindow(typeof(VistaghostWindowPane), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new NotSupportedException(Properties.Resources.CanNotCreateWindow);
+            }
+
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            if (windowFrame.IsVisible() == VSConstants.S_FALSE)
+                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.ShowNoActivate());
         }
 
         public void EnableButton(int cmdidButton, bool enabled)
@@ -313,15 +333,14 @@ namespace Vistaghost.VISTAGHOST
 
         private void ShowToolWindowCallback(object sender, EventArgs e)
         {
-            WindowManager.ShowToolWindow();
+            ShowToolWindow();
         }
 
         private void CopyPrototypeCallback(object sender, EventArgs e)
         {
-            string prototype = String.Empty;
-            bool successed = VGOperations.GetFuncPrototype(DteHelper.DTE2, PrototypeType.FullProt, out prototype);
+            string prototype = VGOperations.GetFuncPrototype(DteHelper.DTE2, PrototypeType.FullProt);
 
-            if (successed)
+            if (!String.IsNullOrEmpty(prototype))
                 Clipboard.SetText(prototype, TextDataFormat.UnicodeText);
         }
 
@@ -590,18 +609,14 @@ namespace Vistaghost.VISTAGHOST
                 if (VGSetting.SettingData.HistoryInfo.WriteLogHistory)
                 {
                     /*Get function*/
-                    string prototype = String.Empty;
-                    bool successed = VGOperations.GetFuncPrototype(DteHelper.DTE2, PrototypeType.FuncName, out prototype);
+                    string prototype = VGOperations.GetFuncPrototype(DteHelper.DTE2, PrototypeType.FuncName);
 
-                    if (successed)
-                    {
-                        LogFileType type = LogFileType.Xml;
+                    LogFileType type = LogFileType.Xml;
 
-                        if (VGSetting.SettingData.HistoryInfo.LogExtension == ".txt")
-                            type = LogFileType.TextFile;
+                    if (VGSetting.SettingData.HistoryInfo.LogExtension == ".txt")
+                        type = LogFileType.TextFile;
 
-                        Logger.LogHistory(type, info.Path, info.Line, mode, find, replace, numPh, prototype);
-                    }
+                    Logger.LogHistory(type, info.Path, info.Line, mode, find, replace, numPh, prototype);
                 }
 
                 DteHelper.DTE.StatusBar.Text = Properties.Resources.AddCommentSuccess;

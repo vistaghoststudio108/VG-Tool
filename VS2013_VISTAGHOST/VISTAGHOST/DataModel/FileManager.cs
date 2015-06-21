@@ -66,7 +66,12 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void FixCorruptedFiles()
         {
+             CheckFile();
 
+            XDocument doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+            if (doc != null)
+            {
+            }
         }
 
         public void UpdateStatus()
@@ -80,6 +85,14 @@ namespace Vistaghost.VISTAGHOST.DataModel
                 doc.Root.Attribute("from").Value = DateTime.Now.ToShortDateString();
                 doc.Root.Attribute("project").Value = vgSetting.ProjectStatus.ProjectName;
                 doc.Root.Attribute("author").Value = Environment.MachineName;
+
+                // Delete all old datas
+                doc.Root.Element("ChangedFile").RemoveAll();
+                doc.Root.Element("CodeElement").Element("Function").RemoveAll();
+                doc.Root.Element("CodeElement").Element("Class").RemoveAll();
+                doc.Root.Element("CodeElement").Element("Enum").RemoveAll();
+                doc.Root.Element("CodeElement").Element("Struct").RemoveAll();
+                doc.Root.Element("Comment").RemoveAll();
 
                 doc.Save(whPath);
             }
@@ -458,7 +471,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
             {
                 var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
                 var groupNode = doc.Root.Element("ChangedFile");
-                if (groupNode != null && !ExistNode(filename, groupNode))
+                if (groupNode != null)
                 {
                     var eNode = new XElement("File");
                     eNode.Value = filename;
