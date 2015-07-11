@@ -222,16 +222,6 @@ namespace Vistaghost.VISTAGHOST.Lib
             return lineBreakStr + str1 + (String.IsNullOrEmpty(str2) ? lineBreakStr : "\n" + str2 + lineBreakStr);
         }
 
-        static string CreateSizeOfString(string funcstr)
-        {
-            string tempStr = funcstr;
-            tempStr = tempStr.Substring(10);
-            var listparam = tempStr.Split(new char[] { ',' });
-            var sizeofString = "sizeof(" + listparam[0] + ") / sizeof(" + listparam[0] + "[0])";
-
-            return ", " + sizeofString;
-        }
-
         /// <summary>
         /// Processing text for add single comments
         /// </summary>

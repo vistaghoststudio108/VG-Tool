@@ -33,13 +33,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         bool IsCanceled = false;
         SearchType searchType = SearchType.None;
         public VistaghostWindowControls Instance;
-//        private int numItem = 1;
         bool IsSearching = false;
         List<VGCodeElement> Results = new List<VGCodeElement>();
         List<FileContainer> FileList = new List<FileContainer>();
         int totalFileSearched = 0;
         int preLineNumber = 0;
-//        int curComboIndex = 0;
 
         public VistaghostWindowControls()
         {
@@ -111,6 +109,40 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
         private void TextViewArea_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void Combo_ElementType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox combo = (ComboBox)sender;
+            switch (combo.SelectedIndex)
+            {
+                case 0:// Function search
+                    {
+                        searchType = SearchType.Function;
+                    }
+                    break;
+
+                case 1:// Class search
+                    {
+                        searchType = SearchType.Class;
+                    }
+                    break;
+
+                case 2:
+                    {
+                        searchType = SearchType.Enumerable;
+                    }
+                    break;
+
+                case 3:
+                    {
+                        searchType = SearchType.Structure;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void Combo_SearchType_SelectionChanged(object sender, SelectionChangedEventArgs e)

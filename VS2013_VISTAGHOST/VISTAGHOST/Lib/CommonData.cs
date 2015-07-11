@@ -360,11 +360,4 @@ namespace Vistaghost.VISTAGHOST.Lib
         VG_RETRY,
         VG_NONE
     }
-
-    public enum CopyFuncType
-    {
-        WCSCPY_S = 0,
-        WCSNCPY_S,
-        _TCSCPY
-    }
 }

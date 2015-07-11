@@ -215,6 +215,17 @@ namespace Vistaghost.VISTAGHOST.Lib
             return ("//" + tlist[(int)mode - 1] + t[1]);
         }
 
+        static string get_FinalString(string str1, string str2)
+        {
+            string lineBreakStr = "\n";
+            for (int i = 0; i < VGSetting.SettingData.CommentInfo.EmptyLineNum; i++)
+            {
+                lineBreakStr += "\n";
+            }
+
+            return lineBreakStr + str1 + (String.IsNullOrEmpty(str2) ? lineBreakStr : "\n" + str2 + lineBreakStr);
+        }
+
         /// <summary>
         /// Processing text for add single comments
         /// </summary>
@@ -328,7 +339,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                 switch (mode)
                 {
                     case ActionType.Modify:
-                        result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + strSelected + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                        result = selected.ReplacePattern(selected.Text, blank + opentag + get_FinalString(selected.Text, strSelected) + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
                         if (result)
                         {
                             selected.EndOfLine(false);
@@ -376,7 +387,7 @@ namespace Vistaghost.VISTAGHOST.Lib
                                 result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
                             }
                             else
-                                result = selected.ReplacePattern(selected.Text, blank + opentag + "\n" + selected.Text + "\n" + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
+                                result = selected.ReplacePattern(selected.Text, blank + opentag + get_FinalString(selected.Text, String.Empty) + blank + closetag, (int)vsFindOptions.vsFindOptionsNone, ref dummy);
                         }
                         break;
 

@@ -20,7 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+        <!--============================================================================================================================================-->
         <RichTextBox Style="{DynamicResource VGRichTextBoxTemplate}" x:Name="SearchResultArea" Grid.Row="1" 
                      KeyDown="TextViewArea_KeyDown" 
                      PreviewMouseUp="SearchResultArea_PreviewMouseUp"
@@ -33,7 +33,7 @@
                 </Style>
             </RichTextBox.Resources>
         </RichTextBox>
-        
+        <!--============================================================================================================================================-->
         <RichTextBox Style="{DynamicResource VGRichTextBoxTemplate}" x:Name="WorkingHistoryArea" Grid.Row="1" 
                      KeyDown="TextViewArea_KeyDown"
                      TextChanged="WorkingHistoryArea_TextChanged">
@@ -43,13 +43,13 @@
                 </Style>
             </RichTextBox.Resources>
         </RichTextBox>
-        
+        <!--============================================================================================================================================-->
         <TextBox Style="{DynamicResource VGTextBoxTemplate}" x:Name="NotesArea" Grid.Row="1" KeyDown="TextViewArea_KeyDown">
         </TextBox>
-        
+        <!--============================================================================================================================================-->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Visibility="Visible">          
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Text="Show output from:"/>
-            
+            <!--============================================================================================================================================-->
             <ComboBox x:Name="Combo_SearchType" Width="130" Margin="5,2,2,2"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       IsDropDownOpen="False" 
@@ -58,28 +58,29 @@
                 <ComboBoxItem Content="Working History"/>
                 <ComboBoxItem Content="Notes"/>
             </ComboBox>
-            
+            <!--============================================================================================================================================-->
             <Line Y1="2" Y2="20" Width="1" Height="22" Margin="4,0" Stroke="#FFBDBCBC" Fill="#FF4F4A4A" Stretch="Fill" X2="1"/>
-            
+            <!--============================================================================================================================================-->
             <StackPanel x:Name="ChangedElementPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible">         
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Element type</TextBlock>
-                
+                <!--============================================================================================================================================-->
                 <ComboBox x:Name="Combo_ElementType" Width="80" Margin="5,2,2,2"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           IsDropDownOpen="False"
-                          SelectedIndex="1">
+                          SelectedIndex="1"
+                          SelectionChanged="Combo_ElementType_SelectionChanged">
                     <ComboBoxItem Content="Function"/>
                     <ComboBoxItem Content="Class"/>
                     <ComboBoxItem Content="Enum"/>
                     <ComboBoxItem Content="Struct"/>
                 </ComboBox>
-                
+                <!--============================================================================================================================================-->
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Key word</TextBlock>
-                
+                <!--============================================================================================================================================-->
                 <TextBox Style="{DynamicResource VGTextBoxTemplate1}" x:Name="Combo_Keyword" Width="120" Height="20" Margin="5,0,0,0"/>
-                
+                <!--============================================================================================================================================-->
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">Source</TextBlock>
-                
+                <!--============================================================================================================================================-->
                 <ComboBox x:Name="Combo_BaseSource" Width="110" Margin="5,2,2,2"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           IsDropDownOpen="False"
@@ -89,7 +90,7 @@
                     <ComboBoxItem Content="Find Results 1"/>
                     <ComboBoxItem Content="Find Results 2"/>
                 </ComboBox>
-                
+                <!--============================================================================================================================================-->
                 <Button x:Name="BtnSearchElement" Width="20" Height="20"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
@@ -97,7 +98,7 @@
                         Click="BtnSearchElement_Click">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/FindResults1_6264.png"/>
                 </Button>
-                
+                <!--============================================================================================================================================-->
                 <Button x:Name="BtnCopyElement" Width="20" Height="20"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
@@ -105,17 +106,16 @@
                         Click="BtnCopyElement_Click">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Copy_6524.png"/>
                 </Button>
-                
+                <!--============================================================================================================================================-->
                 <Button x:Name="BtnStopSearch" Width="20" Height="20"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         ToolTip="Stop a background search"
                         Click="BtnStopSearch_Click" IsEnabled="False">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Terminate.png"/>
-                </Button>
-                
+                </Button>       
             </StackPanel>
-            
+            <!--============================================================================================================================================-->
             <StackPanel x:Name="WorkingHistoryPanel" Grid.Row="0" Orientation="Horizontal" Visibility="Visible">
                 <Button x:Name="BtnClearAll" Width="20" Height="20" BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Clear All" Click="BtnClearAll_Click">
                     <gImage:AutoGreyableImage Style="{DynamicResource ImageTemplate}" Source="/VISTAGHOST;component/Resources/Clearwindowcontent.png"/>
