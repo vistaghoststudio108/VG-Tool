@@ -42,6 +42,9 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             Combo_ElementType.SelectedIndex = 0;
             Combo_BaseSource.SelectedIndex = 1;
 
+            SearchResultArea.Document.Blocks.Clear();
+            SearchResultArea.Document.PageWidth = 3000;
+
             bw = new BackgroundWorker();
             bw.WorkerSupportsCancellation = true;
             bw.DoWork += new DoWorkEventHandler(bw_DoWork);
@@ -73,7 +76,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             switch (sType)
             {
                 case 0:
-                    //SearchResultArea.Clear();
+                    SearchResultArea.Document.Blocks.Clear();
                     break;
 
                 case 1:
@@ -103,7 +106,7 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
             /*Enable some buttons*/
             BtnSearchElement.IsEnabled = true;
             BtnCopyElement.IsEnabled = true;
-            //BtnClearAll.IsEnabled = true;
+            BtnClearAll.IsEnabled = true;
             BtnStopSearch.IsEnabled = false;
 
             // Finish searching
@@ -406,6 +409,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                     Logger.LogError(ex, false);
                 }
             }
+        }
+
+        private void BtnClearAll_Click(object sender, RoutedEventArgs e)
+        {
+            this.Clear();
         }
 
         private void BtnCopyElement_Click(object sender, RoutedEventArgs e)
