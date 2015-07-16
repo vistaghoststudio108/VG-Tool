@@ -148,7 +148,7 @@ namespace Vistaghost.VISTAGHOST
             }
 
             // initial datetime
-            Setting.CurrentDate = vgOperations.GetDateString((DateFormat)vgSetting.SettingData.CommentInfo.DateFormat);
+            //Setting.CurrentDate = vgOperations.GetDateString((DateFormat)vgSetting.SettingData.CommentInfo.DateFormat);
 
             sf.OnSendData = new AddCommentEventHandler(sf_OnSendData);
             cff.OnSendData = new ConfigEventHandler(cff_OnSendData);
@@ -609,7 +609,7 @@ namespace Vistaghost.VISTAGHOST
         {
             vgSetting.SettingData = data;
             vgSetting.SaveSettings();
-            Setting.CurrentDate = vgOperations.GetDateString((DateFormat)data.CommentInfo.DateFormat);
+            //Setting.CurrentDate = vgOperations.GetDateString((DateFormat)data.CommentInfo.DateFormat);
         }
 
         private void ihf_OnSendData(ObjectType func)

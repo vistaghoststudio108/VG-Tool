@@ -61,7 +61,13 @@ namespace Vistaghost.VISTAGHOST
 
         public bool IsFirstInstall { get; set; }
 
-        public string CurrentDate { get; set; }
+        public string CurrentDate
+        {
+            get 
+            {
+                return vgOperations.GetDateString((DateFormat)SettingData.CommentInfo.DateFormat);
+            }
+        }
 
         public string Title { get; set; }
 

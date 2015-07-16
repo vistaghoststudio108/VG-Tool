@@ -66,7 +66,8 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void FixCorruptedFiles()
         {
-             CheckFile();
+             if(!CheckFile())
+                 return;
 
             XDocument doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
             if (doc != null)
@@ -76,7 +77,8 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void UpdateStatus()
         {
-            CheckFile();
+            if (!CheckFile())
+                return;
 
             XDocument doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
             if (doc != null)
