@@ -148,6 +148,7 @@
     <Compile Include="DataModel\VGCodeElement.cs" />
     <Compile Include="Editor\EditorManager.cs" />
     <Compile Include="Editor\MarkPosTagger.cs" />
+    <Compile Include="Helper\ComManager.cs" />
     <Compile Include="Network\VGProduct.cs" />
     <Compile Include="Packages\OleComponent.cs" />
     <Compile Include="ToolWindows\BoolVisibilityConventer.cs" />

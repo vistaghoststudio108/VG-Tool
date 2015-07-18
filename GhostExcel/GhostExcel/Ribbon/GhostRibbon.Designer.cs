@@ -37,14 +37,24 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btnUpdate = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.btnSetting = this.Factory.CreateRibbonButton();
+            this.mailThread = new System.ComponentModel.BackgroundWorker();
+            this.group3 = this.Factory.CreateRibbonGroup();
+            this.btnFeedBack = this.Factory.CreateRibbonButton();
+            this.button2 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
+            this.group2.SuspendLayout();
+            this.group3.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.group1);
-            this.tab1.Label = "TabAddIns";
+            this.tab1.Groups.Add(this.group2);
+            this.tab1.Groups.Add(this.group3);
+            this.tab1.Label = "VISTAGHOST";
             this.tab1.Name = "tab1";
             // 
             // group1
@@ -59,6 +69,36 @@
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnUpdate_Click);
             // 
+            // group2
+            // 
+            this.group2.Items.Add(this.btnSetting);
+            this.group2.Label = "Configuration";
+            this.group2.Name = "group2";
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Label = "Setting";
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetting_Click);
+            // 
+            // group3
+            // 
+            this.group3.Items.Add(this.btnFeedBack);
+            this.group3.Items.Add(this.button2);
+            this.group3.Label = "Help";
+            this.group3.Name = "group3";
+            // 
+            // btnFeedBack
+            // 
+            this.btnFeedBack.Label = "FeedBack";
+            this.btnFeedBack.Name = "btnFeedBack";
+            this.btnFeedBack.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnFeedBack_Click);
+            // 
+            // button2
+            // 
+            this.button2.Label = "About";
+            this.button2.Name = "button2";
+            // 
             // GhostRibbon
             // 
             this.Name = "GhostRibbon";
@@ -69,6 +109,10 @@
             this.tab1.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
+            this.group2.ResumeLayout(false);
+            this.group2.PerformLayout();
+            this.group3.ResumeLayout(false);
+            this.group3.PerformLayout();
 
         }
 
@@ -77,6 +121,12 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnUpdate;
+        private System.ComponentModel.BackgroundWorker mailThread;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSetting;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnFeedBack;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
     }
 
     partial class ThisRibbonCollection

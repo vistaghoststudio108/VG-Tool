@@ -111,6 +111,13 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -158,6 +165,11 @@
   -->
   <ItemGroup>
     <Compile Include="DataModel\Common.cs" />
+    <Compile Include="DataModel\GhostConstants.cs" />
+    <Compile Include="Helper\ExcelUtilities.cs" />
+    <Compile Include="Helper\ExcelCleaner.cs" />
+    <Compile Include="Helper\ExcelLogger.cs" />
+    <Compile Include="Helper\ThreadManager.cs" />
     <Compile Include="Ribbon\GhostRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -166,6 +178,30 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\AttachmentItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\AttachmentItem.Designer.cs">
+      <DependentUpon>AttachmentItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GhostPane.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\GhostPane.Designer.cs">
+      <DependentUpon>GhostPane.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm\FeedBackForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\FeedBackForm.Designer.cs">
+      <DependentUpon>FeedBackForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm\SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Ribbon\GhostRibbon.resx">
       <DependentUpon>GhostRibbon.cs</DependentUpon>
@@ -178,8 +214,22 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UserControls\AttachmentItem.resx">
+      <DependentUpon>AttachmentItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\GhostPane.resx">
+      <DependentUpon>GhostPane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm\FeedBackForm.resx">
+      <DependentUpon>FeedBackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm\SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="GhostExcel_TemporaryKey.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -199,7 +249,9 @@
     </Compile>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Network\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
