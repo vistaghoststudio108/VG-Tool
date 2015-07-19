@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblFilePath = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lblFilePath
@@ -74,5 +76,6 @@
 
         private System.Windows.Forms.Label lblFilePath;
         private System.Windows.Forms.Label btnClose;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

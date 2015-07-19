@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -78,5 +79,18 @@ namespace GhostExcel.DataModel
         Facebook,
         MicrosoftLive,
         None
+    }
+
+    public class Function
+    {
+        public string Name { get; set; }
+        public string Location { get; set; }
+        public bool? Status { get; set; }
+        public Function(string name, string location, bool status)
+        {
+            this.Name = name;
+            this.Location = location;
+            this.Status = status;
+        }
     }
 }

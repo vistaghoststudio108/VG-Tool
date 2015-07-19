@@ -53,6 +53,7 @@ namespace GhostExcel
             //Init my custom pane
             _ghostPane = new GhostPane();
             _myCustomTaskPane = this.CustomTaskPanes.Add(_ghostPane, "Update Results");
+            _myCustomTaskPane.Visible = true;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

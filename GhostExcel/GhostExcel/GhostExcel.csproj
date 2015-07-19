@@ -120,6 +120,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -170,6 +171,7 @@
     <Compile Include="Helper\ExcelCleaner.cs" />
     <Compile Include="Helper\ExcelLogger.cs" />
     <Compile Include="Helper\ThreadManager.cs" />
+    <Compile Include="Network\NetServices.cs" />
     <Compile Include="Ribbon\GhostRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -250,7 +252,13 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Network\" />
+    <None Include="Resources\Find_5650.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Pham Thuan\Downloads\Compressed\ObjectListView-2.8.0\ObjectListViewDemo\ObjectListView\ObjectListView2012.csproj">
+      <Project>{18FEDA0C-D147-4286-B39A-01204808106A}</Project>
+      <Name>ObjectListView2012</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

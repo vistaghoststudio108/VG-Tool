@@ -15,7 +15,6 @@ namespace GhostExcel
 {
     public static class ExcelUtilities
     {
-        
         static ExcelUtilities()
         {
 
@@ -182,15 +181,26 @@ namespace GhostExcel
             return mailfrom;
         }
 
-        private static SmtpClient CreateSMTPClient()
+        private static SmtpClient CreateSMTPClient(MailServer mailSvr)
         {
             SmtpClient smtpClient = null;
 
             smtpClient = new SmtpClient();
-            smtpClient.Host = GhostConstants.SMTPHost;
+
+            switch (mailSvr)
+            {
+                case MailServer.Outlook:
+                    smtpClient.Host = GhostConstants.SMTPOutlookHost;
+                    break;
+                case MailServer.Gmail:
+                default:
+                    smtpClient.Host = GhostConstants.SMTPGmailHost;
+                    break;
+            }
+
             smtpClient.Port = GhostConstants.SMTPPort;
             smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential("thuanpv.uit@gmail.com", "phamvanthuan");
+            smtpClient.Credentials = new NetworkCredential(GetMailFromAddress(), GhostConstants.MailPassword);
 
             return smtpClient;
         }
@@ -215,11 +225,11 @@ namespace GhostExcel
                 msg.Subject = subject;
                 msg.Body = message;
                 msg.To.Add(GhostConstants.EmailTo);
-                msg.From = new MailAddress("thuanpv.uit@gmail.com");
+                msg.From = new MailAddress(GetMailFromAddress());
                 msg.BodyEncoding = Encoding.UTF8;
                 msg.IsBodyHtml = true;
 
-                SmtpClient smtpClient = CreateSMTPClient();
+                SmtpClient smtpClient = CreateSMTPClient(mailSvr);
 
                 if (attachments != null)
                 {
@@ -235,7 +245,7 @@ namespace GhostExcel
             catch (Exception ex)
             {
 #if DEBUG
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.Message + "\n");
 #endif
                 ExcelLogger.LogError(ex);
                 successed = false;
