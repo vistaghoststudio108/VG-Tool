@@ -80,6 +80,7 @@ namespace GhostExcel.WinForm
 
             //Get server
             MailServer mailSvr = MailServer.Gmail;
+
             //Send mail
             if (OnSendMail != null)
                 OnSendMail(this, txtMessage.Text, attachments, mailSvr);

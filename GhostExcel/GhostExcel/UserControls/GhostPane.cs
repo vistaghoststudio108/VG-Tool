@@ -18,22 +18,23 @@ namespace GhostExcel.UserControls
         Point OriginPos = new Point(5, 27);
         Size FixedSize = new Size(230, 230);
         List<Function> listFunc = new List<Function>();
+        bool CancelMenuContext = false;
+
         public GhostPane()
         {
             InitializeComponent();
+            var func = new Function("Function1", "", false);
+            this.objListViewFast.AddObject(func);
 
-            //init list
-            for (int i = 0; i < 40; i++)
-            {
-                listFunc.Add(new Function("Function1", "C:\adfasdf", false));
-            }
-            listFunc.Add(new Function("Function2", "C:\adfasdf", false));
-            listFunc.Add(new Function("Function3", "C:\adfasdf", false));
-
-            InitListView(listFunc);
+            this.contextMenuStrip1.Opening += contextMenuStrip1_Opening;
         }
 
-        private void InitListView(List<Function> list)
+        void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = this.CancelMenuContext;
+        }
+
+        private void AddIListViewItems(List<Function> list)
         {
             this.olvColumn1.AspectGetter = delegate(object x) { return ((Function)x).Name; };
 
@@ -120,6 +121,20 @@ namespace GhostExcel.UserControls
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void objListViewFast_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) 
+                return;
+
+            if (this.objListViewFast.FocusedItem != null &&
+                this.objListViewFast.FocusedItem.Bounds.Contains(e.Location) == true)
+            {
+                this.CancelMenuContext = false;
+            }
+            else
+                this.CancelMenuContext = true;
         }
     }
 }

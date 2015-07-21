@@ -119,6 +119,7 @@
             this.objListViewFast.GridLines = true;
             this.objListViewFast.HideSelection = false;
             this.objListViewFast.Location = new System.Drawing.Point(0, 71);
+            this.objListViewFast.MultiSelect = false;
             this.objListViewFast.Name = "objListViewFast";
             this.objListViewFast.OwnerDraw = true;
             this.objListViewFast.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.Submenu;
@@ -136,6 +137,7 @@
             this.objListViewFast.UseHyperlinks = true;
             this.objListViewFast.View = System.Windows.Forms.View.Details;
             this.objListViewFast.VirtualMode = true;
+            this.objListViewFast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.objListViewFast_MouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -144,7 +146,7 @@
             this.deleteToolStripMenuItem,
             this.detailsToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(166, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(166, 70);
             // 
             // addToolStripMenuItem
             // 

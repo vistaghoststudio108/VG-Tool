@@ -118,6 +118,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ObjectListView, Version=2.8.0.41889, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ObjectListView.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -166,6 +170,7 @@
   -->
   <ItemGroup>
     <Compile Include="DataModel\Common.cs" />
+    <Compile Include="DataModel\FileManager.cs" />
     <Compile Include="DataModel\GhostConstants.cs" />
     <Compile Include="Helper\ExcelUtilities.cs" />
     <Compile Include="Helper\ExcelCleaner.cs" />
@@ -262,12 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Find_5650.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\Pham Thuan\Downloads\Compressed\ObjectListView-2.8.0\ObjectListViewDemo\ObjectListView\ObjectListView2012.csproj">
-      <Project>{18FEDA0C-D147-4286-B39A-01204808106A}</Project>
-      <Name>ObjectListView2012</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

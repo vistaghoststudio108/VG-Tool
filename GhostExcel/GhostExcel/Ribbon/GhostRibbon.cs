@@ -15,13 +15,14 @@ namespace GhostExcel
     public partial class GhostRibbon
     {
         Excel.Application _application;
+        string ErrorMessage = string.Empty;
 
         private void GhostRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             this._application = Globals.ThisAddIn.Application;
 
-            mailThread.DoWork += backgroundWorker_DoWork;
-            mailThread.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+            mailThread.DoWork += mailThread_DoWork;
+            mailThread.RunWorkerCompleted += mailThread_RunWorkerCompleted;
 
             searchThread.DoWork += searchThread_DoWork;
             searchThread.RunWorkerCompleted += searchThread_RunWorkerCompleted;
@@ -50,32 +51,57 @@ namespace GhostExcel
             progress.Close();
         }
 
-        void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        void mailThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show(Properties.Resources.SendMailSucceed, "Notifications", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (e.Cancelled)
+            {
+                MessageBox.Show(this.ErrorMessage + " Check network connection and try again.", "Send failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+                MessageBox.Show(Properties.Resources.SendMailSucceed, "Notifications", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            btnFeedBack.Enabled = true;
             //btnUpdate.Enabled = true;
             ////Show my custom pane
             //if(!Globals.ThisAddIn.MyCustomTaskPane.Visible)
             //    Globals.ThisAddIn.MyCustomTaskPane.Visible = true;
         }
 
-        void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        void mailThread_DoWork(object sender, DoWorkEventArgs e)
         {
             MailData mailData = (MailData)e.Argument;
+            string errorMsg = String.Empty;
 
-            ExcelUtilities.SendFeedBackEmail(GhostConstants.MailSubject, 
-                                             mailData.Message, 
-                                             mailData.Attachments as List<Attachment>, 
+            bool succeed = ExcelUtilities.SendFeedBackEmail(GhostConstants.MailSubject,
+                                             mailData.Message,
+                                             mailData.Attachments as List<Attachment>,
+                                             out errorMsg,
                                              mailData.MailSvr);
+
+            // If send failed, just cancel the thread
+            if (!succeed)
+            {
+                e.Cancel = true;
+                this.ErrorMessage = errorMsg;
+            }
         }
 
         private void btnUpdate_Click(object sender, RibbonControlEventArgs e)
         {
-            if(!searchThread.IsBusy)
+            //if (!searchThread.IsBusy)
+            //{
+            //    ProgressForm pf = new ProgressForm();
+            //    searchThread.RunWorkerAsync(pf);
+            //    pf.ShowDialog();
+            //}
+
+            Excel.Worksheet ws = (Excel.Worksheet)this._application.ActiveWorkbook.ActiveSheet;
+
+            Excel.Range range = ws.get_Range("A1", "D4");
+
+            if(ExcelUtilities.Find(range, "vistaghost"))
             {
-                ProgressForm pf = new ProgressForm();
-                searchThread.RunWorkerAsync(pf);
-                pf.ShowDialog();
+
             }
         }
 
@@ -87,13 +113,13 @@ namespace GhostExcel
 
         private void fbf_OnSendMail(object sender, string message, object attachments, MailServer mailSvr)
         {
-            if(!mailThread.IsBusy)
+            if (!mailThread.IsBusy)
             {
-                MailData mailData = new MailData 
-                { 
-                    MailSvr = mailSvr, 
+                MailData mailData = new MailData
+                {
+                    MailSvr = mailSvr,
                     Message = message,
-                    Attachments = attachments 
+                    Attachments = attachments
                 };
 
                 mailThread.RunWorkerAsync(mailData);
@@ -102,6 +128,7 @@ namespace GhostExcel
 
         private void btnFeedBack_Click(object sender, RibbonControlEventArgs e)
         {
+            btnFeedBack.Enabled = false;
             FeedBackForm fbf = new FeedBackForm();
             fbf.OnSendMail += new UCEventHandler(fbf_OnSendMail);
             fbf.ShowDialog();

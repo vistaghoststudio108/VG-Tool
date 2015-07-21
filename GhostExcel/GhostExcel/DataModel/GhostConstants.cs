@@ -23,6 +23,7 @@ namespace GhostExcel.DataModel
         public const string MailSubject = "Error about GhostExcel Add-in";
         public const long MaxAttachFileSize = 5000000; //5MB
         public const string MailPassword = "phamvanthuan";
+        public const string MailUserToken = "test message 1";
 
     }
 }

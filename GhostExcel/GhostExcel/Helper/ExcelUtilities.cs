@@ -88,6 +88,22 @@ namespace GhostExcel
             ExcelCleaner.releaseObject(borders);
         }
 
+        public static bool Find(Excel.Range range, string strFind)
+        {
+            bool found = false;
+            Excel.Range curFind = null;
+
+            curFind = range.Find(strFind, Type.Missing,
+                                      Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlPart,
+                                      Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlNext, false,
+                                      Type.Missing, Type.Missing);
+
+            if (curFind != null)
+                found = true;
+
+            return found;
+        }
+
         /// <summary>
         /// Find string in active excel's sheet
         /// </summary>
@@ -95,10 +111,11 @@ namespace GhostExcel
         /// <param name="strFind">string to find</param>
         /// <param name="resultColor">result's color</param>
         /// <param name="boldResult">bold result or not</param>
-        public static void Find(Excel.Range range, string strFind, Color resultColor, bool boldResult = true)
+        public static bool Find(Excel.Range range, string strFind, Color resultColor, bool boldResult = true)
         {
             Excel.Range currentFind = null;
             Excel.Range firstFind = null;
+            bool found = false;
 
             // You should specify all these parameters every time you call this method, 
             // since they can be overridden in the user interface. 
@@ -131,6 +148,8 @@ namespace GhostExcel
             //Release all COM objects
             ExcelCleaner.releaseObject(firstFind);
             ExcelCleaner.releaseObject(currentFind);
+
+            return found;
         }
 
         /// <summary>
@@ -188,6 +207,8 @@ namespace GhostExcel
                     break;
             }
 
+            smtpClient.Timeout = 30000; // 30000 miniseconds (30 seconds)
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.Port = GhostConstants.SMTPPort;
             smtpClient.EnableSsl = true;
             smtpClient.Credentials = new NetworkCredential(GhostConstants.EmailFrom, GhostConstants.MailPassword);
@@ -205,18 +226,22 @@ namespace GhostExcel
         /// <returns>true - if successed; false - if failed</returns>
         public static bool SendFeedBackEmail(string subject, string message,
                                              List<Attachment> attachmentList,
+                                             out string errorMsg,
                                              MailServer mailSvr = MailServer.Gmail)
         {
             MailMessage msg = null;
-            bool successed = false;
+            bool succeed = false;
+            errorMsg = String.Empty;
+
             try
             {
                 msg = new MailMessage();
                 msg.Subject = subject;
+                msg.SubjectEncoding = Encoding.UTF8;
                 msg.Body = message;
+                msg.BodyEncoding = Encoding.UTF8;
                 msg.To.Add(GhostConstants.EmailTo);
                 msg.From = new MailAddress(GhostConstants.EmailFrom);
-                msg.BodyEncoding = Encoding.UTF8;
                 msg.IsBodyHtml = true;
 
                 SmtpClient smtpClient = CreateSMTPClient(mailSvr);
@@ -238,21 +263,22 @@ namespace GhostExcel
                 }
 
                 smtpClient.Send(msg);
-                successed = true;
+                succeed = true;
             }
-            catch (Exception ex)
+            catch (SmtpException ex)
             {
 #if DEBUG
                 System.Diagnostics.Debug.WriteLine(ex.Message + "\n");
 #endif
                 ExcelLogger.LogError(ex);
-                successed = false;
+                succeed = false;
+                errorMsg = ex.Message;
             }
 
             if (msg != null)
                 msg.Dispose();
 
-            return successed;
+            return succeed;
         }
 
         /// <summary>
