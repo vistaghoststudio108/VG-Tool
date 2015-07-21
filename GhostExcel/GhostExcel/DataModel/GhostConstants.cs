@@ -14,6 +14,7 @@ namespace GhostExcel.DataModel
 
         //Mail
         public const string EmailTo = "phamvanthuankhmt05uit@gmail.com";
+        public const string EmailFrom = "thuanpv.uit@gmail.com";
         public const string AttachFileName = "error_file.txt";
         public const string ContentTypeString = "application/vnd.ms-excel";
         public const int SMTPPort = 587;

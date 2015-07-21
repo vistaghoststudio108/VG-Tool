@@ -39,10 +39,11 @@
             this.btnUpdate = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.btnSetting = this.Factory.CreateRibbonButton();
-            this.mailThread = new System.ComponentModel.BackgroundWorker();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.btnFeedBack = this.Factory.CreateRibbonButton();
             this.button2 = this.Factory.CreateRibbonButton();
+            this.mailThread = new System.ComponentModel.BackgroundWorker();
+            this.searchThread = new System.ComponentModel.BackgroundWorker();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -99,6 +100,10 @@
             this.button2.Label = "About";
             this.button2.Name = "button2";
             // 
+            // searchThread
+            // 
+            this.searchThread.WorkerReportsProgress = true;
+            // 
             // GhostRibbon
             // 
             this.Name = "GhostRibbon";
@@ -127,6 +132,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnFeedBack;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
+        private System.ComponentModel.BackgroundWorker searchThread;
     }
 
     partial class ThisRibbonCollection

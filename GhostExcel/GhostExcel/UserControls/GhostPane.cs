@@ -16,6 +16,7 @@ namespace GhostExcel.UserControls
     public partial class GhostPane : UserControl
     {
         Point OriginPos = new Point(5, 27);
+        Size FixedSize = new Size(230, 230);
         List<Function> listFunc = new List<Function>();
         public GhostPane()
         {
@@ -51,9 +52,9 @@ namespace GhostExcel.UserControls
         private void GhostPane_SizeChanged(object sender, EventArgs e)
         {
             textBoxFilterFast.Width = this.Width - 15 - this.cbFilterType.Width;
-            this.cbFilterType.Location = new Point 
-            { 
-                X = this.OriginPos.X + this.textBoxFilterFast.Width + 5, 
+            this.cbFilterType.Location = new Point
+            {
+                X = this.OriginPos.X + this.textBoxFilterFast.Width + 5,
                 Y = this.OriginPos.Y - 1
             };
 
@@ -114,6 +115,11 @@ namespace GhostExcel.UserControls
                                                           objects.Count,
                                                           olv.Items.Count,
                                                           stopWatch.ElapsedMilliseconds);
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

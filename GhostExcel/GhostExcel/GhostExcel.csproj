@@ -199,6 +199,12 @@
     <Compile Include="WinForm\FeedBackForm.Designer.cs">
       <DependentUpon>FeedBackForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForm\ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForm\SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -226,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForm\FeedBackForm.resx">
       <DependentUpon>FeedBackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm\ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForm\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>

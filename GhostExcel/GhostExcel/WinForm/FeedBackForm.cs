@@ -80,9 +80,6 @@ namespace GhostExcel.WinForm
 
             //Get server
             MailServer mailSvr = MailServer.Gmail;
-            if (rdOutlook.Checked)
-                mailSvr = MailServer.Outlook;
-
             //Send mail
             if (OnSendMail != null)
                 OnSendMail(this, txtMessage.Text, attachments, mailSvr);
@@ -115,9 +112,6 @@ namespace GhostExcel.WinForm
             this.Height += offset;
             this.btnCancel.Location = new Point(this.btnCancel.Location.X, this.btnCancel.Location.Y + offset);
             this.btnSendMail.Location = new Point(this.btnSendMail.Location.X, this.btnSendMail.Location.Y + offset);
-            this.rdGmail.Location = new Point(this.rdGmail.Location.X, this.rdGmail.Location.Y + offset);
-            this.rdOutlook.Location = new Point(this.rdOutlook.Location.X, this.rdOutlook.Location.Y + offset);
-            this.lblMailServer.Location = new Point(this.lblMailServer.Location.X, this.lblMailServer.Location.Y + offset);
         }
 
         /// <summary>

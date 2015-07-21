@@ -33,9 +33,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.rdGmail = new System.Windows.Forms.RadioButton();
-            this.rdOutlook = new System.Windows.Forms.RadioButton();
-            this.lblMailServer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtMessage
@@ -83,46 +80,12 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // rdGmail
-            // 
-            this.rdGmail.AutoSize = true;
-            this.rdGmail.Checked = true;
-            this.rdGmail.Location = new System.Drawing.Point(92, 129);
-            this.rdGmail.Name = "rdGmail";
-            this.rdGmail.Size = new System.Drawing.Size(58, 19);
-            this.rdGmail.TabIndex = 0;
-            this.rdGmail.TabStop = true;
-            this.rdGmail.Text = "Gmail";
-            this.rdGmail.UseVisualStyleBackColor = true;
-            // 
-            // rdOutlook
-            // 
-            this.rdOutlook.AutoSize = true;
-            this.rdOutlook.Location = new System.Drawing.Point(175, 129);
-            this.rdOutlook.Name = "rdOutlook";
-            this.rdOutlook.Size = new System.Drawing.Size(67, 19);
-            this.rdOutlook.TabIndex = 0;
-            this.rdOutlook.Text = "Outlook";
-            this.rdOutlook.UseVisualStyleBackColor = true;
-            // 
-            // lblMailServer
-            // 
-            this.lblMailServer.AutoSize = true;
-            this.lblMailServer.Location = new System.Drawing.Point(13, 130);
-            this.lblMailServer.Name = "lblMailServer";
-            this.lblMailServer.Size = new System.Drawing.Size(73, 15);
-            this.lblMailServer.TabIndex = 5;
-            this.lblMailServer.Text = "Mail server :";
-            // 
             // FeedBackForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 156);
+            this.ClientSize = new System.Drawing.Size(476, 157);
             this.ControlBox = false;
-            this.Controls.Add(this.lblMailServer);
-            this.Controls.Add(this.rdOutlook);
-            this.Controls.Add(this.rdGmail);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSendMail);
@@ -150,8 +113,5 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.RadioButton rdOutlook;
-        private System.Windows.Forms.RadioButton rdGmail;
-        private System.Windows.Forms.Label lblMailServer;
     }
 }

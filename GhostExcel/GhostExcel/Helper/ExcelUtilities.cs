@@ -95,15 +95,14 @@ namespace GhostExcel
         /// <param name="strFind">string to find</param>
         /// <param name="resultColor">result's color</param>
         /// <param name="boldResult">bold result or not</param>
-        public static void Find(Excel.Worksheet workSheet, string strFind, Color resultColor, bool boldResult = true)
+        public static void Find(Excel.Range range, string strFind, Color resultColor, bool boldResult = true)
         {
             Excel.Range currentFind = null;
             Excel.Range firstFind = null;
 
-            Excel.Range _find = workSheet.get_Range("A1", "B3");
             // You should specify all these parameters every time you call this method, 
             // since they can be overridden in the user interface. 
-            currentFind = _find.Find(strFind, Type.Missing,
+            currentFind = range.Find(strFind, Type.Missing,
                                       Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlPart,
                                       Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlNext, false,
                                       Type.Missing, Type.Missing);
@@ -126,13 +125,12 @@ namespace GhostExcel
                 currentFind.Font.Color = ColorTranslator.ToOle(resultColor);
                 currentFind.Font.Bold = boldResult;
 
-                currentFind = _find.FindNext(currentFind);
+                currentFind = range.FindNext(currentFind);
             }
 
             //Release all COM objects
             ExcelCleaner.releaseObject(firstFind);
             ExcelCleaner.releaseObject(currentFind);
-            ExcelCleaner.releaseObject(_find);
         }
 
         /// <summary>
@@ -173,14 +171,6 @@ namespace GhostExcel
             ExcelCleaner.releaseObject(style);
         }
 
-        private static string GetMailFromAddress()
-        {
-            string author = Globals.ThisAddIn.Application.ThisWorkbook.Author;
-            string mailfrom = string.Format("{0}@fsoft.com.vn", author);
-
-            return mailfrom;
-        }
-
         private static SmtpClient CreateSMTPClient(MailServer mailSvr)
         {
             SmtpClient smtpClient = null;
@@ -200,7 +190,7 @@ namespace GhostExcel
 
             smtpClient.Port = GhostConstants.SMTPPort;
             smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential(GetMailFromAddress(), GhostConstants.MailPassword);
+            smtpClient.Credentials = new NetworkCredential(GhostConstants.EmailFrom, GhostConstants.MailPassword);
 
             return smtpClient;
         }
@@ -210,11 +200,11 @@ namespace GhostExcel
         /// </summary>
         /// <param name="subject">mail's subject</param>
         /// <param name="message">mail's content</param>
-        /// <param name="attachments">attach files</param>
+        /// <param name="attachmentList">attach files</param>
         /// <param name="mailSvr">mail's server</param>
         /// <returns>true - if successed; false - if failed</returns>
         public static bool SendFeedBackEmail(string subject, string message,
-                                             List<Attachment> attachments,
+                                             List<Attachment> attachmentList,
                                              MailServer mailSvr = MailServer.Gmail)
         {
             MailMessage msg = null;
@@ -225,18 +215,26 @@ namespace GhostExcel
                 msg.Subject = subject;
                 msg.Body = message;
                 msg.To.Add(GhostConstants.EmailTo);
-                msg.From = new MailAddress(GetMailFromAddress());
+                msg.From = new MailAddress(GhostConstants.EmailFrom);
                 msg.BodyEncoding = Encoding.UTF8;
                 msg.IsBodyHtml = true;
 
                 SmtpClient smtpClient = CreateSMTPClient(mailSvr);
 
-                if (attachments != null)
+                if (attachmentList != null)
                 {
-                    foreach (var item in attachments)
+                    foreach (var item in attachmentList)
                     {
                         msg.Attachments.Add(item);
                     }
+                }
+                else
+                {
+                    //Get default error file
+                    var attachment = GetAttachment();
+
+                    if(attachment != null)
+                        msg.Attachments.Add(attachment);
                 }
 
                 smtpClient.Send(msg);
@@ -257,6 +255,10 @@ namespace GhostExcel
             return successed;
         }
 
+        /// <summary>
+        /// Get error file which created if existed an error while running
+        /// </summary>
+        /// <returns>error path</returns>
         private static string GetErrorFile()
         {
              var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), GhostConstants.VGFolder);
@@ -287,8 +289,11 @@ namespace GhostExcel
             return memStream;
         }
 
-        //Attachment building
-        private static Attachment CreateAttachment()
+        /// <summary>
+        /// Get attach file when send email
+        /// </summary>
+        /// <returns></returns>
+        private static Attachment GetAttachment()
         {
             Attachment attachment = null;
             string strErrorFile = String.Empty;
@@ -296,11 +301,11 @@ namespace GhostExcel
             strErrorFile = GetErrorFile();
 
             if (String.IsNullOrEmpty(strErrorFile))
-                return attachment;
+                return null;
 
             try
             {
-                var stream = new FileStream(strErrorFile, FileMode.Open, FileAccess.Read);
+                var stream = WriteFileToMemory(strErrorFile);
                 if (stream != null)
                 {
                     attachment = new Attachment(stream, GhostConstants.AttachFileName);
@@ -310,6 +315,7 @@ namespace GhostExcel
             catch (Exception ex)
             {
                 ExcelLogger.LogError(ex);
+                return null;
             }
 
             return attachment;

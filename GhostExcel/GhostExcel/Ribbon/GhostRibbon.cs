@@ -22,6 +22,32 @@ namespace GhostExcel
 
             mailThread.DoWork += backgroundWorker_DoWork;
             mailThread.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+
+            searchThread.DoWork += searchThread_DoWork;
+            searchThread.RunWorkerCompleted += searchThread_RunWorkerCompleted;
+            searchThread.ProgressChanged += searchThread_ProgressChanged;
+        }
+
+        void searchThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            //pf.SetProgressPercent(e.ProgressPercentage);
+        }
+
+        void searchThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        void searchThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ProgressForm progress = (ProgressForm)e.Argument;
+            int i = 1;
+            while (i < 100)
+            {
+                progress.UpdateProgress(i);
+                i++;
+            }
+            progress.Close();
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -45,7 +71,12 @@ namespace GhostExcel
 
         private void btnUpdate_Click(object sender, RibbonControlEventArgs e)
         {
-
+            if(!searchThread.IsBusy)
+            {
+                ProgressForm pf = new ProgressForm();
+                searchThread.RunWorkerAsync(pf);
+                pf.ShowDialog();
+            }
         }
 
         private void btnSetting_Click(object sender, RibbonControlEventArgs e)
