@@ -81,6 +81,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <!--
     This section defines properties that are set when the "Release" configuration is selected.
@@ -175,7 +176,7 @@
     <Compile Include="Helper\ExcelUtilities.cs" />
     <Compile Include="Helper\ExcelCleaner.cs" />
     <Compile Include="Helper\ExcelLogger.cs" />
-    <Compile Include="Helper\ThreadManager.cs" />
+    <Compile Include="Helper\ExceptionManager.cs" />
     <Compile Include="Network\NetServices.cs" />
     <Compile Include="Ribbon\GhostRibbon.cs">
       <SubType>Component</SubType>
@@ -198,11 +199,11 @@
     <Compile Include="UserControls\GhostPane.Designer.cs">
       <DependentUpon>GhostPane.cs</DependentUpon>
     </Compile>
-    <Compile Include="WinForm\FeedBackForm.cs">
+    <Compile Include="WinForm\ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinForm\FeedBackForm.Designer.cs">
-      <DependentUpon>FeedBackForm.cs</DependentUpon>
+    <Compile Include="WinForm\ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForm\ProgressForm.cs">
       <SubType>Form</SubType>
@@ -235,8 +236,8 @@
     <EmbeddedResource Include="UserControls\GhostPane.resx">
       <DependentUpon>GhostPane.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForm\FeedBackForm.resx">
-      <DependentUpon>FeedBackForm.cs</DependentUpon>
+    <EmbeddedResource Include="WinForm\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForm\ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
@@ -267,6 +268,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Find_5650.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

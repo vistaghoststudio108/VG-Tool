@@ -43,7 +43,10 @@ namespace GhostExcel
                     writer.WriteLine();
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                ExceptionManager.Instance.ThrowExceptionReport(ex);
+            }
         }
 
         ///<summary>
@@ -76,7 +79,10 @@ namespace GhostExcel
                     writer.WriteLine();
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ExceptionManager.Instance.ThrowExceptionReport(ex);
+            }
         }
     }
 }

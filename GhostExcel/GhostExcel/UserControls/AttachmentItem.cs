@@ -14,6 +14,7 @@ namespace GhostExcel.UserControls
         public EventHandler OnClosed;
 
         public int Index { get; set; }
+        public string RealText { get; set; }
 
         public override string Text
         {
@@ -23,6 +24,7 @@ namespace GhostExcel.UserControls
             }
             set
             {
+                this.RealText = value;
                 string newText = GetVisibleString(value, this.Width - this.btnClose.Width - 10);
                 this.lblFilePath.Text = newText;
 

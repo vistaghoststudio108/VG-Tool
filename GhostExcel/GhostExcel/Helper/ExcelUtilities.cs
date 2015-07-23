@@ -226,12 +226,10 @@ namespace GhostExcel
         /// <returns>true - if successed; false - if failed</returns>
         public static bool SendFeedBackEmail(string subject, string message,
                                              List<Attachment> attachmentList,
-                                             out string errorMsg,
                                              MailServer mailSvr = MailServer.Gmail)
         {
             MailMessage msg = null;
             bool succeed = false;
-            errorMsg = String.Empty;
 
             try
             {
@@ -272,7 +270,6 @@ namespace GhostExcel
 #endif
                 ExcelLogger.LogError(ex);
                 succeed = false;
-                errorMsg = ex.Message;
             }
 
             if (msg != null)
@@ -309,7 +306,6 @@ namespace GhostExcel
                 var bytes = new byte[file.Length];
                 file.Read(bytes, 0, (int)file.Length);
                 memStream.Write(bytes, 0, (int)file.Length);
-                file.Close();
             }
             memStream.Position = 0;
             return memStream;
@@ -341,6 +337,7 @@ namespace GhostExcel
             catch (Exception ex)
             {
                 ExcelLogger.LogError(ex);
+                ExceptionManager.Instance.ThrowExceptionReport(ex);
                 return null;
             }
 

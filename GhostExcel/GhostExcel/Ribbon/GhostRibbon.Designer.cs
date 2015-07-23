@@ -37,6 +37,7 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btnUpdate = this.Factory.CreateRibbonButton();
+            this.btnNew = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.btnSetting = this.Factory.CreateRibbonButton();
             this.group3 = this.Factory.CreateRibbonGroup();
@@ -61,14 +62,27 @@
             // group1
             // 
             this.group1.Items.Add(this.btnUpdate);
+            this.group1.Items.Add(this.btnNew);
             this.group1.Label = "Data";
             this.group1.Name = "group1";
             // 
             // btnUpdate
             // 
+            this.btnUpdate.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnUpdate.Image = global::GhostExcel.Properties.Resources.update;
             this.btnUpdate.Label = "Update";
             this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.ShowImage = true;
             this.btnUpdate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnUpdate_Click);
+            // 
+            // btnNew
+            // 
+            this.btnNew.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnNew.Image = global::GhostExcel.Properties.Resources.add;
+            this.btnNew.Label = "New";
+            this.btnNew.Name = "btnNew";
+            this.btnNew.ShowImage = true;
+            this.btnNew.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnNew_Click);
             // 
             // group2
             // 
@@ -78,8 +92,11 @@
             // 
             // btnSetting
             // 
+            this.btnSetting.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnSetting.Image = global::GhostExcel.Properties.Resources.settings;
             this.btnSetting.Label = "Setting";
             this.btnSetting.Name = "btnSetting";
+            this.btnSetting.ShowImage = true;
             this.btnSetting.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetting_Click);
             // 
             // group3
@@ -133,6 +150,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnFeedBack;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
         private System.ComponentModel.BackgroundWorker searchThread;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnNew;
     }
 
     partial class ThisRibbonCollection

@@ -24,6 +24,7 @@ namespace GhostExcel
             catch (Exception ex)
             {
                 ExcelLogger.LogError(ex);
+                ExceptionManager.Instance.ThrowExceptionReport(ex);
                 obj = null;
             }
 
