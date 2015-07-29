@@ -23,8 +23,6 @@ namespace GhostExcel.UserControls
         public GhostPane()
         {
             InitializeComponent();
-            var func = new Function("Function1", "", false);
-            this.objListViewFast.AddObject(func);
 
             this.contextMenuStrip1.Opening += contextMenuStrip1_Opening;
         }
@@ -32,6 +30,16 @@ namespace GhostExcel.UserControls
         void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel = this.CancelMenuContext;
+        }
+
+        public void AddObj(object item)
+        {
+            this.objListViewFast.AddObject(item);
+        }
+
+        public void ClearList()
+        {
+            this.objListViewFast.ClearObjects();
         }
 
         private void AddIListViewItems(List<Function> list)

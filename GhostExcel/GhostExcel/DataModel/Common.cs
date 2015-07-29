@@ -85,12 +85,15 @@ namespace GhostExcel.DataModel
     {
         public string Name { get; set; }
         public string Location { get; set; }
-        public bool? Status { get; set; }
-        public Function(string name, string location, bool status)
+        public Function()
+        {
+
+        }
+
+        public Function(string name, string location)
         {
             this.Name = name;
             this.Location = location;
-            this.Status = status;
         }
     }
 }

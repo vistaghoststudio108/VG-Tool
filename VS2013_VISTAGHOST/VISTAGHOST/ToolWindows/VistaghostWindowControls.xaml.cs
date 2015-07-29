@@ -399,10 +399,11 @@ namespace Vistaghost.VISTAGHOST.ToolWindows
                         break;
                 }
 
-                //Results = vgOperations.GetFunctionProtFromHistory(_dte, this.FileList, searchType, ref Instance, out totalFileSearched, ref IsCanceled);
-
                 if (IsCanceled && totalFileSearched != this.FileList.Count)
                     e.Cancel = true;
+
+                //Save found files
+                FileManager.Instance.SaveFoundFiles(this.Results);
             }
             catch (Exception ex)
             {

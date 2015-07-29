@@ -9,63 +9,84 @@ using GhostExcel.WinForm;
 using GhostExcel.DataModel;
 using System.Net.Mail;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace GhostExcel
 {
     public partial class GhostRibbon
     {
         Excel.Application _application;
+        //ProgressForm progress;
 
         private void GhostRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             this._application = Globals.ThisAddIn.Application;
 
-            //mailThread.DoWork += mailThread_DoWork;
-            //mailThread.RunWorkerCompleted += mailThread_RunWorkerCompleted;
-
             searchThread.DoWork += searchThread_DoWork;
             searchThread.RunWorkerCompleted += searchThread_RunWorkerCompleted;
-            searchThread.ProgressChanged += searchThread_ProgressChanged;
+            //searchThread.ProgressChanged += searchThread_ProgressChanged;
         }
 
         void searchThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //pf.SetProgressPercent(e.ProgressPercentage);
+            //progress.Message = "In progress, please wait... " + e.ProgressPercentage.ToString() + "%";
+            //progress.ProgressValue = e.ProgressPercentage;
         }
 
         void searchThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Cancelled == true)
+            {
+                
+            }
+            else if (e.Error != null)
+            {
+                
+            }
+            else
+            {
 
+            }
+
+            //Enable Update button
+            btnUpdate.Enabled = true;
         }
 
         void searchThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            ProgressForm progress = (ProgressForm)e.Argument;
-            int i = 1;
-            while (i < 100)
+            Excel.Worksheet ws = (Excel.Worksheet)this._application.ActiveWorkbook.ActiveSheet;
+            Excel.Range range = ws.UsedRange;
+
+            int numOfFunc = FileManager.Instance.SearchInFile().Count;
+
+            if(numOfFunc == 0)
             {
-                progress.UpdateProgress(i);
-                i++;
+                this._application.StatusBar = "Function not found";
+                return;
             }
-            progress.Close();
+
+            Globals.ThisAddIn.GhostPane.ClearList();
+
+            foreach (var func in FileManager.Instance.SearchInFile())
+            {
+                if(!ExcelUtilities.Find(range, func.Name))
+                {
+                    Globals.ThisAddIn.GhostPane.AddObj(func);
+                    this._application.StatusBar = "Found " + func.Name;
+                }
+            }
+
+            ExcelCleaner.releaseObject(ws);
+            ExcelCleaner.releaseObject(range);
         }
 
         private void btnUpdate_Click(object sender, RibbonControlEventArgs e)
         {
-            //if (!searchThread.IsBusy)
-            //{
-            //    ProgressForm pf = new ProgressForm();
-            //    searchThread.RunWorkerAsync(pf);
-            //    pf.ShowDialog();
-            //}
-
-            Excel.Worksheet ws = (Excel.Worksheet)this._application.ActiveWorkbook.ActiveSheet;
-
-            Excel.Range range = ws.get_Range("A1", "D4");
-
-            if(ExcelUtilities.Find(range, "vistaghost"))
+            if (!searchThread.IsBusy)
             {
-
+                btnUpdate.Enabled = false;
+                // Start the asynchronous operation.
+                searchThread.RunWorkerAsync();
             }
         }
 

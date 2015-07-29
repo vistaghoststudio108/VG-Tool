@@ -340,6 +340,7 @@
     <None Include="Resources\Images.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\SharedFile.xml" />
     <Resource Include="Resources\WorkHistory.xml">
       <SubType>Designer</SubType>
     </Resource>

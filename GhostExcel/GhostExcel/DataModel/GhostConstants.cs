@@ -9,6 +9,8 @@ namespace GhostExcel.DataModel
     {
         public const string Version = "1.0.0";
         public const string VGFolder = "Vistaghost";
+        public const string SharedFolder = "Shared";
+        public const string SharedFile = "SharedFile.xml";
         public const string ErrorLogFile = "ExcelErrorLog.txt";
         public const string DefaultStyleName = "GhostExcelStyle";
 

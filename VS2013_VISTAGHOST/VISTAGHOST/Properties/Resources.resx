@@ -178,6 +178,9 @@
   <data name="NoText" xml:space="preserve">
     <value>No text selection</value>
   </data>
+  <data name="SharedFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SharedFile.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="SingleHeader" xml:space="preserve">
     <value>EditorContextMenus.CodeWindow.MakeFunctionHeader</value>
   </data>

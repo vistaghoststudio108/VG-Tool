@@ -15,7 +15,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
     public class FileManager
     {
         static FileManager _instance;
-        private static string whPath = String.Empty; // work history path
+        private string whPath = String.Empty; // work history path
         private static readonly object fsLock = new object();
         public static FileManager Instance
         {
@@ -30,33 +30,34 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public FileManager()
         {
-            CheckFile();
+            CheckFile(Properties.Resources.WorkHistory);
             SearchCanceled = false;
         }
 
         /// <summary>
         /// Check the exist of the hisory file
         /// </summary>
-        bool CheckFile()
+        bool CheckFile(string resourceFile, string desFolder = vgSettingConstants.WorkHistoryFolder,
+                       string desFile = vgSettingConstants.WorkHistoryFile, bool needStarted = true)
         {
-            if (!vgSetting.ProjectStatus.Started)
+            if (needStarted && !vgSetting.ProjectStatus.Started)
                 return false;
 
             var dir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                                              vgSettingConstants.VGFolder,
-                                             vgSettingConstants.WorkHistoryFolder);
+                                             desFolder);
 
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
 
-            whPath = System.IO.Path.Combine(dir, vgSettingConstants.WorkHistoryFile);
+            this.whPath = System.IO.Path.Combine(dir, desFile);
             if (!File.Exists(whPath))
             {
                 using (var stream = File.CreateText(whPath))
                 {
-                    stream.Write(Properties.Resources.WorkHistory);
+                    stream.Write(resourceFile);
                     //File.SetAttributes(whPath, FileAttributes.ReadOnly | FileAttributes.Encrypted | FileAttributes.System);
                 }
             }
@@ -66,7 +67,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void FixCorruptedFiles()
         {
-             if(!CheckFile())
+            if (!CheckFile(Properties.Resources.WorkHistory))
                  return;
 
             XDocument doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
@@ -77,7 +78,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void UpdateStatus()
         {
-            if (!CheckFile())
+            if (!CheckFile(Properties.Resources.WorkHistory))
                 return;
 
             XDocument doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
@@ -348,7 +349,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
             return null;
         }
 
-        public static void UpdateWorkHistory(CodeElement Element, ActionType type)
+        public void UpdateWorkHistory(CodeElement Element, ActionType type)
         {
             switch (type)
             {
@@ -414,7 +415,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void SaveNewElements(List<VGCodeElement> codeElements)
         {
-            if (!CheckFile())
+            if (!CheckFile(Properties.Resources.WorkHistory))
                 return;
 
             try
@@ -466,7 +467,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void SaveFileChanged(string filename)
         {
-            if (!CheckFile())
+            if (!CheckFile(Properties.Resources.WorkHistory))
                 return;
 
             try
@@ -493,7 +494,7 @@ namespace Vistaghost.VISTAGHOST.DataModel
 
         public void RemoveElement(string eName)
         {
-            if (!CheckFile())
+            if (!CheckFile(Properties.Resources.WorkHistory))
                 return;
 
             try
@@ -509,6 +510,45 @@ namespace Vistaghost.VISTAGHOST.DataModel
                         delNode.Remove();
                         doc.Save(whPath);
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex);
+            }
+        }
+
+        public void SaveFoundFiles(List<VGCodeElement> fileList)
+        {
+            if (!CheckFile(Properties.Resources.SharedFile, vgSettingConstants.SharedFolder, vgSettingConstants.SharedFile, false))
+                return;
+
+            try
+            {
+                var doc = XDocument.Load(whPath, LoadOptions.SetBaseUri);
+                var funcNode = doc.Root.Element("Function");
+
+                if (funcNode != null)
+                {
+                    funcNode.RemoveAll();
+
+                    foreach (var file in fileList)
+                    {
+                        var fNode = new XElement("Func");
+
+                        var nameNode = new XElement("Name");
+                        nameNode.Value = file.Name;
+
+                        var locationNode = new XElement("Location");
+                        locationNode.Value = file.File;
+
+                        fNode.Add(nameNode);
+                        fNode.Add(locationNode);
+
+                        funcNode.Add(fNode);
+                    }
+
+                    doc.Save(whPath);
                 }
             }
             catch (Exception ex)

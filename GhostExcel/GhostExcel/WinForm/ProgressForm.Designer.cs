@@ -36,7 +36,7 @@
             // 
             this.progressUpdate.Location = new System.Drawing.Point(12, 12);
             this.progressUpdate.Name = "progressUpdate";
-            this.progressUpdate.Size = new System.Drawing.Size(437, 23);
+            this.progressUpdate.Size = new System.Drawing.Size(273, 23);
             this.progressUpdate.TabIndex = 0;
             // 
             // lblStatus
@@ -52,7 +52,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(461, 62);
+            this.ClientSize = new System.Drawing.Size(297, 58);
             this.ControlBox = false;
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.progressUpdate);
@@ -63,8 +63,9 @@
             this.Name = "ProgressForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Updating";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

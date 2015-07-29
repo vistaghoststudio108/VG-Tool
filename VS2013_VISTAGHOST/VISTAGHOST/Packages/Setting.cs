@@ -23,6 +23,8 @@ namespace Vistaghost.VISTAGHOST
         public const string RegisterFile = "Register.xml";
 
         public const string VGFolder = "Vistaghost";
+        public const string SharedFolder = "Shared";
+        public const string SharedFile = "SharedFile.xml";
         public const string FileExtenstion = ".vgconfig";
         public const string LogFolder = "Log";
         public const string LogTextFile = "History.txt";
@@ -38,6 +40,7 @@ namespace Vistaghost.VISTAGHOST
         public const string LineCode = @"//.*";
 
         public const string ErrorLogFile = "ErrorLog.txt";
+        
         public static class SettingsKey
         {
         }

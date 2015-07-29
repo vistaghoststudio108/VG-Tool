@@ -93,13 +93,16 @@ namespace GhostExcel
             bool found = false;
             Excel.Range curFind = null;
 
-            curFind = range.Find(strFind, Type.Missing,
+            curFind = range.EntireRow.Find(strFind, Type.Missing,
                                       Excel.XlFindLookIn.xlValues, Excel.XlLookAt.xlPart,
-                                      Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlNext, false,
+                                      Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlNext, true,
                                       Type.Missing, Type.Missing);
 
             if (curFind != null)
+            {
+                string add = ExcelUtilities.RangeAddress(curFind);
                 found = true;
+            }
 
             return found;
         }
@@ -351,5 +354,7 @@ namespace GhostExcel
             AddBorder(range, Color.Black);
             range.Columns.AutoFit();
         }
+
+
     }
 }

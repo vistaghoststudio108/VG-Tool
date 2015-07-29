@@ -11,14 +11,31 @@ namespace GhostExcel.WinForm
 {
     public partial class ProgressForm : Form
     {
+        public string Message
+        {
+            set { lblStatus.Text = value; }
+        }
+
+        public int ProgressValue
+        {
+            set { progressUpdate.Value = value; }
+        }
+
+        public event EventHandler<EventArgs> Canceled;
+
         public ProgressForm()
         {
             InitializeComponent();
         }
 
-        internal void UpdateProgress(int percent)
+        private void buttonCancel_Click(object sender, EventArgs e)
         {
-            progressUpdate.Value = percent;
+            // Create a copy of the event to work with
+            EventHandler<EventArgs> ea = Canceled;
+            /* If there are no subscribers, eh will be null so we need to check
+             * to avoid a NullReferenceException. */
+            if (ea != null)
+                ea(this, e);
         }
     }
 }
