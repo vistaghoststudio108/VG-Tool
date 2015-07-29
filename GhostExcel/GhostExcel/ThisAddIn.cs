@@ -53,6 +53,9 @@ namespace GhostExcel
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            //Hook keyboard
+            InterceptKeys.SetHook();
+
             //Init my custom pane
             _ghostPane = new GhostPane();
             _myCustomTaskPane = this.CustomTaskPanes.Add(_ghostPane, "Update Results");
@@ -120,6 +123,9 @@ namespace GhostExcel
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+            //Unhook keyboard
+            InterceptKeys.ReleaseHook();
+
             //Release all resources
             this.Dispose(true);
         }   

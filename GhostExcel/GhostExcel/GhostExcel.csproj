@@ -177,6 +177,7 @@
     <Compile Include="Helper\ExcelCleaner.cs" />
     <Compile Include="Helper\ExcelLogger.cs" />
     <Compile Include="Helper\ExceptionManager.cs" />
+    <Compile Include="Helper\LocalWindowsHook.cs" />
     <Compile Include="Network\NetServices.cs" />
     <Compile Include="Ribbon\GhostRibbon.cs">
       <SubType>Component</SubType>
