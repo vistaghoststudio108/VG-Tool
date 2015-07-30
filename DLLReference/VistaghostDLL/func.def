@@ -1,0 +1,4 @@
+LIBRARY	VISTAGHOSTDLL
+EXPORTS
+MyAdd		@1
+MyFunction	@2
