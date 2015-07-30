@@ -16,6 +16,7 @@ namespace Vistaghost.VISTAGHOST
     public partial class DeleteForm : Form
     {
         public DeleteEventHandler OnSendData;
+        bool Changed = false;
 
         public DeleteForm()
         {
@@ -35,6 +36,8 @@ namespace Vistaghost.VISTAGHOST
         private void DeleteForm_Load(object sender, EventArgs e)
         {
             btnApply.Focus();
+            Changed = false;
+            btnApply.Enabled = false;
         }
 
         private void DeleteForm_KeyDown(object sender, KeyEventArgs e)
@@ -42,6 +45,15 @@ namespace Vistaghost.VISTAGHOST
             if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
+            }
+        }
+
+        private void cbDeleteDoubleSlash_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Changed)
+            {
+                btnApply.Enabled = true;
+                Changed = true;
             }
         }
     }

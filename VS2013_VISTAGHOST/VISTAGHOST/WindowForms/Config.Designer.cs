@@ -109,7 +109,6 @@
             this.cbCurrentShortcut = new System.Windows.Forms.ComboBox();
             this.btnRemoveHotkey = new System.Windows.Forms.Button();
             this.btnAssignHotKey = new System.Windows.Forms.Button();
-            this.txtHotKey = new Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox();
             this.lvDetailKeys = new System.Windows.Forms.ListView();
             this.colCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colKey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -117,6 +116,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.txtHotKey = new Vistaghost.VISTAGHOST.VGUserControl.ShortcutKeyTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numerEmptyLine)).BeginInit();
             this.pnCommentSetting.SuspendLayout();
@@ -896,16 +896,6 @@
             this.btnAssignHotKey.UseVisualStyleBackColor = true;
             this.btnAssignHotKey.Click += new System.EventHandler(this.btnAssignHotKey_Click);
             // 
-            // txtHotKey
-            // 
-            this.txtHotKey.DTE2Object = null;
-            this.txtHotKey.ExistKeyBindings = null;
-            this.txtHotKey.Location = new System.Drawing.Point(103, 257);
-            this.txtHotKey.Name = "txtHotKey";
-            this.txtHotKey.Size = new System.Drawing.Size(173, 23);
-            this.txtHotKey.TabIndex = 7;
-            this.txtHotKey.TextChanged += new System.EventHandler(this.txtHotKey_TextChanged);
-            // 
             // lvDetailKeys
             // 
             this.lvDetailKeys.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -985,11 +975,21 @@
             this.label13.TabIndex = 5;
             this.label13.Text = "Hotkeyable Items";
             // 
+            // txtHotKey
+            // 
+            this.txtHotKey.DTE2Object = null;
+            this.txtHotKey.ExistKeyBindings = null;
+            this.txtHotKey.Location = new System.Drawing.Point(103, 257);
+            this.txtHotKey.Name = "txtHotKey";
+            this.txtHotKey.Size = new System.Drawing.Size(173, 23);
+            this.txtHotKey.TabIndex = 7;
+            this.txtHotKey.TextChanged += new System.EventHandler(this.txtHotKey_TextChanged);
+            // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1131, 741);
+            this.ClientSize = new System.Drawing.Size(1406, 741);
             this.Controls.Add(this.pnKeyboard);
             this.Controls.Add(this.pnHistory);
             this.Controls.Add(this.pnCommentSetting);
