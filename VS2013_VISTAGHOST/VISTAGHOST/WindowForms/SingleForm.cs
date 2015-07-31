@@ -18,6 +18,7 @@ namespace Vistaghost.VISTAGHOST
         public AddCommentEventHandler OnSendData;
         bool ChangedContent = false;
         bool MoreOptions = false;
+        bool Initialize = false;
         ActionType vmode = ActionType.NONE;
 
         public SingleForm()
@@ -27,6 +28,7 @@ namespace Vistaghost.VISTAGHOST
 
         public void LoadData(Settings settings, ActionType vmode)
         {
+
             txtContent.Text = settings.CommentInfo.Content;
             txtAccount.Text = settings.CommentInfo.Account;
             txtDevID.Text = settings.CommentInfo.DevID;
@@ -34,6 +36,7 @@ namespace Vistaghost.VISTAGHOST
 
             btnAdd.Enabled = true;
             ChangedContent = false;
+            Initialize = true;
 
             this.vmode = vmode;
 
@@ -49,6 +52,8 @@ namespace Vistaghost.VISTAGHOST
                         btnAdd.Location = new Point(369, 99);
                         expMore.Visible = true;
                         btnAdd.Text = "Add";
+
+                        this.Text = "Modify Tag";
                     }
                     break;
                 case ActionType.ADD:
@@ -59,6 +64,18 @@ namespace Vistaghost.VISTAGHOST
                         chKeepComments.Visible = false;
                         btnAdd.Location = new Point(369, 75);
                         btnAdd.Text = "Add";
+
+                        switch (vmode)
+                        {
+                            case ActionType.ADD:
+                                this.Text = "Add Tag";
+                                break;
+                            case ActionType.DELETE:
+                                this.Text = "Delete Tag";
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     break;
 
@@ -69,6 +86,9 @@ namespace Vistaghost.VISTAGHOST
                         chKeepComments.Visible = false;
                         btnAdd.Location = new Point(369, 75);
                         btnAdd.Text = "Save";
+                        btnAdd.Enabled = false;
+
+                        this.Text = "Change Tag Information";
                     }
                     break;
 
@@ -77,6 +97,9 @@ namespace Vistaghost.VISTAGHOST
                 default:
                     break;
             }
+
+            //Finished initialize
+            Initialize = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -126,7 +149,7 @@ namespace Vistaghost.VISTAGHOST
                 return;
             }
 
-            ChangedContent = true;
+            //ChangedContent = true;
         }
 
         private void expMore_ExpandCollapse(object sender, MakarovDev.ExpandCollapsePanel.ExpandCollapseEventArgs e)
@@ -158,6 +181,9 @@ namespace Vistaghost.VISTAGHOST
 
         private void chKeepComments_CheckedChanged(object sender, EventArgs e)
         {
+            if (Initialize)
+                return;
+
             ChangedContent = true;
         }
 
@@ -166,6 +192,24 @@ namespace Vistaghost.VISTAGHOST
             if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
+            }
+        }
+
+        private void txtContent_TextChanged(object sender, EventArgs e)
+        {
+            if (ChangedContent || Initialize)
+                return;
+
+            switch (vmode)
+            {
+                case ActionType.CHANGE_INFO:
+                    {
+                        btnAdd.Enabled = true;
+                        ChangedContent = true;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }

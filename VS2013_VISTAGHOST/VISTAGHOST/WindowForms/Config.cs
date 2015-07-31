@@ -468,6 +468,9 @@ namespace Vistaghost.VISTAGHOST
                 txtHistory.Enabled = check.Checked;
                 cbXAModel.Enabled = check.Checked;
             }
+
+            //Enable Save button
+            btnSave.Enabled = true;
         }
 
         private void cbDateFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -555,6 +558,7 @@ namespace Vistaghost.VISTAGHOST
             childIndex = 0;
             btnAssignHotKey.Enabled = false;
             btnRemoveHotkey.Enabled = false;
+            txtHotKey.Text = String.Empty;
 
             foreach (var c in commands)
             {
@@ -795,7 +799,7 @@ namespace Vistaghost.VISTAGHOST
                     {
                         btnStartProject.Text = "Start";
                         txtProjectName.Enabled = true;
-                        txtProjectName.Text = String.Empty;
+                        //txtProjectName.Text = String.Empty;
                         txtProjectID.Enabled = true;
                         txtProjectID.Text = String.Empty;
                         lblProjectStatus.Text = "No projects";

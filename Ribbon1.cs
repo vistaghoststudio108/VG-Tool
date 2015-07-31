@@ -61,5 +61,28 @@ namespace GhostExcelTest
             trackCell.Value2 = header[index];
             trackCell.ColumnWidth = headerWidth[index];
         }
+
+        void SplitRange(Excel.Range useRange)
+        {
+            Excel.Worksheet sheet = (Excel.Worksheet)this.app.ActiveWorkbook.ActiveSheet;
+            Excel.Range firtRange = sheet.Cells[useRange.Row, useRange.Column];
+
+            int nRow = firtRange.get_End(Excel.XlDirection.xlDown).Row;
+            int nCol = useRange.Column + useRange.Columns.Count - 1;
+
+            Excel.Range endRange = sheet.Cells[nRow, nCol];
+
+            Excel.Range finalRange = sheet.get_Range(firtRange, endRange);
+
+            finalRange.Select();
+
+            Excel.Range dd = (Excel.Range)useRange.Rows[1];
+
+            var emptyRange = dd.Cells.SpecialCells(Excel.XlCellType.xlCellTypeBlanks, Missing.Value);
+
+            if (emptyRange.Columns.Count == 0)
+
+                MessageBox.Show("hihi");
+        }
     }
 }

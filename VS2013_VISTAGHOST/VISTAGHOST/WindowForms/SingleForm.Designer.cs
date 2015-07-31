@@ -60,6 +60,7 @@
             this.txtContent.Name = "txtContent";
             this.txtContent.Size = new System.Drawing.Size(388, 23);
             this.txtContent.TabIndex = 0;
+            this.txtContent.TextChanged += new System.EventHandler(this.txtContent_TextChanged);
             this.txtContent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtString_KeyDown);
             // 
             // label3
@@ -80,6 +81,7 @@
             this.txtAccount.Name = "txtAccount";
             this.txtAccount.Size = new System.Drawing.Size(156, 23);
             this.txtAccount.TabIndex = 1;
+            this.txtAccount.TextChanged += new System.EventHandler(this.txtContent_TextChanged);
             this.txtAccount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtString_KeyDown);
             // 
             // label4
@@ -99,6 +101,7 @@
             this.txtDevID.Name = "txtDevID";
             this.txtDevID.Size = new System.Drawing.Size(163, 23);
             this.txtDevID.TabIndex = 2;
+            this.txtDevID.TextChanged += new System.EventHandler(this.txtContent_TextChanged);
             this.txtDevID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtString_KeyDown);
             // 
             // chKeepComments

@@ -45,6 +45,7 @@
             this.cbDeleteDoubleSlash.TabIndex = 5;
             this.cbDeleteDoubleSlash.Text = "Delete all (//) comments";
             this.cbDeleteDoubleSlash.UseVisualStyleBackColor = true;
+            this.cbDeleteDoubleSlash.CheckedChanged += new System.EventHandler(this.cbDeleteDoubleSlash_CheckedChanged);
             // 
             // cbDeleteAllBreakLines
             // 
@@ -55,6 +56,7 @@
             this.cbDeleteAllBreakLines.TabIndex = 6;
             this.cbDeleteAllBreakLines.Text = "Delete all break lines";
             this.cbDeleteAllBreakLines.UseVisualStyleBackColor = true;
+            this.cbDeleteAllBreakLines.CheckedChanged += new System.EventHandler(this.cbDeleteDoubleSlash_CheckedChanged);
             // 
             // cbDeleteSlashStar
             // 
@@ -65,6 +67,7 @@
             this.cbDeleteSlashStar.TabIndex = 5;
             this.cbDeleteSlashStar.Text = "Delete all (/**/) comments";
             this.cbDeleteSlashStar.UseVisualStyleBackColor = true;
+            this.cbDeleteSlashStar.CheckedChanged += new System.EventHandler(this.cbDeleteDoubleSlash_CheckedChanged);
             // 
             // cbSmartFormat
             // 
@@ -75,6 +78,7 @@
             this.cbSmartFormat.TabIndex = 6;
             this.cbSmartFormat.Text = "Smart format";
             this.cbSmartFormat.UseVisualStyleBackColor = true;
+            this.cbSmartFormat.CheckedChanged += new System.EventHandler(this.cbDeleteDoubleSlash_CheckedChanged);
             // 
             // btnApply
             // 

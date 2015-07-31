@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLLReference", "DLLReference\DLLReference.vcxproj", "{BC20C25B-281C-419F-A463-06519F6585D4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VistaghostDLL", "VistaghostDLL\VistaghostDLL.vcxproj", "{6FB7C85E-6D81-41A8-98E1-5E2511E6BF21}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OtherDLL", "OtherDLL\OtherDLL.vcxproj", "{C5A8F841-2EF2-40FC-A281-30E264EED08E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC20C25B-281C-419F-A463-06519F6585D4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC20C25B-281C-419F-A463-06519F6585D4}.Debug|Win32.Build.0 = Debug|Win32
+		{BC20C25B-281C-419F-A463-06519F6585D4}.Release|Win32.ActiveCfg = Release|Win32
+		{BC20C25B-281C-419F-A463-06519F6585D4}.Release|Win32.Build.0 = Release|Win32
+		{6FB7C85E-6D81-41A8-98E1-5E2511E6BF21}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6FB7C85E-6D81-41A8-98E1-5E2511E6BF21}.Debug|Win32.Build.0 = Debug|Win32
+		{6FB7C85E-6D81-41A8-98E1-5E2511E6BF21}.Release|Win32.ActiveCfg = Release|Win32
+		{6FB7C85E-6D81-41A8-98E1-5E2511E6BF21}.Release|Win32.Build.0 = Release|Win32
+		{C5A8F841-2EF2-40FC-A281-30E264EED08E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C5A8F841-2EF2-40FC-A281-30E264EED08E}.Debug|Win32.Build.0 = Debug|Win32
+		{C5A8F841-2EF2-40FC-A281-30E264EED08E}.Release|Win32.ActiveCfg = Release|Win32
+		{C5A8F841-2EF2-40FC-A281-30E264EED08E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
