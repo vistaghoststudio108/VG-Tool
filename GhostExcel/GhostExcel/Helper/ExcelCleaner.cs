@@ -14,6 +14,9 @@ namespace GhostExcel
         /// <param name="obj"> object need to release </param>
         public static void releaseObject(object obj)
         {
+            if (obj == null)
+                return;
+
             try
             {
                 if(Marshal.IsComObject(obj))
@@ -37,6 +40,9 @@ namespace GhostExcel
 
         public static void releaseObject(ref object obj)
         {
+            if (obj == null)
+                return;
+
             if(Marshal.IsComObject(obj))
             {
                 Marshal.ReleaseComObject(obj);

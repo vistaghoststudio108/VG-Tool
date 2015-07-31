@@ -10,6 +10,7 @@ using BrightIdeasSoftware;
 using GhostExcel.DataModel;
 using System.Diagnostics;
 using System.Collections;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace GhostExcel.UserControls
 {
@@ -128,7 +129,12 @@ namespace GhostExcel.UserControls
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Excel.Worksheet ws = (Excel.Worksheet)Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet;
+            Excel.Range beginCell = Globals.ThisAddIn.Application.ActiveCell;
 
+            Excel.Range endCell = ws.Cells[beginCell.Row, beginCell.Column + 6];
+
+            Excel.Range finalRange = ws.get_Range(beginCell, endCell);
         }
 
         private void objListViewFast_MouseDown(object sender, MouseEventArgs e)

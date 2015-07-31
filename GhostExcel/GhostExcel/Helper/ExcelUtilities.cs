@@ -10,6 +10,8 @@ using System.Net.Mail;
 using System.IO;
 using System.Net.Mime;
 using System.Net;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace GhostExcel
 {
@@ -345,6 +347,76 @@ namespace GhostExcel
             }
 
             return attachment;
+        }
+
+        /// <summary>
+        /// Break whole range into
+        /// </summary>
+        /// <param name="usedRange"></param>
+        /// <param name="listAreas"></param>
+        /// <returns></returns>
+        public static bool SplitUsedRange(Excel.Range usedRange, out List<Excel.Range> listAreas)
+        {
+            bool succeeded = false;
+            int nColCount = usedRange.Columns.Count;
+            int nRowCount = usedRange.Rows.Count;
+            bool IsFirstCellOfRange = true;
+
+            Excel.Range _beginCell = null;
+            Excel.Range _endCell = null;
+            Excel.Range _emptyRow = null;
+
+            listAreas = new List<Excel.Range>();
+
+            foreach (Excel.Range row in usedRange.Rows)
+            {
+                //Last row
+                if (row.Row == usedRange.Row + nRowCount - 1)
+                {
+                    _endCell = usedRange.Cells[row.Row - usedRange.Row + 1, nColCount];
+                    listAreas.Add(usedRange.get_Range(_beginCell, _endCell));
+
+                    break;
+                }
+
+                try
+                {
+                    _emptyRow = row.SpecialCells(Excel.XlCellType.xlCellTypeBlanks, Missing.Value);
+                }
+                catch
+                {
+                    if (IsFirstCellOfRange)
+                    {
+                        IsFirstCellOfRange = false;
+                        _beginCell = usedRange.Cells[row.Row - usedRange.Row + 1, 1];
+                    }
+
+                    continue;
+                }
+
+                //Empty row
+                if (_emptyRow.Columns.Count == nColCount)
+                {
+                    if (!IsFirstCellOfRange)
+                    {
+                        IsFirstCellOfRange = true;
+                        _endCell = usedRange.Cells[row.Row - usedRange.Row, nColCount];
+                        listAreas.Add(usedRange.get_Range(_beginCell, _endCell));
+                    }
+                }
+                else if(IsFirstCellOfRange)
+                {
+                    IsFirstCellOfRange = false;
+                    _beginCell = usedRange.Cells[row.Row - usedRange.Row + 1, 1];
+                }
+            }
+
+            //Release COM object
+            ExcelCleaner.releaseObject(_beginCell);
+            ExcelCleaner.releaseObject(_endCell);
+            ExcelCleaner.releaseObject(_emptyRow);
+
+            return succeeded;
         }
 
         public static void FormatExcel(Excel.Worksheet worksheet)

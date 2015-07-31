@@ -56,6 +56,8 @@ namespace GhostExcel
         {
             Excel.Worksheet ws = (Excel.Worksheet)this._application.ActiveWorkbook.ActiveSheet;
             Excel.Range range = ws.UsedRange;
+            List<Excel.Range> listAreas;
+            ExcelUtilities.SplitUsedRange(ws.UsedRange, out listAreas);
 
             int numOfFunc = FileManager.Instance.SearchInFile().Count;
 
